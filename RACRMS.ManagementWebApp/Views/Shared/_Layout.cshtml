@@ -1,0 +1,490 @@
+﻿@{
+    string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+
+    string contentHeaderIconName = string.Empty;
+    string contentHeaderName = string.Empty;
+    string contentModuleName = string.Empty;
+
+    int scrollTopValue = int.MinValue;
+
+    if (string.IsNullOrEmpty(controllerName) || controllerName == "Reservation") { contentHeaderIconName = "icon-calendar2"; contentHeaderName = "Kiralama Yönetimi"; contentModuleName = "Rezervasyonlar"; }
+    else if (controllerName == "Profile") { contentHeaderIconName = "icon-user"; contentHeaderName = "Hesap Yönetimi"; contentModuleName = "Profilim"; }
+    else if (controllerName == "Customer") { contentHeaderIconName = "icon-users4"; contentHeaderName = "Kiralama Yönetimi"; contentModuleName = "Müşteriler"; }
+    else if (controllerName == "Car") { contentHeaderIconName = "icon-car"; contentHeaderName = "Araç Yönetimi"; contentModuleName = "Araçlar"; }
+    else if (controllerName == "CarBrand") { contentHeaderIconName = "icon-grid-alt"; contentHeaderName = "Araç Yönetimi"; contentModuleName = "Araç Markaları"; }
+    else if (controllerName == "CarChassisType") { contentHeaderIconName = "icon-alignment-unalign"; contentHeaderName = "Araç Yönetimi"; contentModuleName = "Araç Kasa Tipleri"; }
+    else if (controllerName == "CarClass") { contentHeaderIconName = "icon-stars"; contentHeaderName = "Araç Yönetimi"; contentModuleName = "Araç Sınıfları"; }
+    else if (controllerName == "CarFuelType") { contentHeaderIconName = "icon-gas"; contentHeaderName = "Araç Yönetimi"; contentModuleName = "Araç Yakıt Tipleri"; }
+    else if (controllerName == "CarGearType") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-cogs"; contentHeaderName = "Araç Yönetimi"; contentModuleName = "Araç Vites Tipleri"; }
+    else if (controllerName == "CarModel") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-steering-wheel"; contentHeaderName = "Araç Yönetimi"; contentModuleName = "Araç Modelleri"; }
+    else if (controllerName == "CarPreference") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-list2"; contentHeaderName = "Araç Yönetimi"; contentModuleName = "Araç Özellikleri"; }
+    else if (controllerName == "CarRentalPrice") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-calculator2"; contentHeaderName = "Araç Yönetimi"; contentModuleName = "Araç Kiralama Fiyatları"; }
+    else if (controllerName == "CarRentalRequirement") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-shield-check"; contentHeaderName = "Araç Yönetimi"; contentModuleName = "Araç Kiralama Şartları"; }
+    else if (controllerName == "CarType") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-car2"; contentHeaderName = "Araç Yönetimi"; contentModuleName = "Araç Tipleri"; }
+    else if (controllerName == "Preference") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-list2"; contentHeaderName = "Yönetimsel Ayarlar"; contentModuleName = "Özellikler"; }
+    else if (controllerName == "Requirement") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-shield-check"; contentHeaderName = "Yönetimsel Ayarlar"; contentModuleName = "Şartlar"; }
+    else if (controllerName == "User") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-users2"; contentHeaderName = "Yönetimsel Ayarlar"; contentModuleName = "Kullanıcılar"; }
+    else if (controllerName == "UserRole") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-medal-star"; contentHeaderName = "Yönetimsel Ayarlar"; contentModuleName = "Kullanıcı Rolleri"; }
+
+    List<Claim> claims = Context.User.Claims.ToList();
+
+    string name = claims.Where(x => x.Type.ToString() == ClaimTypes.Name.ToString()).Select(x => x.Value).FirstOrDefault();
+    string surname = claims.Where(x => x.Type.ToString() == ClaimTypes.Surname.ToString()).Select(x => x.Value).FirstOrDefault();
+    string actor = claims.Where(x => x.Type.ToString() == ClaimTypes.Actor.ToString()).Select(x => x.Value).FirstOrDefault();
+    string stateOrProvince = claims.Where(x => x.Type.ToString() == ClaimTypes.StateOrProvince.ToString()).Select(x => x.Value).FirstOrDefault();
+
+    int? waitingReservationCount = ViewBag.WaitingReservationCount;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="~/lib/Template/global_assets/css/icons/icomoon/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="~/lib/Template/global_assets/css/extras/animate.min.css" rel="stylesheet" type="text/css">
+    <link href="~/lib/Template/assets/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/site.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+    <!-- Core JS files -->
+    <script src="~/lib/Template/global_assets/js/main/jquery.min.js"></script>
+    <script src="~/lib/Template/global_assets/js/main/bootstrap.bundle.min.js"></script>
+    <!-- /core JS files -->
+    <!-- Theme JS files -->
+    <script src="~/lib/Template/global_assets/js/plugins/ui/moment/moment.min.js"></script>
+    <script src="~/lib/Template/global_assets/js/plugins/pickers/daterangepicker.js"></script>
+    <script src="~/lib/Template/global_assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script src="~/lib/Template/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/lib/Template/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+    <script src="~/lib/Template/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js"></script>
+    <script src="~/lib/Template/global_assets/js/plugins/notifications/jgrowl.min.js"></script>
+    <script src="~/lib/Template/global_assets/js/plugins/notifications/noty.min.js"></script>
+    <script src="~/lib/Template/global_assets/js/plugins/forms/selects/select2.min.js"></script>
+
+    <script src="~/lib/Template/assets/js/app.js"></script>
+
+    <script src="~/js/site.js"></script>
+    <!-- /theme JS files -->
+    <script>
+        $(() => $(document).ready(() => $('.sidebar-content').scrollTop(@scrollTopValue)));
+    </script>
+
+    @if (waitingReservationCount.HasValue && waitingReservationCount != 0)
+    {
+        <script>
+            var animations = ['bounce', 'flash', 'pulse', 'rubberBand', 'shake', 'swing', 'tada', 'wobble'];
+
+            $(() => {
+                setAnimation = () => {
+                    var animationType = animations[Math.floor(Math.random() * animations.length)];
+
+                    $('.animation').data('animation', animationType);
+
+                    var animation = $('.animation').data('animation');
+
+                    $('.animation').addClass('animated ' + animation).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                        $('.animation').removeClass('animated ' + animation);
+                    });
+                };
+
+                setAnimation();
+
+                setInterval(setAnimation, 10000);
+            });
+        </script>
+    }
+
+    <script>
+        $(() => {
+            $(document).ready(() => {
+                var breadcrumbs = [];
+
+                var previousPage = localStorage.getItem('previousPage');
+                var previousPageIcon = localStorage.getItem('previousPageIcon');
+                var previousPageLink = localStorage.getItem('previousPageLink');
+
+                if (previousPage == undefined || previousPage == null || previousPage == '') {
+                    previousPage = '@contentModuleName';
+                    previousPageIcon = '@contentHeaderIconName';
+                    previousPageLink = '@controllerName';
+
+                    localStorage.setItem('previousPage', previousPage);
+                    localStorage.setItem('previousPageIcon', previousPageIcon);
+                    localStorage.setItem('previousPageLink', previousPageLink);
+
+                    breadcrumbs.push({
+                        PreviousPage: previousPage,
+                        PreviousPageIcon: previousPageIcon,
+                        PreviousPageLink: previousPageLink
+                    });
+                }
+                else {
+                    breadcrumbs.push({
+                        PreviousPage: previousPage,
+                        PreviousPageIcon: previousPageIcon,
+                        PreviousPageLink: previousPageLink
+                    });
+
+                    if (previousPage != '@contentModuleName')
+                        breadcrumbs.push({
+                        PreviousPage: '@contentModuleName',
+                        PreviousPageIcon: '@contentHeaderIconName',
+                        PreviousPageLink: '@controllerName'
+                    });
+                }
+
+                var innerHtml = '';
+
+                if (breadcrumbs.length == 1) {
+                    innerHtml += '<a href="/' + breadcrumbs[0].PreviousPageLink + '" class="breadcrumb-item"><i class="' + breadcrumbs[0].PreviousPageIcon + ' mr-2"></i> ' + breadcrumbs[0].PreviousPage+'</a>';
+                }
+                else {
+                    for (var index = 0; index < breadcrumbs.length; index++) {
+                        if (index == 0) {
+                            innerHtml += '<a href="/' + breadcrumbs[index].PreviousPageLink + '" class="breadcrumb-item"><i class="' + breadcrumbs[index].PreviousPageIcon + ' mr-2"></i> ' + breadcrumbs[index].PreviousPage + '</a>';
+                        }
+                        else if (index == breadcrumbs.length - 1) {
+                            innerHtml += '<span class="breadcrumb-item active"><i class="' + breadcrumbs[index].PreviousPageIcon + ' mr-2"></i> ' + breadcrumbs[index].PreviousPage + '</span>';
+
+                            localStorage.setItem('previousPage', breadcrumbs[index].PreviousPage);
+                            localStorage.setItem('previousPageIcon', breadcrumbs[index].PreviousPageIcon);
+                            localStorage.setItem('previousPageLink', breadcrumbs[index].PreviousPageLink);
+                        }
+                        else {
+                            innerHtml += '<span class="breadcrumb-item"><i class="' + breadcrumbs[index].PreviousPageIcon + ' mr-2"></i> ' + breadcrumbs[index].PreviousPage + '</span>';
+                        }
+                    }
+                }
+
+                $('.breadcrumb-navigation').html(innerHtml);
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Main navbar -->
+    <div class="navbar navbar-expand-lg navbar-dark bg-indigo navbar-static">
+        <div class="d-flex flex-1 d-lg-none">
+            <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+                <i class="icon-paragraph-justify3"></i>
+            </button>
+        </div>
+
+        <div class="navbar-brand text-center text-lg-left">
+            <a href="index.html" class="d-inline-block">
+                <img src="~/lib/Template/global_assets/images/logo_light.png" class="d-none d-sm-block" alt="">
+                <img src="~/lib/Template/global_assets/images/logo_icon_light.png" class="d-sm-none" alt="">
+            </a>
+        </div>
+
+        <div class="navbar-collapse collapse flex-lg-1 mx-lg-3 order-2 order-lg-1" id="navbar-search">
+            <div class="navbar-search d-flex align-items-center py-2 py-lg-0">
+                <div class="form-group-feedback form-group-feedback-left flex-grow-1">
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end align-items-center flex-1 flex-lg-0 order-1 order-lg-2">
+            <ul class="navbar-nav flex-row">
+                <li class="nav-item nav-item-dropdown-lg dropdown">
+                </li>
+
+                <li class="nav-item nav-item-dropdown-lg dropdown">
+                </li>
+
+                <li class="nav-item">
+                    <a href="@Url.Action("Index","Login")" class="navbar-nav-link navbar-nav-link-toggler">
+                        <span>Çıkış</span>
+                        <i class="icon-switch2 ml-2"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /main navbar -->
+    <!-- Page content -->
+    <div class="page-content">
+
+        <!-- Main sidebar -->
+        <div class="sidebar sidebar-light sidebar-main sidebar-expand-lg">
+
+            <!-- Sidebar content -->
+            <div class="sidebar-content">
+
+                <!-- User menu -->
+                <div class="sidebar-section">
+                    <div class="sidebar-user-material">
+                        <div class="sidebar-section-body">
+                            <div class="d-flex">
+                                <div class="flex-1">
+                                </div>
+                                <a href="#" class="flex-1 text-center"><img src="~/lib/Template/global_assets/images/placeholders/placeholder.jpg" class="img-fluid rounded-circle shadow-sm" width="80" height="80" alt=""></a>
+                                <div class="flex-1 text-right">
+                                    <button type="button" class="btn btn-outline-light border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
+                                        <i class="icon-transmission"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-outline-light border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-main-toggle d-lg-none">
+                                        <i class="icon-cross2"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <h6 class="mb-0 text-white text-shadow-dark mt-3">@($"{name} {surname}")</h6>
+                                <span class="font-size-sm text-white text-shadow-dark">@($"{actor}, {stateOrProvince}")</span>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-user-material-footer">
+                            <a href="#user-nav" class="d-flex justify-content-between align-items-center text-shadow-dark dropdown-toggle" data-toggle="collapse"><span>Hesap Yönetimi</span></a>
+                        </div>
+                    </div>
+
+                    <div class="collapse border-bottom" id="user-nav">
+                        <ul class="nav nav-sidebar">
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index","Profile")" class="nav-link">
+                                    <i class="icon-user"></i>
+                                    <span>Profilim</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index","Login")" class="nav-link">
+                                    <i class="icon-switch2"></i>
+                                    <span>Çıkış</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /user menu -->
+                <!-- Main navigation -->
+                <div class="sidebar-section">
+                    <ul class="nav nav-sidebar" data-nav-type="accordion">
+
+                        <!-- Main -->
+                        <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs mt-1">Kiralama Yönetimi</div> <i class="icon-menu" title="Main"></i></li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Reservation")" class="nav-link @((controllerName == ("Reservation") || controllerName == string.Empty) ? "active" : string.Empty)">
+                                <i class="icon-calendar2"></i>
+                                <span>
+                                    Rezervasyonlar
+                                </span>
+                                @if (waitingReservationCount != 0)
+                                {
+                                    <span class="badge badge-warning badge-pill align-self-center ml-auto mr-2 animation" data-animation="flash">@waitingReservationCount</span>
+                                }
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Customer")" class="nav-link @(controllerName == "Customer" ? "active" : string.Empty)">
+                                <i class="icon-users4"></i>
+                                <span>
+                                    Müşteriler
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs mt-1">Araç Yönetimi</div> <i class="icon-menu" title="Main"></i></li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Car")" class="nav-link @(controllerName == "Car" ? "active" : string.Empty)">
+                                <i class="icon-car"></i>
+                                <span>
+                                    Araçlar
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","CarBrand")" class="nav-link @(controllerName == "CarBrand" ? "active" : string.Empty)">
+                                <i class="icon-grid-alt"></i>
+                                <span>
+                                    Araç Markaları
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","CarChassisType")" class="nav-link @(controllerName == "CarChassisType" ? "active" : string.Empty)">
+                                <i class="icon-alignment-unalign"></i>
+                                <span>
+                                    Araç Kasa Tipleri
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","CarClass")" class="nav-link @(controllerName == "CarClass" ? "active" : string.Empty)">
+                                <i class="icon-stars"></i>
+                                <span>
+                                    Araç Sınıfları
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","CarFuelType")" class="nav-link @(controllerName == "CarFuelType" ? "active" : string.Empty)">
+                                <i class="icon-gas"></i>
+                                <span>
+                                    Araç Yakıt Tipleri
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","CarGearType")" class="nav-link @(controllerName == "CarGearType" ? "active" : string.Empty)">
+                                <i class="icon-cogs"></i>
+                                <span>
+                                    Araç Vites Tipleri
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","CarModel")" class="nav-link @(controllerName == "CarModel" ? "active" : string.Empty)">
+                                <i class="icon-steering-wheel"></i>
+                                <span>
+                                    Araç Modelleri
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","CarPreference")" class="nav-link @(controllerName == "CarPreference" ? "active" : string.Empty)">
+                                <i class="icon-list2"></i>
+                                <span>
+                                    Araç Özellikleri
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","CarRentalPrice")" class="nav-link @(controllerName == "CarRentalPrice" ? "active" : string.Empty)">
+                                <i class="icon-calculator2"></i>
+                                <span>
+                                    Araç Kiralama Fiyatları
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","CarRentalRequirement")" class="nav-link @(controllerName == "CarRentalRequirement" ? "active" : string.Empty)">
+                                <i class="icon-shield-check"></i>
+                                <span>
+                                    Araç Kiralama Şartları
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","CarType")" class="nav-link @(controllerName == "CarType" ? "active" : string.Empty)">
+                                <i class="icon-car2"></i>
+                                <span>
+                                    Araç Tipleri
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs mt-1">Yönetimsel Ayarlar</div> <i class="icon-menu" title="Main"></i></li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Preference")" class="nav-link @(controllerName == "Preference" ? "active" : string.Empty)">
+                                <i class="icon-list2"></i>
+                                <span>
+                                    Özellikler
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Requirement")" class="nav-link @(controllerName == "Requirement" ? "active" : string.Empty)">
+                                <i class="icon-shield-check"></i>
+                                <span>
+                                    Şartlar
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","User")" class="nav-link @(controllerName == "User" ? "active" : string.Empty)">
+                                <i class="icon-users2"></i>
+                                <span>
+                                    Kullanıcılar
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","UserRole")" class="nav-link @(controllerName == "UserRole" ? "active" : string.Empty)">
+                                <i class="icon-medal-star"></i>
+                                <span>
+                                    Kullanıcı Rolleri
+                                </span>
+                            </a>
+                        </li>
+                        <!-- /main -->
+
+                    </ul>
+                </div>
+                <!-- /main navigation -->
+
+            </div>
+            <!-- /sidebar content -->
+
+        </div>
+        <!-- /main sidebar -->
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Inner content -->
+            <div class="content-inner">
+
+                <!-- Page header -->
+                <div class="page-header page-header-light">
+                    <div class="page-header-content header-elements-lg-inline">
+                        <div class="page-title d-flex">
+                            <h4><i class="@contentHeaderIconName mr-2"></i> <span class="font-weight-semibold">@contentHeaderName</span> - @contentModuleName</h4>
+                        </div>
+
+                        <div class="header-elements d-none">
+                            <div class="d-flex justify-content-center">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+                        <div class="d-flex">
+                            <div class="breadcrumb breadcrumb-navigation">
+                                <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                                <span class="breadcrumb-item active">Dashboard</span>
+                            </div>
+                        </div>
+
+                        <div class="header-elements d-none">
+                            <div class="breadcrumb justify-content-center">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /page header -->
+                <!-- Content area -->
+                <div class="content">
+                    @RenderBody()
+                </div>
+                <!-- /content area -->
+                <!-- Footer -->
+                <div class="navbar navbar-expand-lg navbar-light">
+                    <div class="text-center d-lg-none w-100">
+                        <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
+                            <i class="icon-unfold mr-2"></i>
+                            Hakkında
+                        </button>
+                    </div>
+
+                    <div class="navbar-collapse collapse" id="navbar-footer">
+                        <span class="navbar-text">
+                            &copy; 2022. <a href="https://www.ilyarentacar.com.tr">İlya Rent A Car</a>
+                        </span>
+                    </div>
+                </div>
+                <!-- /footer -->
+
+            </div>
+            <!-- /inner content -->
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+    <!-- /page content -->
+
+</body>
+</html>

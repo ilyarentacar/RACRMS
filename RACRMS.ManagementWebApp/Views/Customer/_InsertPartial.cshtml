@@ -1,0 +1,120 @@
+﻿@model CustomerDTO
+
+<script>
+        $(() => {
+
+            $(document).ready(() => {
+                $('#modal_form_horizontal').modal('show');
+
+                $('#modal_form_horizontal').on('hidden.bs.modal', (e) => window.location.href = '@Url.Action("Cancel")');
+
+                $('.form-horizontal').validate({
+                    ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+                    errorClass: 'validation-invalid-label',
+                    successClass: 'validation-valid-label',
+                    validClass: 'validation-valid-label',
+                    highlight: function (element, errorClass) {
+                        $(element).removeClass(errorClass);
+                    },
+                    unhighlight: function (element, errorClass) {
+                        $(element).removeClass(errorClass);
+                    },
+                    rules: {
+                        Name: {
+                            required: true,
+                            maxlength: 25
+                        },
+                        Surname: {
+                            required: true,
+                            maxlength: 40
+                        },
+                        IdentityNumber: {
+                            required: true,
+                            maxlength: 11
+                        },
+                        EmailAddress: {
+                            required: true,
+                            maxlength: 35
+                        },
+                        CellNumber: {
+                            required: true,
+                            maxlength: 20
+                        }
+                    },
+                    messages: {
+                        Name: {
+                            required: "Bu alan boş bırakılamaz.",
+                            maxlength: "En fazla 25 karakter girişi yapılabilir."
+                        },
+                        Surname: {
+                            required: "Bu alan boş bırakılamaz.",
+                            maxlength: "En fazla 40 karakter girişi yapılabilir."
+                        },
+                        IdentityNumber: {
+                            required: "Bu alan boş bırakılamaz.",
+                            maxlength: "En fazla 11 karakter girişi yapılabilir."
+                        },
+                        EmailAddress: {
+                            required: "Bu alan boş bırakılamaz.",
+                            maxlength: "En fazla 35 karakter girişi yapılabilir."
+                        },
+                        CellNumber: {
+                            required: "Bu alan boş bırakılamaz.",
+                            maxlength: "En fazla 20 karakter girişi yapılabilir."
+                        }
+                    }
+                });
+            });
+
+        })
+</script>
+
+<!-- Horizontal form modal -->
+<div id="modal_form_horizontal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="icon-diff-added mr-2"></i>Yeni Kayıt Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            @using (Html.BeginForm("Insert", "Customer", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <div class="modal-body">
+                    <div class="form-group row p-2">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(x => x.IdentityNumber)
+                            @Html.TextBoxFor(x => x.IdentityNumber, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            @Html.LabelFor(x => x.Name)
+                            @Html.TextBoxFor(x => x.Name, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.Surname)
+                            @Html.TextBoxFor(x => x.Surname, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            @Html.LabelFor(x => x.EmailAddress)
+                            @Html.TextBoxFor(x => x.EmailAddress, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.CellNumber)
+                            @Html.TextBoxFor(x => x.CellNumber, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="@Url.Action("Cancel")" class="btn btn-outline-danger" data-dismiss="modal"><i class="icon-cancel-square2 mr-2"></i> İptal</a>
+                    <button type="submit" class="btn btn-success"><i class="icon-floppy-disk mr-2"></i> Kaydet</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- /horizontal form modal -->

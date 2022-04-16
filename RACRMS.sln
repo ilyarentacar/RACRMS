@@ -1,0 +1,97 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.Entity", "RACRMS.Entity\RACRMS.Entity.csproj", "{37FB23AF-08BC-4A0D-A668-F09EEE4B9E20}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.Repository", "RACRMS.Repository\RACRMS.Repository.csproj", "{5A4DB06C-F7BB-4EC8-B289-564D3B0E0783}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.DataAccessLayer", "RACRMS.DataAccessLayer\RACRMS.DataAccessLayer.csproj", "{F3FDFE15-233E-4904-B96A-99A0A4DB7AF9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.UnitOfWork", "RACRMS.UnitOfWork\RACRMS.UnitOfWork.csproj", "{265D7FB6-EE5E-4D49-84BD-3C25C6522080}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.Common", "RACRMS.Common\RACRMS.Common.csproj", "{C1812674-C428-45D7-96CC-CBE193CBDB81}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.BusinessLayer", "RACRMS.BusinessLayer\RACRMS.BusinessLayer.csproj", "{7A272FB7-C864-403B-87FE-79CFEC155EDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.DataTransferObject", "RACRMS.DataTransferObject\RACRMS.DataTransferObject.csproj", "{6F509513-8CEA-49A9-B1AB-C99CEEE9E75D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.ValidationLayer", "RACRMS.ValidationLayer\RACRMS.ValidationLayer.csproj", "{4DC78D8B-774B-413A-BD4C-EB88EED493E2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.Extension", "RACRMS.Extension\RACRMS.Extension.csproj", "{1897FB99-A44B-4CDB-B02C-47B416C226D9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.ManagementWebApp", "RACRMS.ManagementWebApp\RACRMS.ManagementWebApp.csproj", "{2CB244D4-0DFB-4E2B-AFB7-AC2C0FE37AFD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.WebApp", "RACRMS.WebApp\RACRMS.WebApp.csproj", "{A9A30613-618D-4F56-9E7E-73BFB48A1343}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACRMS.MailServiceWebAPI", "RACRMS.MailServiceWebAPI\RACRMS.MailServiceWebAPI.csproj", "{62653C47-20B1-4C77-96C1-C49FC777BCE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACRMS.MailServiceShared", "RACRMS.MailServiceShared\RACRMS.MailServiceShared.csproj", "{B82959A2-B89D-418B-80F5-B8DAF131728D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37FB23AF-08BC-4A0D-A668-F09EEE4B9E20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37FB23AF-08BC-4A0D-A668-F09EEE4B9E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37FB23AF-08BC-4A0D-A668-F09EEE4B9E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37FB23AF-08BC-4A0D-A668-F09EEE4B9E20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A4DB06C-F7BB-4EC8-B289-564D3B0E0783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4DB06C-F7BB-4EC8-B289-564D3B0E0783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A4DB06C-F7BB-4EC8-B289-564D3B0E0783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A4DB06C-F7BB-4EC8-B289-564D3B0E0783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3FDFE15-233E-4904-B96A-99A0A4DB7AF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3FDFE15-233E-4904-B96A-99A0A4DB7AF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3FDFE15-233E-4904-B96A-99A0A4DB7AF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3FDFE15-233E-4904-B96A-99A0A4DB7AF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{265D7FB6-EE5E-4D49-84BD-3C25C6522080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{265D7FB6-EE5E-4D49-84BD-3C25C6522080}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{265D7FB6-EE5E-4D49-84BD-3C25C6522080}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{265D7FB6-EE5E-4D49-84BD-3C25C6522080}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1812674-C428-45D7-96CC-CBE193CBDB81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1812674-C428-45D7-96CC-CBE193CBDB81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1812674-C428-45D7-96CC-CBE193CBDB81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1812674-C428-45D7-96CC-CBE193CBDB81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A272FB7-C864-403B-87FE-79CFEC155EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A272FB7-C864-403B-87FE-79CFEC155EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A272FB7-C864-403B-87FE-79CFEC155EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A272FB7-C864-403B-87FE-79CFEC155EDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F509513-8CEA-49A9-B1AB-C99CEEE9E75D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F509513-8CEA-49A9-B1AB-C99CEEE9E75D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F509513-8CEA-49A9-B1AB-C99CEEE9E75D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F509513-8CEA-49A9-B1AB-C99CEEE9E75D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DC78D8B-774B-413A-BD4C-EB88EED493E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DC78D8B-774B-413A-BD4C-EB88EED493E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DC78D8B-774B-413A-BD4C-EB88EED493E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DC78D8B-774B-413A-BD4C-EB88EED493E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1897FB99-A44B-4CDB-B02C-47B416C226D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1897FB99-A44B-4CDB-B02C-47B416C226D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1897FB99-A44B-4CDB-B02C-47B416C226D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1897FB99-A44B-4CDB-B02C-47B416C226D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CB244D4-0DFB-4E2B-AFB7-AC2C0FE37AFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB244D4-0DFB-4E2B-AFB7-AC2C0FE37AFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB244D4-0DFB-4E2B-AFB7-AC2C0FE37AFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB244D4-0DFB-4E2B-AFB7-AC2C0FE37AFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9A30613-618D-4F56-9E7E-73BFB48A1343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9A30613-618D-4F56-9E7E-73BFB48A1343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9A30613-618D-4F56-9E7E-73BFB48A1343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9A30613-618D-4F56-9E7E-73BFB48A1343}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62653C47-20B1-4C77-96C1-C49FC777BCE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62653C47-20B1-4C77-96C1-C49FC777BCE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62653C47-20B1-4C77-96C1-C49FC777BCE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62653C47-20B1-4C77-96C1-C49FC777BCE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B82959A2-B89D-418B-80F5-B8DAF131728D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B82959A2-B89D-418B-80F5-B8DAF131728D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B82959A2-B89D-418B-80F5-B8DAF131728D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B82959A2-B89D-418B-80F5-B8DAF131728D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE2A05D0-6FC4-47A6-AC32-55FF4C22045E}
+	EndGlobalSection
+EndGlobal

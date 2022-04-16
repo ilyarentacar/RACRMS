@@ -1,0 +1,105 @@
+﻿@model CarRentalRequirementDTO
+
+<script>
+        $(() => {
+
+            $(document).ready(() => {
+                $('#modal_form_horizontal').modal('show');
+
+                $('#modal_form_horizontal').on('hidden.bs.modal', (e) => window.location.href = '@Url.Action("Cancel")');
+
+                $.validator.addMethod(
+                    'checkListRequired',
+                    (value, element, requiredValue) => {
+                        if ($("input:checked").length == 0)
+                            return false;
+
+                        return true;
+                    },
+                    'Şart seçimi boş bırakılamaz.'
+                );
+
+                $('.form-horizontal').validate({
+                    ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+                    errorClass: 'validation-invalid-label',
+                    successClass: 'validation-valid-label',
+                    validClass: 'validation-valid-label',
+                    highlight: function (element, errorClass) {
+                        $(element).removeClass(errorClass);
+                    },
+                    unhighlight: function (element, errorClass) {
+                        $(element).removeClass(errorClass);
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.hasClass('select2-hidden-accessible') && element.next('.select2-container').length) {
+                            error.insertAfter(element.next('.select2-container'));
+                        }
+                        else if (element.hasClass('custom-control-input')) {
+                            if (!$('#Requirements').next().hasClass('validation-invalid-label'))
+                                error.insertAfter($('#Requirements'));
+                        }
+                        else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    rules: {
+                        CarId: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        CarId: {
+                            required: "Bu alan boş bırakılamaz."
+                        }
+                    }
+                });
+            });
+
+        })
+</script>
+
+<!-- Horizontal form modal -->
+<div id="modal_form_horizontal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="icon-diff-added mr-2"></i>Yeni Kayıt Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            @using (Html.BeginForm("Insert", "CarRentalRequirement", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <div class="modal-body">
+                    <div class="form-group row p-2">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(x => x.PlateNumber)
+                            @Html.DropDownListFor(x => x.CarId, Model.Cars.Select(x => new SelectListItem() { Text = x.PlateNumber, Value = x.Id.ToString() }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control car-select select", data_fouc = "data-fouc" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(x => x.RequirementId)
+                            <div class="border p-3 rounded" id="Requirements">
+                                @for (int index = 0; index < Model.Requirements.Length; index++)
+                                {
+                                    <div class="custom-control custom-checkbox mb-2">
+                                        <input type="checkbox" class="custom-control-input" asp-for="@Model.Requirements[index].Selected" data-rule-checkListRequired="true" />
+                                        <label class="custom-control-label" asp-for="@Model.Requirements[index].Selected">@Model.Requirements[index].Name</label>
+                                        <input type="hidden" asp-for="@Model.Requirements[index].Id" />
+                                        <input type="hidden" asp-for="@Model.Requirements[index].Name" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="@Url.Action("Cancel")" class="btn btn-outline-danger" data-dismiss="modal"><i class="icon-cancel-square2 mr-2"></i> İptal</a>
+                    <button type="submit" class="btn btn-success"><i class="icon-floppy-disk mr-2"></i> Kaydet</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- /horizontal form modal -->

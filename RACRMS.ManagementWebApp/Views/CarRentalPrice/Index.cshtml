@@ -1,0 +1,106 @@
+﻿@model CarRentalPriceViewModel
+
+<script>
+    $(() => {
+
+        $(document).ready(() => {
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                var errorMessage = ViewBag.ErrorMessage;
+
+                <text>
+                    new Noty({
+                        text: '@errorMessage',
+                        type: 'error'
+                    }).show();
+                </text>
+            }
+            else if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+            {
+                var successMessage = ViewBag.SuccessMessage;
+
+                <text>
+                    new Noty({
+                        text: '@successMessage',
+                        type: 'success'
+                    }).show();
+                </text>
+            }
+
+            $('.datatable-responsive-control-right').DataTable({
+                language: {
+                    url: (window.location.origin + "/lib/Template/global_assets/js/plugins/tables/datatables/localization/datatables_localization_tr.json")
+                },
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: -1
+                    }
+                },
+                columnDefs: [
+                    {
+                        className: 'control',
+                        orderable: false,
+                        targets: -1
+                    },
+                    {
+                        orderable: false,
+                        targets: [5]
+                    }
+                ]
+            });
+        });
+
+    })
+</script>
+
+<!-- Basic datatable -->
+<div class="card">
+    <div class="card-body">
+        <a href="@Url.Action("Insert")" class="btn btn-success btn-add-new"><i class="icon-diff-added"></i> Yeni Kayıt Ekle</a>
+    </div>
+    <table class="table datatable-responsive-control-right table-hover">
+        <thead>
+            <tr>
+                <th>Sıra No</th>
+                <th>Araç Plakası</th>
+                <th>Kiralama Ücreti</th>
+                <th>Başlangıç Tarihi</th>
+                <th>Bitiş Tarihi</th>
+                <th class="text-center">İşlemler</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var carRentalPrices in Model.CarRentalPrices)
+            {
+                <tr>
+                    <td>@carRentalPrices.Id</td>
+                    <td>@carRentalPrices.PlateNumber</td>
+                    <td>@carRentalPrices.RentPrice.ToString("#.## ₺")</td>
+                    <td>@carRentalPrices.StartDate.ToString("dd.MM.yyyy")</td>
+                    <td>@carRentalPrices.EndDate.ToString("dd.MM.yyyy")</td>
+                    <td class="text-center">
+                        <a href="@Url.Action("Update",new { id = carRentalPrices.Id} )" class="btn btn-sm btn-secondary btn-icon mr-2"><i class="icon-pencil7"></i></a>
+                        <a href="@Url.Action("Delete",new { id = carRentalPrices.Id} )" class="btn btn-sm btn-danger btn-icon"><i class="icon-bin"></i></a>
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- /basic datatable -->
+
+@if (Model != null && Model.OpenInsertPopup)
+{
+    await Html.RenderPartialAsync("_InsertPartial", Model.CarRentalPrice);
+}
+else if (Model != null && Model.OpenUpdatePopup)
+{
+    await Html.RenderPartialAsync("_UpdatePartial", Model.CarRentalPrice);
+}
+else if (Model != null && Model.OpenDeletePopup)
+{
+    await Html.RenderPartialAsync("_DeletePartial", Model.CarRentalPrice);
+}

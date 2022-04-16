@@ -1,0 +1,53 @@
+﻿@model CarRentalPriceDTO
+<!-- Horizontal form modal -->
+<div id="modal_form_horizontal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="icon-bin mr-2 mr-2"></i>Kayıt Sil</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            @using (Html.BeginForm("Delete", "CarRentalPrice", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <div class="modal-body">
+                    @Html.HiddenFor(x => x.Id)
+                    <div class="form-group row p-2">
+                        @Html.LabelFor(x => x.PlateNumber)
+                        @Html.TextBoxFor(x => x.PlateNumber, new { placeholder = "Kayıt giriniz...", @class = "form-control", disabled = "disabled" })
+                    </div>
+                    <div class="form-group row p-2">
+                        @Html.LabelFor(x => x.StartDateStr)
+                        @Html.TextBoxFor(x => x.StartDateStr, new { placeholder = "Kayıt giriniz...", @class = "form-control", disabled = "disabled" })
+                    </div>
+                    <div class="form-group row p-2">
+                        @Html.LabelFor(x => x.EndDateStr)
+                        @Html.TextBoxFor(x => x.EndDateStr, new { placeholder = "Kayıt giriniz...", @class = "form-control", disabled = "disabled" })
+                    </div>
+                    <div class="form-group row p-2">
+                        @Html.LabelFor(x => x.RentPrice)
+                        @Html.TextBoxFor(x => x.RentPrice, "{0:#.## ₺}", new { placeholder = "Fiyat giriniz...", @class = "form-control", disabled = "disabled" })
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="@Url.Action("Cancel")" class="btn btn-outline-danger" data-dismiss="modal"><i class="icon-cancel-square2 mr-2"></i> İptal</a>
+                    <button type="submit" class="btn btn-success"><i class="icon-bin mr-2"></i> Sil</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- /horizontal form modal -->
+
+<script>
+        $(() => {
+
+            $(document).ready(() => {
+                $('#modal_form_horizontal').modal('show');
+
+                $('#modal_form_horizontal').on('hidden.bs.modal', (e) => window.location.href = '@Url.Action("Cancel")');
+            });
+
+        })
+</script>

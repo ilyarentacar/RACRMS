@@ -1,0 +1,36 @@
+﻿@model ProfileViewModel
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.User.Name)
+                    @Html.TextBoxFor(x => x.User.Name, new { placeholder = "Kayıt giriniz...", @class = "form-control", disabled = "disabled" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.User.Surname)
+                    @Html.TextBoxFor(x => x.User.Surname, new { placeholder = "Kayıt giriniz...", @class = "form-control", disabled = "disabled" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.User.UserRole.Name)
+                    @Html.TextBoxFor(x => x.User.UserRole.Name, new { placeholder = "Kayıt giriniz...", @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.User.EmailAddress)
+                    @Html.TextBoxFor(x => x.User.EmailAddress, new { placeholder = "Kayıt giriniz...", @class = "form-control", disabled = "disabled" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.User.Username)
+                    @Html.TextBoxFor(x => x.User.Username, new { placeholder = "Kayıt giriniz...", @class = "form-control", disabled = "disabled" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.User.Password)
+                    @Html.TextBoxFor(x => x.User.Password, new { placeholder = "Kayıt giriniz...", @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

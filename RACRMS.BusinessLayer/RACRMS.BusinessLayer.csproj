@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RACRMS.DataTransferObject\RACRMS.DataTransferObject.csproj" />
+    <ProjectReference Include="..\RACRMS.Extension\RACRMS.Extension.csproj" />
+    <ProjectReference Include="..\RACRMS.UnitOfWork\RACRMS.UnitOfWork.csproj" />
+    <ProjectReference Include="..\RACRMS.ValidationLayer\RACRMS.ValidationLayer.csproj" />
+  </ItemGroup>
+
+</Project>

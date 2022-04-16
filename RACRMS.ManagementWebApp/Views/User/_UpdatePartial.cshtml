@@ -1,0 +1,140 @@
+﻿@model UserDTO
+
+<script>
+        $(() => {
+
+            $(document).ready(() => {
+                $('#modal_form_horizontal').modal('show');
+
+                $('#modal_form_horizontal').on('hidden.bs.modal', (e) => window.location.href = '@Url.Action("Cancel")');
+
+                $('.form-horizontal').validate({
+                    ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+                    errorClass: 'validation-invalid-label',
+                    successClass: 'validation-valid-label',
+                    validClass: 'validation-valid-label',
+                    highlight: function (element, errorClass) {
+                        $(element).removeClass(errorClass);
+                    },
+                    unhighlight: function (element, errorClass) {
+                        $(element).removeClass(errorClass);
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.hasClass('select2-hidden-accessible') && element.next('.select2-container').length) {
+                            error.insertAfter(element.next('.select2-container'));
+                        }
+                        else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    rules: {
+                        UserRoleId: {
+                            required: true,
+                        },
+                        Name: {
+                            required: true,
+                            maxlength: 25
+                        },
+                        Surname: {
+                            required: true,
+                            maxlength: 40
+                        },
+                        EmailAddress: {
+                            required: true,
+                            maxlength: 35,
+                            email: true
+                        },
+                        Username: {
+                            required: true,
+                            maxlength: 25
+                        },
+                        Password: {
+                            required: true,
+                            maxlength: 25
+                        }
+                    },
+                    messages: {
+                        UserRoleId: {
+                            required: "Bu alan boş bırakılamaz."
+                        },
+                        Name: {
+                            required: "Bu alan boş bırakılamaz.",
+                            maxlength: "En fazla 25 karakter girişi yapılabilir."
+                        },
+                        Surname: {
+                            required: "Bu alan boş bırakılamaz.",
+                            maxlength: "En fazla 40 karakter girişi yapılabilir."
+                        },
+                        EmailAddress: {
+                            required: "Bu alan boş bırakılamaz.",
+                            maxlength: "En fazla 35 karakter girişi yapılabilir.",
+                            email: "Gerçerli bir e-posta adresi giriniz."
+                        },
+                        Username: {
+                            required: "Bu alan boş bırakılamaz.",
+                            maxlength: "En fazla 25 karakter girişi yapılabilir."
+                        },
+                        Password: {
+                            required: "Bu alan boş bırakılamaz.",
+                            maxlength: "En fazla 25 karakter girişi yapılabilir."
+                        }
+                    }
+                });
+            });
+
+        })
+</script>
+
+<!-- Horizontal form modal -->
+<div id="modal_form_horizontal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="icon-pencil7 mr-2"></i>Kayıt Güncelle</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            @using (Html.BeginForm("Update", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <div class="modal-body">
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            @Html.LabelFor(x => x.UserRoleName)
+                            @Html.DropDownListFor(x => x.UserRoleId, Model.UserRoles.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control userRole-select select", data_fouc = "data-fouc" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.Name)
+                            @Html.TextBoxFor(x => x.Name, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            @Html.LabelFor(x => x.Surname)
+                            @Html.TextBoxFor(x => x.Surname, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.EmailAddress)
+                            @Html.TextBoxFor(x => x.EmailAddress, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            @Html.LabelFor(x => x.Username)
+                            @Html.TextBoxFor(x => x.Username, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.Password)
+                            @Html.TextBoxFor(x => x.Password, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="@Url.Action("Cancel")" class="btn btn-outline-danger" data-dismiss="modal"><i class="icon-cancel-square2 mr-2"></i> İptal</a>
+                    <button type="submit" class="btn btn-success"><i class="icon-floppy-disk mr-2"></i> Kaydet</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- /horizontal form modal -->

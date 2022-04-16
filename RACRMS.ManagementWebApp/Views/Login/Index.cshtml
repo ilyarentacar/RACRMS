@@ -1,0 +1,129 @@
+﻿@model UserDTO
+
+@{
+    ViewData["Title"] = "İlya Rent A Car Yönetim Paneli";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<script>
+    $(() => {
+
+        $(document).ready(() => {
+            if (typeof Noty == 'undefined') {
+                console.warn('Warning - noty.min.js is not loaded.');
+                return;
+            }
+
+            // Override Noty defaults
+            Noty.overrideDefaults({
+                theme: 'limitless',
+                layout: 'topRight',
+                type: 'alert',
+                timeout: 2500
+            });
+
+            $.get('https://api.ipify.org', (x) => $('#text-ip-address').html(x));
+
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                var errorMessage = ViewBag.ErrorMessage;
+
+                <text>
+            new Noty({
+                text: '@errorMessage',
+                type: 'error'
+            }).show();
+                </text>
+            }
+            else if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+            {
+                var successMessage = ViewBag.SuccessMessage;
+
+                <text>
+            new Noty({
+                text: '@successMessage',
+                type: 'success'
+            }).show();
+                </text>
+            }
+
+            $('.form-validate').validate({
+                ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+                errorClass: 'validation-invalid-label',
+                successClass: 'validation-valid-label',
+                validClass: 'validation-valid-label',
+                highlight: function (element, errorClass) {
+                    $(element).removeClass(errorClass);
+                },
+                unhighlight: function (element, errorClass) {
+                    $(element).removeClass(errorClass);
+                },
+                rules: {
+                    Username: {
+                        required: true,
+                        maxlength: 25
+                    },
+                    Password: {
+                        required: true,
+                        maxlength: 25
+                    }
+                },
+                messages: {
+                    Username: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 25 karakter girişi yapılabilir."
+                    },
+                    Password: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 25 karakter girişi yapılabilir."
+                    }
+                }
+            });
+        });
+
+    });
+</script>
+
+<!-- Login card -->
+@using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "login-form form-validate" }))
+{
+    <div class="card mb-0">
+        <div class="card-body">
+            <div class="text-center mb-3">
+                <i class="icon-vcard icon-2x text-secondary border-secondary border-3 rounded-pill p-3 mb-3 mt-1"></i>
+                <h5 class="mb-0">Hesabınıza giriş yapın</h5>
+                <span class="d-block text-muted">Kimlik bilgileriniz</span>
+            </div>
+
+            <div class="form-group form-group-feedback form-group-feedback-left">
+                @Html.TextBoxFor(x => x.Username, new { @class = "form-control", name = "Username", placeholder = "Kullanıcı Adı", required = "required" })
+                <div class="form-control-feedback">
+                    <i class="icon-user text-muted"></i>
+                </div>
+            </div>
+
+            <div class="form-group form-group-feedback form-group-feedback-left">
+                @Html.PasswordFor(x => x.Password, new { @class = "form-control", name = "Password", placeholder = "Şifre", required = "required" })
+                <div class="form-control-feedback">
+                    <i class="icon-lock2 text-muted"></i>
+                </div>
+            </div>
+
+            <div class="form-group d-flex align-items-center">
+                <label class="custom-control custom-checkbox">
+                    @Html.CheckBoxFor(x => x.RememberMe, new { @class = "custom-control-input", @checked = "checked" })
+                    <span class="custom-control-label">Beni hatırla</span>
+                </label>
+
+                <a href="@Url.Action("PasswordRecover")" class="ml-auto">Şifremi unuttum?</a>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Oturum Aç</button>
+            </div>
+
+            <span class="form-text text-center text-muted" id="text-ip-address">Doğrulanıyor...</span>
+        </div>
+    </div>
+}
+<!-- /login card -->

@@ -1,0 +1,234 @@
+﻿@model CarDTO
+
+<script>
+
+    var carModels;
+
+    $(() => {
+
+        $(document).ready(() => {
+            $('.carBrand-select').on('select2:select', (e) => {
+                clearInputs();
+
+                var getUrl = '@Url.Action("InsertCarBrandSelected")/' + ($('.carBrand-select').val());
+
+                $.getJSON(getUrl, (x) => {
+                    carModels = x;
+
+                    var innerHtml = '';
+
+                    for (var index = 0; index < x.length; index++) {
+                        innerHtml += '<option value="' + carModels[index].id + '">' + carModels[index].name + '</option>';
+                    }
+
+                    $('.carModel-select')
+                        .empty()
+                        .append(innerHtml)
+                        .removeAttr('disabled')
+                        .select2('data', null, true);
+
+                    $('.carModel-select').val(0);
+                });
+            });
+
+            $('.carModel-select').on('select2:select', (e) => {
+                var carModelId = $('.carModel-select').val();
+                var index = carModels.findIndex(x => x.id == carModelId);
+                var carModel = carModels[index];
+
+                fillInputs(carModel)
+            });
+
+            fillInputs = (x) => {
+                $('#carClassId').val(x.carClass.id);
+                $('#carTypeId').val(x.carType.id);
+                $('#carChassisTypeId').val(x.carChassisType.id);
+                $('#carFuelTypeId').val(x.carFuelType.id);
+                $('#carGearTypeId').val(x.carGearType.id);
+
+                $('#carClassName').val(x.carClass.name);
+                $('#carTypeName').val(x.carType.name);
+                $('#carChassisTypeName').val(x.carChassisType.name);
+                $('#carFuelTypeName').val(x.carFuelType.name);
+                $('#carGearTypeName').val(x.carGearType.name);
+
+                $('.form-horizontal').valid();
+            };
+
+            clearInputs = () => {
+                $('#carClassName').val('');
+                $('#carTypeName').val('');
+                $('#carChassisTypeName').val('');
+                $('#carFuelTypeName').val('');
+                $('#carGearTypeName').val('');
+            };
+
+            $('#modal_form_horizontal').modal('show');
+
+            $('#modal_form_horizontal').on('hidden.bs.modal', (e) => window.location.href = '@Url.Action("Cancel")');
+
+            $('.form-horizontal').validate({
+                ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+                errorClass: 'validation-invalid-label',
+                successClass: 'validation-valid-label',
+                validClass: 'validation-valid-label',
+                highlight: function (element, errorClass) {
+                    $(element).removeClass(errorClass);
+                },
+                unhighlight: function (element, errorClass) {
+                    $(element).removeClass(errorClass);
+                },
+                errorPlacement: function (error, element) {
+                    if (element.hasClass('select2-hidden-accessible') && element.next('.select2-container').length) {
+                        error.insertAfter(element.next('.select2-container'));
+                    }
+                    else {
+                        error.insertAfter(element);
+                    }
+                },
+                rules: {
+                    PlateNumber: {
+                        required: true,
+                        maxlength: 10
+                    },
+                    CarBrandId: {
+                        required: true,
+                    },
+                    CarModelId: {
+                        required: true,
+                    },
+                    CarClassName: {
+                        required: true,
+                        maxlength: 15
+                    },
+                    CarTypeName: {
+                        required: true,
+                        maxlength: 15
+                    },
+                    CarChassisTypeName: {
+                        required: true,
+                        maxlength: 15
+                    },
+                    CarFuelTypeName: {
+                        required: true,
+                        maxlength: 15
+                    },
+                    CarGearTypeName: {
+                        required: true,
+                        maxlength: 15
+                    }
+                },
+                messages: {
+                    PlateNumber: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 10 karakter girişi yapılabilir."
+                    },
+                    CarBrandId: {
+                        required: "Bu alan boş bırakılamaz."
+                    },
+                    CarModelId: {
+                        required: "Bu alan boş bırakılamaz."
+                    },
+                    CarClassName: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 15 karakter girişi yapılabilir."
+                    },
+                    CarTypeName: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 15 karakter girişi yapılabilir."
+                    },
+                    CarChassisTypeName: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 15 karakter girişi yapılabilir."
+                    },
+                    CarFuelTypeName: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 15 karakter girişi yapılabilir."
+                    },
+                    CarGearTypeName: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 15 karakter girişi yapılabilir."
+                    }
+                }
+            });
+        });
+
+    });
+</script>
+
+<!-- Horizontal form modal -->
+<div id="modal_form_horizontal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="icon-diff-added mr-2"></i>Yeni Kayıt Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            @using (Html.BeginForm("Insert", "Car", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <div class="modal-body">
+                    <div class="form-group row p-2">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(x => x.PlateNumber)
+                            @Html.TextBoxFor(x => x.PlateNumber, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            @Html.LabelFor(x => x.CarBrandName)
+                            @Html.DropDownListFor(x => x.CarBrandId, Model.CarBrands.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control carBrand-select select", data_fouc = "data-fouc" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.CarModelName)
+                            @Html.DropDownListFor(x => x.CarModelId, Model.CarModels.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control carModel-select select", disabled = "disabled", data_fouc = "data-fouc", allowClear = true })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            @Html.LabelFor(x => x.CarClassName)
+                            @Html.HiddenFor(x => x.CarClassId, new { id = "carClassId" })
+                            @Html.TextBoxFor(x => x.CarClassName, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required", @readonly = "readonly", id = "carClassName" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.CarTypeName)
+                            @Html.HiddenFor(x => x.CarTypeId, new { id = "carTypeId" })
+                            @Html.TextBoxFor(x => x.CarTypeName, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required", @readonly = "readonly", id = "carTypeName" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            @Html.LabelFor(x => x.CarChassisTypeName)
+                            @Html.HiddenFor(x => x.CarChassisTypeId, new { id = "carChassisTypeId" })
+                            @Html.TextBoxFor(x => x.CarChassisTypeName, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required", @readonly = "readonly", id = "carChassisTypeName" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.CarFuelTypeName)
+                            @Html.HiddenFor(x => x.CarFuelTypeId, new { id = "carFuelTypeId" })
+                            @Html.TextBoxFor(x => x.CarFuelTypeName, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required", @readonly = "readonly", id = "carFuelTypeName" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            @Html.LabelFor(x => x.CarGearTypeName)
+                            @Html.HiddenFor(x => x.CarGearTypeId, new { id = "carGearTypeId" })
+                            @Html.TextBoxFor(x => x.CarGearTypeName, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required", @readonly = "readonly", id = "carGearTypeName" })
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="custom-control custom-switch custom-switch-square custom-control-success mt-3 pt-3">
+                                @Html.CheckBoxFor(x => x.Rentable, new { @class = "custom-control-input", @checked = "checked" })
+                                @Html.LabelFor(x => x.Rentable, new { @class = "custom-control-label" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="@Url.Action("Cancel")" class="btn btn-outline-danger" data-dismiss="modal"><i class="icon-cancel-square2 mr-2"></i> İptal</a>
+                    <button type="submit" class="btn btn-success"><i class="icon-floppy-disk mr-2"></i> Kaydet</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- /horizontal form modal -->

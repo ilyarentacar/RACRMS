@@ -1,0 +1,141 @@
+﻿@model CarModelDTO
+
+<script>
+
+    var carModels;
+
+    $(() => {
+
+        $(document).ready(() => {
+            $('#modal_form_horizontal').modal('show');
+
+            $('#modal_form_horizontal').on('hidden.bs.modal', (e) => window.location.href = '@Url.Action("Cancel")');
+
+            $('.form-horizontal').validate({
+                ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+                errorClass: 'validation-invalid-label',
+                successClass: 'validation-valid-label',
+                validClass: 'validation-valid-label',
+                highlight: function (element, errorClass) {
+                    $(element).removeClass(errorClass);
+                },
+                unhighlight: function (element, errorClass) {
+                    $(element).removeClass(errorClass);
+                },
+                rules: {
+                    Name: {
+                        required: true,
+                        maxlength: 15
+                    },
+                    CarClassName: {
+                        required: true,
+                        maxlength: 15
+                    },
+                    carTypeName: {
+                        required: true,
+                        maxlength: 15
+                    },
+                    carChassisTypeName: {
+                        required: true,
+                        maxlength: 15
+                    },
+                    carFuelTypeName: {
+                        required: true,
+                        maxlength: 15
+                    },
+                    carGearTypeName: {
+                        required: true,
+                        maxlength: 15
+                    }
+                },
+                messages: {
+                    Name: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 15 karakter girişi yapılabilir."
+                    },
+                    CarClassName: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 15 karakter girişi yapılabilir."
+                    },
+                    carTypeName: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 15 karakter girişi yapılabilir."
+                    },
+                    carChassisTypeName: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 15 karakter girişi yapılabilir."
+                    },
+                    carFuelTypeName: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 15 karakter girişi yapılabilir."
+                    },
+                    carGearTypeName: {
+                        required: "Bu alan boş bırakılamaz.",
+                        maxlength: "En fazla 15 karakter girişi yapılabilir."
+                    }
+                }
+            });
+        });
+
+    });
+</script>
+
+<!-- Horizontal form modal -->
+<div id="modal_form_horizontal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="icon-pencil7 mr-2"></i>Kayıt Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            @using (Html.BeginForm("Update", "CarModel", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <div class="modal-body">
+                    <div class="form-group row p-2">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(x => x.Name)
+                            @Html.TextBoxFor(x => x.Name, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            @Html.LabelFor(x => x.CarBrandName)
+                            @Html.DropDownListFor(x => x.CarBrandId, Model.CarBrands.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control carBrand-select select", data_fouc = "data-fouc" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.CarClassName)
+                            @Html.DropDownListFor(x => x.CarClassId, Model.CarClasses.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control carClass-select select", data_fouc = "data-fouc" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            @Html.LabelFor(x => x.CarTypeName)
+                            @Html.DropDownListFor(x => x.CarTypeId, Model.CarTypes.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control carType-select select", data_fouc = "data-fouc" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.CarChassisTypeName)
+                            @Html.DropDownListFor(x => x.CarChassisTypeId, Model.CarChassisTypes.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control carChassisType-select select", data_fouc = "data-fouc" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            @Html.LabelFor(x => x.CarFuelTypeName)
+                            @Html.DropDownListFor(x => x.CarFuelTypeId, Model.CarFuelTypes.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control carFuelType-select select", data_fouc = "data-fouc" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.CarGearTypeName)
+                            @Html.DropDownListFor(x => x.CarGearTypeId, Model.CarGearTypes.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control carGearType-select select", data_fouc = "data-fouc" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="@Url.Action("Cancel")" class="btn btn-outline-danger" data-dismiss="modal"><i class="icon-cancel-square2 mr-2"></i> İptal</a>
+                    <button type="submit" class="btn btn-success"><i class="icon-floppy-disk mr-2"></i> Kaydet</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- /horizontal form modal -->
