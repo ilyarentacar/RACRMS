@@ -49,5 +49,9 @@ namespace RACRMS.DataTransferObject
         public string CustomerName { get; set; }
         [DisplayName("Müşteri Soyadı :")]
         public string CustomerSurname { get; set; }
+        [DisplayName("Müşteri Eposta Adresi :")]
+        public string CustomerEmailAddress { get; set; }
+        [DisplayName("Müşteri Cep Telefonu :")]
+        public string CustomerCellNumber { get; set; }
     }
 }

@@ -24,6 +24,8 @@ namespace RACRMS.Extension
                     CustomerId = entity.CustomerId,
                     CustomerName = entity.Customer != null ? entity.Customer.Name : string.Empty,
                     CustomerSurname = entity.Customer != null ? entity.Customer.Surname : string.Empty,
+                    CustomerEmailAddress = entity.Customer != null ? entity.Customer.EmailAddress : string.Empty,
+                    CustomerCellNumber = entity.Customer != null ? entity.Customer.CellNumber : string.Empty,
                     StartDate = entity.StartDate,
                     EndDate = entity.EndDate,
                     TotalPrice = entity.TotalPrice,
