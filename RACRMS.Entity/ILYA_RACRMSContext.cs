@@ -26,7 +26,9 @@ namespace RACRMS.Entity
         public virtual DbSet<CarRentalPrice> CarRentalPrice { get; set; }
         public virtual DbSet<CarRentalRequirement> CarRentalRequirement { get; set; }
         public virtual DbSet<CarType> CarType { get; set; }
+        public virtual DbSet<Contract> Contract { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<PaymentType> PaymentType { get; set; }
         public virtual DbSet<Preference> Preference { get; set; }
         public virtual DbSet<Requirement> Requirement { get; set; }
         public virtual DbSet<Reservation> Reservation { get; set; }
@@ -252,6 +254,49 @@ namespace RACRMS.Entity
                 entity.Property(e => e.UpdateDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<Contract>(entity =>
+            {
+                entity.Property(e => e.CardCvv).HasMaxLength(3);
+
+                entity.Property(e => e.CardNumber).HasMaxLength(16);
+
+                entity.Property(e => e.CardOwnerName).HasMaxLength(65);
+
+                entity.Property(e => e.CardValidDate).HasMaxLength(4);
+
+                entity.Property(e => e.ContractCompletedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PlanedEndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("money");
+
+                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Car)
+                    .WithMany(p => p.Contract)
+                    .HasForeignKey(d => d.CarId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.Contract)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.PaymentType)
+                    .WithMany(p => p.Contract)
+                    .HasForeignKey(d => d.PaymentTypeId);
+
+                entity.HasOne(d => d.Reservation)
+                    .WithMany(p => p.Contract)
+                    .HasForeignKey(d => d.ReservationId);
+            });
+
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.Property(e => e.CellNumber).HasMaxLength(20);
@@ -269,6 +314,17 @@ namespace RACRMS.Entity
                 entity.Property(e => e.Surname)
                     .IsRequired()
                     .HasMaxLength(40);
+
+                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<PaymentType>(entity =>
+            {
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(15);
 
                 entity.Property(e => e.UpdateDate).HasColumnType("datetime");
             });

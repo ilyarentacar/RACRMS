@@ -9,6 +9,7 @@ namespace RACRMS.DataTransferObject
     {
         public CustomerDTO()
         {
+            Contract = new HashSet<ContractDTO>();
             Reservation = new List<ReservationDTO>();
         }
 
@@ -40,6 +41,7 @@ namespace RACRMS.DataTransferObject
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
 
+        public ICollection<ContractDTO> Contract { get; set; }
         public List<ReservationDTO> Reservation { get; set; }
     }
 }

@@ -6,6 +6,11 @@ namespace RACRMS.DataTransferObject
 {
     public partial class ReservationDTO
     {
+        public ReservationDTO()
+        {
+            Contract = new HashSet<ContractDTO>();
+        }
+
         public int Id { get; set; }
         public int CarId { get; set; }
         public int CustomerId { get; set; }
@@ -38,6 +43,8 @@ namespace RACRMS.DataTransferObject
         public CarDTO Car { get; set; }
         public CustomerDTO Customer { get; set; }
         public UserDTO RejectingUser { get; set; }
+        public ICollection<ContractDTO> Contract { get; set; }
+
 
         [DisplayName("Plakası :")]
         public string PlateNumber { get; set; }

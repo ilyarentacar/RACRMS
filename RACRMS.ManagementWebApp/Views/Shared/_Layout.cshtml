@@ -25,6 +25,7 @@
     else if (controllerName == "Requirement") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-shield-check"; contentHeaderName = "Yönetimsel Ayarlar"; contentModuleName = "Şartlar"; }
     else if (controllerName == "User") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-users2"; contentHeaderName = "Yönetimsel Ayarlar"; contentModuleName = "Kullanıcılar"; }
     else if (controllerName == "UserRole") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-medal-star"; contentHeaderName = "Yönetimsel Ayarlar"; contentModuleName = "Kullanıcı Rolleri"; }
+    else if (controllerName == "PaymentType") { scrollTopValue = int.MaxValue; contentHeaderIconName = "icon-credit-card2"; contentHeaderName = "Yönetimsel Ayarlar"; contentModuleName = "Ödeme Türleri"; }
 
     List<Claim> claims = Context.User.Claims.ToList();
 
@@ -391,6 +392,14 @@
                                 <i class="icon-shield-check"></i>
                                 <span>
                                     Şartlar
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","PaymentType")" class="nav-link @(controllerName == "PaymentType" ? "active" : string.Empty)">
+                                <i class="icon-credit-card2"></i>
+                                <span>
+                                    Ödeme Türleri
                                 </span>
                             </a>
                         </li>

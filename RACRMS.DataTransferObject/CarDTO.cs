@@ -13,6 +13,7 @@ namespace RACRMS.DataTransferObject
             CarPreference = new List<CarPreferenceDTO>();
             CarRentalPrice = new List<CarRentalPriceDTO>();
             CarRentalRequirement = new List<CarRentalRequirementDTO>();
+            Contract = new HashSet<ContractDTO>();
             Reservation = new List<ReservationDTO>();
             CarBrands = new List<CarBrandDTO>();
             CarModels = new List<CarModelDTO>();
@@ -54,6 +55,7 @@ namespace RACRMS.DataTransferObject
         public List<CarPreferenceDTO> CarPreference { get; set; }
         public List<CarRentalPriceDTO> CarRentalPrice { get; set; }
         public List<CarRentalRequirementDTO> CarRentalRequirement { get; set; }
+        public ICollection<ContractDTO> Contract { get; set; }
         public List<ReservationDTO> Reservation { get; set; }
 
         [DisplayName("Araç Markası :")]

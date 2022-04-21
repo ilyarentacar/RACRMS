@@ -5,6 +5,11 @@ namespace RACRMS.Entity
 {
     public partial class Reservation
     {
+        public Reservation()
+        {
+            Contract = new HashSet<Contract>();
+        }
+
         public int Id { get; set; }
         public int CarId { get; set; }
         public int CustomerId { get; set; }
@@ -26,5 +31,6 @@ namespace RACRMS.Entity
         public Car Car { get; set; }
         public Customer Customer { get; set; }
         public User RejectingUser { get; set; }
+        public ICollection<Contract> Contract { get; set; }
     }
 }

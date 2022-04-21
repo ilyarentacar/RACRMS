@@ -47,6 +47,7 @@ namespace RACRMS.ManagementWebApp
             services.AddScoped<ICarPreferenceBL, CarPreferenceBL>();
             services.AddScoped<ICarRentalRequirementBL, CarRentalRequirementBL>();
             services.AddScoped<IReservationBL, ReservationBL>();
+            services.AddScoped<IPaymentTypeBL, PaymentTypeBL>();
 
             services.AddAuthentication("Default").AddCookie("Default");
 

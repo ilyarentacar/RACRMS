@@ -69,6 +69,10 @@ namespace RACRMS.UnitOfWork.Concrete
 
         public IUserRoleDAL UserRole => new UserRoleDAL(dbContext);
 
+        public IPaymentTypeDAL PaymentType => new PaymentTypeDAL(dbContext);
+
+        public IContractDAL Contract => new ContractDAL(dbContext);
+
         public async Task<int> SaveChangesAsync()
         {
             try

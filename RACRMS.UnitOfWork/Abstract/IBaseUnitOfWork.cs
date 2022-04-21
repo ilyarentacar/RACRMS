@@ -25,6 +25,8 @@ namespace RACRMS.UnitOfWork.Abstract
         IReservationDAL Reservation { get; }
         IUserDAL User { get; }
         IUserRoleDAL UserRole { get; }
+        IPaymentTypeDAL PaymentType { get; }
+        IContractDAL Contract { get; }
 
         Task<int> SaveChangesAsync();
     }
