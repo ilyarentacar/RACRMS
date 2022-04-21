@@ -73,6 +73,16 @@
                 </div>
                 <div class="form-group row p-2">
                     <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.CustomerEmailAddress)
+                        @Html.TextBoxFor(x => x.CustomerEmailAddress, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(x => x.CustomerCellNumber)
+                        @Html.TextBoxFor(x => x.CustomerCellNumber, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
                         @Html.LabelFor(x => x.StartDate)
                         @Html.TextBoxFor(x => x.StartDate, "{0:dd.MM.yyyy HH:mm:ss}", new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
                     </div>
