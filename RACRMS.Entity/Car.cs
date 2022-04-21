@@ -10,6 +10,7 @@ namespace RACRMS.Entity
             CarPreference = new HashSet<CarPreference>();
             CarRentalPrice = new HashSet<CarRentalPrice>();
             CarRentalRequirement = new HashSet<CarRentalRequirement>();
+            Contract = new HashSet<Contract>();
             Reservation = new HashSet<Reservation>();
         }
 
@@ -36,6 +37,7 @@ namespace RACRMS.Entity
         public ICollection<CarPreference> CarPreference { get; set; }
         public ICollection<CarRentalPrice> CarRentalPrice { get; set; }
         public ICollection<CarRentalRequirement> CarRentalRequirement { get; set; }
+        public ICollection<Contract> Contract { get; set; }
         public ICollection<Reservation> Reservation { get; set; }
     }
 }

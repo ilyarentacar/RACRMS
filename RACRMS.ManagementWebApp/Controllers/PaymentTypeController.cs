@@ -13,14 +13,14 @@ namespace RACRMS.ManagementWebApp.Controllers
 {
     [UserCheck]
     [UserRoleCheck("Sistem Yöneticisi", "Administrator")]
-    public class PreferenceController : Controller
+    public class PaymentTypeController : Controller
     {
-        private readonly IPreferenceBL preferenceBL;
+        private readonly IPaymentTypeBL paymentTypeBL;
         private readonly IReservationBL reservationBL;
 
-        public PreferenceController(IPreferenceBL preferenceBL, IReservationBL reservationBL)
+        public PaymentTypeController(IPaymentTypeBL paymentTypeBL, IReservationBL reservationBL)
         {
-            this.preferenceBL = preferenceBL;
+            this.paymentTypeBL = paymentTypeBL;
             this.reservationBL = reservationBL;
         }
 
@@ -29,7 +29,7 @@ namespace RACRMS.ManagementWebApp.Controllers
         {
             try
             {
-                var preferences = await preferenceBL.GetAsync();
+                var paymentTypes = await paymentTypeBL.GetAsync();
 
                 await getWaitingReservationCountasync();
 
@@ -45,15 +45,15 @@ namespace RACRMS.ManagementWebApp.Controllers
                     HttpContext.Session.Remove("SuccessMessage");
                 }
 
-                return View(new PreferenceViewModel()
+                return View(new PaymentTypeViewModel()
                 {
-                    Preferences = preferences
+                    PaymentTypes = paymentTypes
                 });
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = ex.Message;
-                return View(new PreferenceViewModel());
+                return View(new PaymentTypeViewModel());
             }
         }
 
@@ -62,13 +62,13 @@ namespace RACRMS.ManagementWebApp.Controllers
         {
             try
             {
-                var preferences = await preferenceBL.GetAsync();
+                var paymentTypes = await paymentTypeBL.GetAsync();
 
                 await getWaitingReservationCountasync();
 
-                return View("Index", new PreferenceViewModel(OpenInsertPopup: true)
+                return View("Index", new PaymentTypeViewModel(OpenInsertPopup: true)
                 {
-                    Preferences = preferences
+                    PaymentTypes = paymentTypes
                 });
             }
             catch (Exception ex)
@@ -80,7 +80,7 @@ namespace RACRMS.ManagementWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Insert(PreferenceDTO model)
+        public async Task<IActionResult> Insert(PaymentTypeDTO model)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                     return RedirectToAction("Index");
                 }
 
-                await preferenceBL.InsertAsync(model);
+                await paymentTypeBL.InsertAsync(model);
 
                 HttpContext.Session.SetString("SuccessMessage", "Kayıt işlemi başarıyla tamamlanmıştır.");
 
@@ -110,15 +110,15 @@ namespace RACRMS.ManagementWebApp.Controllers
         {
             try
             {
-                var preference = await this.preferenceBL.GetByIdAsync(id);
-                var preferences = await this.preferenceBL.GetAsync();
+                var paymentType = await paymentTypeBL.GetByIdAsync(id);
+                var paymentTypes = await paymentTypeBL.GetAsync();
 
                 await getWaitingReservationCountasync();
 
-                return View("Index", new PreferenceViewModel(OpenUpdatePopup: true)
+                return View("Index", new PaymentTypeViewModel(OpenUpdatePopup: true)
                 {
-                    Preference = preference,
-                    Preferences = preferences
+                    PaymentType = paymentType,
+                    PaymentTypes = paymentTypes
                 });
             }
             catch (Exception ex)
@@ -130,7 +130,7 @@ namespace RACRMS.ManagementWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(PreferenceDTO model)
+        public async Task<IActionResult> Update(PaymentTypeDTO model)
         {
             try
             {
@@ -141,7 +141,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                     return RedirectToAction("Index");
                 }
 
-                await preferenceBL.UpdateAsync(model);
+                await paymentTypeBL.UpdateAsync(model);
 
                 HttpContext.Session.SetString("SuccessMessage", "Güncelleme işlemi başarıyla tamamlanmıştır.");
 
@@ -160,15 +160,15 @@ namespace RACRMS.ManagementWebApp.Controllers
         {
             try
             {
-                var preference = await this.preferenceBL.GetByIdAsync(id);
-                var preferences = await this.preferenceBL.GetAsync();
+                var paymentType = await paymentTypeBL.GetByIdAsync(id);
+                var paymentTypes = await paymentTypeBL.GetAsync();
 
                 await getWaitingReservationCountasync();
 
-                return View("Index", new PreferenceViewModel(OpenDeletePopup: true)
+                return View("Index", new PaymentTypeViewModel(OpenDeletePopup: true)
                 {
-                    Preference = preference,
-                    Preferences = preferences
+                    PaymentType = paymentType,
+                    PaymentTypes = paymentTypes
                 });
             }
             catch (Exception ex)
@@ -180,11 +180,11 @@ namespace RACRMS.ManagementWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(PreferenceDTO model)
+        public async Task<IActionResult> Delete(PaymentTypeDTO model)
         {
             try
             {
-                await preferenceBL.DeleteAsync(model.Id);
+                await paymentTypeBL.DeleteAsync(model.Id);
 
                 HttpContext.Session.SetString("SuccessMessage", "Silme işlemi başarıyla tamamlanmıştır.");
 
