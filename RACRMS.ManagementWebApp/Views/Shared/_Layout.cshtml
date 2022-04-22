@@ -7,7 +7,8 @@
 
     int scrollTopValue = int.MinValue;
 
-    if (string.IsNullOrEmpty(controllerName) || controllerName == "Reservation") { contentHeaderIconName = "icon-calendar2"; contentHeaderName = "Kiralama Yönetimi"; contentModuleName = "Rezervasyonlar"; }
+    if (string.IsNullOrEmpty(controllerName) || controllerName == "Contract") { contentHeaderIconName = "icon-files-empty2"; contentHeaderName = "Kiralama Yönetimi"; contentModuleName = "Sözleşmeler"; }
+    else if (controllerName == "Reservation") { contentHeaderIconName = "icon-calendar2"; contentHeaderName = "Kiralama Yönetimi"; contentModuleName = "Rezervasyonlar"; }
     else if (controllerName == "Profile") { contentHeaderIconName = "icon-user"; contentHeaderName = "Hesap Yönetimi"; contentModuleName = "Profilim"; }
     else if (controllerName == "Customer") { contentHeaderIconName = "icon-users4"; contentHeaderName = "Kiralama Yönetimi"; contentModuleName = "Müşteriler"; }
     else if (controllerName == "Car") { contentHeaderIconName = "icon-car"; contentHeaderName = "Araç Yönetimi"; contentModuleName = "Araçlar"; }
@@ -269,6 +270,14 @@
 
                         <!-- Main -->
                         <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs mt-1">Kiralama Yönetimi</div> <i class="icon-menu" title="Main"></i></li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Contract")" class="nav-link @(controllerName == "Contract" ? "active" : string.Empty)">
+                                <i class="icon-files-empty2"></i>
+                                <span>
+                                    Sözleşmeler
+                                </span>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="@Url.Action("Index","Reservation")" class="nav-link @((controllerName == ("Reservation") || controllerName == string.Empty) ? "active" : string.Empty)">
                                 <i class="icon-calendar2"></i>
