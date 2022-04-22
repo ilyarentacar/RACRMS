@@ -71,16 +71,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var requirements in Model.PaymentTypes)
+            @foreach (var paymentType in Model.PaymentTypes)
             {
                 <tr>
-                    <td>@requirements.Id</td>
-                    <td>@requirements.Name</td>
-                    <td>@requirements.CreateDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
-                    <td>@(requirements.UpdateDate != null ? requirements.UpdateDate.Value.ToString("dd.MM.yyyy HH:mm:ss") : "Güncelleme yok")</td>
+                    <td>@paymentType.Id</td>
+                    <td>@paymentType.Name</td>
+                    <td>@paymentType.CreateDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                    <td>@(paymentType.UpdateDate != null ? paymentType.UpdateDate.Value.ToString("dd.MM.yyyy HH:mm:ss") : "Güncelleme yok")</td>
                     <td class="text-center">
-                        <a href="@Url.Action("Update",new { id = requirements.Id} )" class="btn btn-sm btn-secondary btn-icon mr-2"><i class="icon-pencil7"></i></a>
-                        <a href="@Url.Action("Delete",new { id = requirements.Id} )" class="btn btn-sm btn-danger btn-icon"><i class="icon-bin"></i></a>
+                        <a href="@Url.Action("Update",new { id = paymentType.Id} )" class="btn btn-sm btn-secondary btn-icon mr-2"><i class="icon-pencil7"></i></a>
+                        <a href="@Url.Action("Delete",new { id = paymentType.Id} )" class="btn btn-sm btn-danger btn-icon"><i class="icon-bin"></i></a>
                     </td>
                     <td></td>
                 </tr>

@@ -21,6 +21,9 @@ namespace RACRMS.Entity
         public string CardNumber { get; set; }
         public string CardValidDate { get; set; }
         public string CardCvv { get; set; }
+        public bool EmailSent { get; set; }
+        public DateTime? EmailSentDate { get; set; }
+        public string EmailTemplate { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
 

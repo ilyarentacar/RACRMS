@@ -268,6 +268,10 @@ namespace RACRMS.Entity
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
+                entity.Property(e => e.EmailSentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EmailTemplate).HasMaxLength(1500);
+
                 entity.Property(e => e.EndDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PlanedEndDate).HasColumnType("datetime");

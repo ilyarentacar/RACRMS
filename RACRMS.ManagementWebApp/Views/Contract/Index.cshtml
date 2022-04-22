@@ -1,0 +1,169 @@
+﻿@model ContractViewModel
+
+<script>
+    $(() => {
+
+        var dataTable;
+
+        $(document).ready(() => {
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                var errorMessage = ViewBag.ErrorMessage;
+
+                <text>
+                    new Noty({
+                        text: '@errorMessage',
+                        type: 'error'
+                    }).show();
+                </text>
+            }
+            else if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+            {
+                var successMessage = ViewBag.SuccessMessage;
+
+                <text>
+                    new Noty({
+                        text: '@successMessage',
+                        type: 'success'
+                    }).show();
+                </text>
+            }
+
+            dataTable = $('.datatable-responsive-control-right').DataTable({
+                language: {
+                    url:"../lib/Template/global_assets/js/plugins/tables/datatables/localization/datatables_localization_tr.json"
+                },
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: -1
+                    }
+                },
+                columnDefs: [
+                    {
+                        className: 'control',
+                        orderable: false,
+                        targets: -1
+                    },
+                    {
+                        orderable: false,
+                        targets: [7]
+                    }
+                ]
+            });
+
+            $.fn.dataTable.ext.search.push((settings, data, dataIndex) => {
+                var checkBoxChecked = $('#only_waitStartingContracts').prop('checked');
+                if (!checkBoxChecked)
+                    return true;
+                else {
+                    var approved = data[6];
+                    if (approved == 'Onay Bekleniyor')
+                        return true;
+
+                    return false;
+                }
+            });
+
+            $('#only_waitStartingContracts').on('change', () => {
+                var checkBoxChecked = $('#only_waitStartingContracts').prop('checked');
+                var checkBoxCheckedOnStorage = localStorage.getItem('OnlyWaitApprovingReservations');
+
+                if (checkBoxCheckedOnStorage === 'true')
+                    checkBoxCheckedOnStorage = true;
+                else
+                    checkBoxCheckedOnStorage = false;
+
+                if (!(checkBoxChecked === checkBoxCheckedOnStorage))
+                    localStorage.setItem('OnlyWaitApprovingReservations', checkBoxChecked);
+
+                dataTable.draw();
+            });
+
+            init = () => {
+                var checkBoxChecked = $('#only_waitStartingContracts').prop('checked');
+                var checkBoxCheckedOnStorage = localStorage.getItem('OnlyWaitApprovingReservations');
+
+                if (checkBoxCheckedOnStorage === 'true')
+                    checkBoxCheckedOnStorage = true;
+                else
+                    checkBoxCheckedOnStorage = false;
+
+                if (checkBoxChecked != checkBoxCheckedOnStorage) {
+                    $('#only_waitStartingContracts').prop('checked', checkBoxCheckedOnStorage);
+                    $("#only_waitStartingContracts").trigger("change");
+                }
+            };
+
+            init();
+        });
+
+    })
+</script>
+
+<!-- Basic datatable -->
+<div class="card">
+    <div class="card-body">
+        <div class="custom-control custom-switch custom-switch-square custom-control-success mb-2">
+            <input type="checkbox" class="custom-control-input" id="only_waitStartingContracts" checked>
+            <label class="custom-control-label" for="only_waitStartingContracts">Sadece Onay Bekleyen Kayıtları Göster</label>
+        </div>
+    </div>
+    <table class="table datatable-responsive-control-right table-hover">
+        <thead>
+            <tr>
+                <th>Sıra No</th>
+                <th>Plaka</th>
+                <th>Müşteri Adı</th>
+                <th>Müşteri Soyadı</th>
+                <th>Alış Tarihi</th>
+                <th>Planlanan Teslim Tarihi</th>
+                <th>Ödeme Yapıldı</th>
+                <th class="text-center">İşlemler</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contract in Model.Contracts)
+            {
+                <tr>
+                    <td>@contract.Id</td>
+                    <td>@contract.Car.PlateNumber</td>
+                    <td>@contract.Customer.Name</td>
+                    <td>@contract.Customer.Surname</td>
+                    <td>@contract.StartDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                    <td>@contract.PlanedEndDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                    @if (contract.HasPaid)
+                    {
+                        <td><span class="badge badge-success">Evet</span></td>
+                    }
+                    else
+                    {
+                        <td><span class="badge badge-dark">Hayır</span></td>
+                    }
+                    <td class="text-center">
+                        <a href="@Url.Action("ContractDetail",new { id = contract.Id} )" class="btn btn-sm btn-dark btn-icon mr-2"><i class="icon-file-text3"></i></a>
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- /basic datatable -->
+@*@if (Model != null && Model.OpenReservationAcceptPopup)
+    {
+        await Html.RenderPartialAsync("_ReservationAcceptPartial", Model.Reservation);
+    }
+    else if (Model != null && Model.OpenReservationRejectPopup)
+    {
+        await Html.RenderPartialAsync("_ReservationRejectPartial", Model.Reservation);
+    }
+    else if (Model != null && Model.OpenDeletePopup)
+    {
+        await Html.RenderPartialAsync("_DeletePartial", Model.Reservation);
+    }
+    else if (Model != null && Model.OpenDetailPopup)
+    {
+        await Html.RenderPartialAsync("_DetailPartial", Model.Reservation);
+    }*@

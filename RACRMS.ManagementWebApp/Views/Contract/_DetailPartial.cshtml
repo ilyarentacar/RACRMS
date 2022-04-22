@@ -1,0 +1,187 @@
+﻿@model ReservationDTO
+
+<script>
+        $(() => {
+
+            $(document).ready(() => {
+                $('#modal_form_horizontal').modal('show');
+
+                $('#modal_form_horizontal').on('hidden.bs.modal', (e) => window.location.href = '@Url.Action("Cancel")');
+            });
+
+        })
+</script>
+
+<!-- Horizontal form modal -->
+<div id="modal_form_horizontal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="icon-file-text3 mr-2"></i>Kayıt Detayları</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                @Html.HiddenFor(x => x.Id)
+                <div class="form-group row p-2">
+                    <div class="col-sm-4 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.PlateNumber)
+                        @Html.TextBoxFor(x => x.PlateNumber, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(x => x.TotalPrice)
+                        @Html.TextBoxFor(x => x.TotalPrice, "{0:#.## ₺}", new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(x => x.Approved)
+                        @if (Model.Approved.HasValue)
+                        {
+                            if (Model.Approved.Value)
+                            {
+                                <input class="form-control" readonly="readonly" id="Approved" name="Approved" placeholder="Kayıt giriniz..." type="text" value="Evet">
+                            }
+                            else
+                            {
+                                <input class="form-control" readonly="readonly" id="Approved" name="Approved" placeholder="Kayıt giriniz..." type="text" value="Hayır">
+                            }
+                        }
+                        else
+                        {
+                            <input class="form-control" readonly="readonly" id="Approved" name="Approved" placeholder="Kayıt giriniz..." type="text" value="Onay bekleniyor">
+                        }
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.CarBrandName)
+                        @Html.TextBoxFor(x => x.CarBrandName, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(x => x.CarModelName)
+                        @Html.TextBoxFor(x => x.CarModelName, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.CustomerName)
+                        @Html.TextBoxFor(x => x.CustomerName, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(x => x.CustomerSurname)
+                        @Html.TextBoxFor(x => x.CustomerSurname, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.CustomerEmailAddress)
+                        @Html.TextBoxFor(x => x.CustomerEmailAddress, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(x => x.CustomerCellNumber)
+                        @Html.TextBoxFor(x => x.CustomerCellNumber, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.StartDate)
+                        @Html.TextBoxFor(x => x.StartDate, "{0:dd.MM.yyyy HH:mm:ss}", new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(x => x.EndDate)
+                        @Html.TextBoxFor(x => x.EndDate, "{0:dd.MM.yyyy HH:mm:ss}", new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.ApprovingUserId)
+                        @if (!Model.ApprovingUserId.HasValue)
+                        {
+                            <input class="form-control" readonly="readonly" id="ApprovingUserId" name="ApprovingUserId" placeholder="Kayıt giriniz..." type="text" value="Onaylayan kullanıcı bulunmuyor">
+                        }
+                        else
+                        {
+                            <input class="form-control" readonly="readonly" id="ApprovingUserId" name="ApprovingUserId" placeholder="Kayıt giriniz..." type="text" value="@($"{Model.ApprovingUser.Name} {Model.ApprovingUser.Surname}")">
+                        }
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(x => x.ApprovalDate)
+                        @if (!Model.ApprovalDate.HasValue)
+                        {
+                            <input class="form-control" readonly="readonly" id="ApprovalDate" name="ApprovalDate" placeholder="Kayıt giriniz..." type="text" value="Onay tarihi bulunmuyor">
+                        }
+                        else
+                        {
+                            <input class="form-control" readonly="readonly" id="ApprovalDate" name="ApprovalDate" placeholder="Kayıt giriniz..." type="text" value="@Model.ApprovalDate.Value.ToString("dd.MM.yyyy HH:mm:ss")">
+                        }
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.RejectingUserId)
+                        @if (!Model.RejectingUserId.HasValue)
+                        {
+                            <input class="form-control" readonly="readonly" id="RejectingUserId" name="RejectingUserId" placeholder="Kayıt giriniz..." type="text" value="Reddeden kullanıcı bulunmuyor">
+                        }
+                        else
+                        {
+                            <input class="form-control" readonly="readonly" id="RejectingUserId" name="RejectingUserId" placeholder="Kayıt giriniz..." type="text" value="@($"{Model.RejectingUser.Name} {Model.RejectingUser.Surname}")">
+                        }
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(x => x.RejectDate)
+                        @if (!Model.RejectDate.HasValue)
+                        {
+                            <input class="form-control" readonly="readonly" id="RejectDate" name="RejectDate" placeholder="Kayıt giriniz..." type="text" value="Ret tarihi bulunmuyor">
+                        }
+                        else
+                        {
+                            <input class="form-control" readonly="readonly" id="RejectDate" name="RejectDate" placeholder="Kayıt giriniz..." type="text" value="@Model.RejectDate.Value.ToString("dd.MM.yyyy HH:mm:ss")">
+                        }
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.EmailSent)
+                        @if (Model.EmailSent)
+                        {
+                            <input class="form-control" readonly="readonly" id="EmailSent" name="EmailSent" placeholder="Kayıt giriniz..." type="text" value="Evet">
+                        }
+                        else
+                        {
+                            <input class="form-control" readonly="readonly" id="EmailSent" name="EmailSent" placeholder="Kayıt giriniz..." type="text" value="Hayır">
+                        }
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(x => x.EmailSentDate)
+                        @if (!Model.EmailSentDate.HasValue)
+                        {
+                            <input class="form-control" readonly="readonly" id="EmailSentDate" name="EmailSentDate" placeholder="Kayıt giriniz..." type="text" value="E-Posta gönderim tarihi bulunmuyor">
+                        }
+                        else
+                        {
+                            <input class="form-control" readonly="readonly" id="EmailSentDate" name="EmailSentDate" placeholder="Kayıt giriniz..." type="text" value="@Model.EmailSentDate.Value.ToString("dd.MM.yyyy HH:mm:ss")">
+                        }
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-12">
+                        @Html.LabelFor(x => x.EmailTemplate)
+                        @if (string.IsNullOrEmpty(Model.EmailTemplate))
+                        {
+                            <textarea rows="1" class="form-control" readonly="readonly" id="EmailTemplate" name="EmailTemplate" placeholder="Kayıt giriniz..." type="text">E-Posta içeriği bulunmuyor</textarea>
+                        }
+                        else
+                        {
+                            @Html.TextAreaFor(x => x.EmailTemplate, new { rows = "10", placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a href="@Url.Action("Cancel")" class="btn btn-outline-danger" data-dismiss="modal"><i class="icon-cancel-square2 mr-2"></i> Kapat</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /horizontal form modal -->

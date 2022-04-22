@@ -48,6 +48,7 @@ namespace RACRMS.ManagementWebApp
             services.AddScoped<ICarRentalRequirementBL, CarRentalRequirementBL>();
             services.AddScoped<IReservationBL, ReservationBL>();
             services.AddScoped<IPaymentTypeBL, PaymentTypeBL>();
+            services.AddScoped<IContractBL, ContractBL>();
 
             services.AddAuthentication("Default").AddCookie("Default");
 
@@ -103,7 +104,7 @@ namespace RACRMS.ManagementWebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Reservation}/{action=Index}/{id?}");
+                    pattern: "{controller=Contract}/{action=Index}/{id?}");
             });
         }
     }
