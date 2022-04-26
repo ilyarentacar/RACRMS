@@ -36,6 +36,7 @@
     string stateOrProvince = claims.Where(x => x.Type.ToString() == ClaimTypes.StateOrProvince.ToString()).Select(x => x.Value).FirstOrDefault();
 
     int? waitingReservationCount = ViewBag.WaitingReservationCount;
+    int? waitingContractCount = ViewBag.WaitingContractCount;
 }
 
 <!DOCTYPE html>
@@ -77,18 +78,43 @@
     @if (waitingReservationCount.HasValue && waitingReservationCount != 0)
     {
         <script>
-            var animations = ['bounce', 'flash', 'pulse', 'rubberBand', 'shake', 'swing', 'tada', 'wobble'];
+            var animationForReservations = ['bounce', 'flash', 'pulse', 'rubberBand', 'shake', 'swing', 'tada', 'wobble'];
 
             $(() => {
                 setAnimation = () => {
-                    var animationType = animations[Math.floor(Math.random() * animations.length)];
+                    var animationType = animationForReservations[Math.floor(Math.random() * animationForReservations.length)];
 
-                    $('.animation').data('animation', animationType);
+                    $('.animationForReservations').data('animation', animationType);
 
-                    var animation = $('.animation').data('animation');
+                    var animation = $('.animationForReservations').data('animation');
 
-                    $('.animation').addClass('animated ' + animation).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-                        $('.animation').removeClass('animated ' + animation);
+                    $('.animationForReservations').addClass('animated ' + animation).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                        $('.animationForReservations').removeClass('animated ' + animation);
+                    });
+                };
+
+                setAnimation();
+
+                setInterval(setAnimation, 10000);
+            });
+        </script>
+    }
+
+    @if (waitingContractCount.HasValue && waitingContractCount != 0)
+    {
+        <script>
+            var animationForContracts = ['bounce', 'flash', 'pulse', 'rubberBand', 'shake', 'swing', 'tada', 'wobble'];
+
+            $(() => {
+                setAnimation = () => {
+                    var animationType = animationForContracts[Math.floor(Math.random() * animationForContracts.length)];
+
+                    $('.animationForContracts').data('animation', animationType);
+
+                    var animation = $('.animationForContracts').data('animation');
+
+                    $('.animationForContracts').addClass('animated ' + animation).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                        $('.animationForContracts').removeClass('animated ' + animation);
                     });
                 };
 
@@ -274,8 +300,12 @@
                             <a href="@Url.Action("Index","Contract")" class="nav-link @(controllerName == "Contract" ? "active" : string.Empty)">
                                 <i class="icon-files-empty2"></i>
                                 <span>
-                                    Sözleşmeler
+                                    Sözleşmeler (TEST YAYINI)
                                 </span>
+                                @if (waitingContractCount != 0)
+                                {
+                                    <span class="badge badge-warning badge-pill align-self-center ml-auto mr-2 animationForContracts" data-animation="flash">@waitingContractCount</span>
+                                }
                             </a>
                         </li>
                         <li class="nav-item">
@@ -286,7 +316,7 @@
                                 </span>
                                 @if (waitingReservationCount != 0)
                                 {
-                                    <span class="badge badge-warning badge-pill align-self-center ml-auto mr-2 animation" data-animation="flash">@waitingReservationCount</span>
+                                    <span class="badge badge-warning badge-pill align-self-center ml-auto mr-2 animationForReservations" data-animation="flash">@waitingReservationCount</span>
                                 }
                             </a>
                         </li>

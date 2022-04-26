@@ -15,7 +15,7 @@ namespace RACRMS.DataTransferObject
         public DateTime StartDate { get; set; }
         public DateTime PlanedEndDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public bool ContractCompleted { get; set; }
+        public bool? ContractCompleted { get; set; }
         public DateTime? ContractCompletedDate { get; set; }
         public decimal TotalPrice { get; set; }
         public bool HasPaid { get; set; }

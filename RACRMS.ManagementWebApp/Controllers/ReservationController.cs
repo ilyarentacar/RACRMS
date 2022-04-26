@@ -20,11 +20,13 @@ namespace RACRMS.ManagementWebApp.Controllers
     public class ReservationController : Controller
     {
         private readonly IReservationBL reservationBL;
+        private readonly IContractBL contractBL;
         private readonly ISendEndpointProvider sendEndpointProvider;
 
-        public ReservationController(IReservationBL reservationBL, ISendEndpointProvider sendEndpointProvider)
+        public ReservationController(IReservationBL reservationBL, IContractBL contractBL, ISendEndpointProvider sendEndpointProvider)
         {
             this.reservationBL = reservationBL;
+            this.contractBL = contractBL;
             this.sendEndpointProvider = sendEndpointProvider;
         }
 
@@ -36,6 +38,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var reservations = await reservationBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 if (HttpContext.Session.Keys.Any(x => x == "ErrorMessage"))
                 {
@@ -70,6 +73,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var reservations = await reservationBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 return View("Index", new ReservationViewModel(OpenReservationAcceptPopup: true)
                 {
@@ -99,6 +103,19 @@ namespace RACRMS.ManagementWebApp.Controllers
                 model.ApprovalDate = DateTime.Now;
 
                 await reservationBL.UpdateAsync(model);
+
+                ContractDTO contractModel = new ContractDTO()
+                {
+                    ReservationId = model.Id,
+                    CarId = model.CarId,
+                    CustomerId = model.CustomerId,
+                    StartDate = model.StartDate,
+                    PlanedEndDate = model.EndDate,
+                    TotalPrice = model.TotalPrice,
+                    CreateDate = DateTime.Now
+                };
+
+                await contractBL.InsertAsync(contractModel);
 
                 ISendEndpoint sendEndpoint = await sendEndpointProvider.GetSendEndpoint(new Uri($"queue:{RabbitMQSettings.ReservationAcceptedEventQueue}"));
 
@@ -133,6 +150,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var reservations = await reservationBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 return View("Index", new ReservationViewModel(OpenReservationRejectPopup: true)
                 {
@@ -157,6 +175,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var reservations = await reservationBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 return View("Index", new ReservationViewModel(OpenDetailPopup: true)
                 {
@@ -220,6 +239,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var reservations = await reservationBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 return View("Index", new ReservationViewModel(OpenDeletePopup: true)
                 {
@@ -259,6 +279,7 @@ namespace RACRMS.ManagementWebApp.Controllers
         public async Task<IActionResult> Cancel()
         {
             await getWaitingReservationCountasync();
+            await getWaitingContractCountasync();
 
             return RedirectToAction("Index");
         }
@@ -268,6 +289,18 @@ namespace RACRMS.ManagementWebApp.Controllers
             try
             {
                 ViewBag.WaitingReservationCount = await reservationBL.GetWaitingReservationCountAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        private async Task getWaitingContractCountasync()
+        {
+            try
+            {
+                ViewBag.WaitingContractCount = await contractBL.GetWaitingContractCountAsync();
             }
             catch
             {

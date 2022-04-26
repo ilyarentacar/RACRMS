@@ -17,11 +17,13 @@ namespace RACRMS.ManagementWebApp.Controllers
     {
         private readonly IUserBL userBL;
         private readonly IReservationBL reservationBL;
+        private readonly IContractBL contractBL;
 
-        public ProfileController(IUserBL userBL, IReservationBL reservationBL)
+        public ProfileController(IUserBL userBL, IReservationBL reservationBL, IContractBL contractBL)
         {
             this.userBL = userBL;
             this.reservationBL = reservationBL;
+            this.contractBL = contractBL;
         }
 
         [HttpGet]
@@ -34,6 +36,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var user = await userBL.GetByIdAsync(userId);
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 if (HttpContext.Session.Keys.Any(x => x == "ErrorMessage"))
                 {
@@ -64,6 +67,18 @@ namespace RACRMS.ManagementWebApp.Controllers
             try
             {
                 ViewBag.WaitingReservationCount = await reservationBL.GetWaitingReservationCountAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        private async Task getWaitingContractCountasync()
+        {
+            try
+            {
+                ViewBag.WaitingContractCount = await contractBL.GetWaitingContractCountAsync();
             }
             catch
             {

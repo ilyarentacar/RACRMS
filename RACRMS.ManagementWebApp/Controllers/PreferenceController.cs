@@ -17,11 +17,13 @@ namespace RACRMS.ManagementWebApp.Controllers
     {
         private readonly IPreferenceBL preferenceBL;
         private readonly IReservationBL reservationBL;
+        private readonly IContractBL contractBL;
 
-        public PreferenceController(IPreferenceBL preferenceBL, IReservationBL reservationBL)
+        public PreferenceController(IPreferenceBL preferenceBL, IReservationBL reservationBL, IContractBL contractBL)
         {
             this.preferenceBL = preferenceBL;
             this.reservationBL = reservationBL;
+            this.contractBL = contractBL;
         }
 
         [HttpGet]
@@ -32,6 +34,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var preferences = await preferenceBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 if (HttpContext.Session.Keys.Any(x => x == "ErrorMessage"))
                 {
@@ -65,6 +68,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var preferences = await preferenceBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 return View("Index", new PreferenceViewModel(OpenInsertPopup: true)
                 {
@@ -114,6 +118,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var preferences = await this.preferenceBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 return View("Index", new PreferenceViewModel(OpenUpdatePopup: true)
                 {
@@ -164,6 +169,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var preferences = await this.preferenceBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 return View("Index", new PreferenceViewModel(OpenDeletePopup: true)
                 {
@@ -203,6 +209,7 @@ namespace RACRMS.ManagementWebApp.Controllers
         public async Task<IActionResult> Cancel()
         {
             await getWaitingReservationCountasync();
+            await getWaitingContractCountasync();
 
             return RedirectToAction("Index");
         }
@@ -212,6 +219,18 @@ namespace RACRMS.ManagementWebApp.Controllers
             try
             {
                 ViewBag.WaitingReservationCount = await reservationBL.GetWaitingReservationCountAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        private async Task getWaitingContractCountasync()
+        {
+            try
+            {
+                ViewBag.WaitingContractCount = await contractBL.GetWaitingContractCountAsync();
             }
             catch
             {
