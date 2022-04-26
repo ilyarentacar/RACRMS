@@ -34,6 +34,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var contracts = await contractBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 if (HttpContext.Session.Keys.Any(x => x == "ErrorMessage"))
                 {
@@ -64,6 +65,18 @@ namespace RACRMS.ManagementWebApp.Controllers
             try
             {
                 ViewBag.WaitingReservationCount = await reservationBL.GetWaitingReservationCountAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        private async Task getWaitingContractCountasync()
+        {
+            try
+            {
+                ViewBag.WaitingContractCount = await contractBL.GetWaitingContractCountAsync();
             }
             catch
             {

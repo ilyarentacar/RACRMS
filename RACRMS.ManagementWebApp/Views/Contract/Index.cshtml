@@ -47,7 +47,7 @@
                     },
                     {
                         orderable: false,
-                        targets: [7]
+                        targets: [9]
                     }
                 ]
             });
@@ -57,8 +57,8 @@
                 if (!checkBoxChecked)
                     return true;
                 else {
-                    var approved = data[6];
-                    if (approved == 'Onay Bekleniyor')
+                    var approved = data[7];
+                    if (approved != 'Tamamlandı')
                         return true;
 
                     return false;
@@ -104,9 +104,10 @@
 <!-- Basic datatable -->
 <div class="card">
     <div class="card-body">
-        <div class="custom-control custom-switch custom-switch-square custom-control-success mb-2">
+        <a href="@Url.Action("Insert")" class="btn btn-success btn-add-new mb-3"><i class="icon-diff-added"></i> Yeni Kayıt Ekle</a>
+        <div class="custom-control custom-switch custom-switch-square custom-control-success">
             <input type="checkbox" class="custom-control-input" id="only_waitStartingContracts" checked>
-            <label class="custom-control-label" for="only_waitStartingContracts">Sadece Onay Bekleyen Kayıtları Göster</label>
+            <label class="custom-control-label" for="only_waitStartingContracts">Tamamlanan sözleşmeleri gösterme</label>
         </div>
     </div>
     <table class="table datatable-responsive-control-right table-hover">
@@ -118,6 +119,8 @@
                 <th>Müşteri Soyadı</th>
                 <th>Alış Tarihi</th>
                 <th>Planlanan Teslim Tarihi</th>
+                <th>Sözleşme Durumu</th>
+                <th>Toplam Ücret</th>
                 <th>Ödeme Yapıldı</th>
                 <th class="text-center">İşlemler</th>
                 <th></th>
@@ -133,6 +136,19 @@
                     <td>@contract.Customer.Surname</td>
                     <td>@contract.StartDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
                     <td>@contract.PlanedEndDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                    @if (!contract.ContractCompleted.HasValue)
+                    {
+                        <td><span class="badge badge-warning">Henüz başlamadı</span></td>
+                    }
+                    else if (contract.ContractCompleted.HasValue && contract.ContractCompleted.Value)
+                    {
+                        <td><span class="badge badge-dark">Kirada</span></td>
+                    }
+                    else if (contract.ContractCompleted.HasValue && !contract.ContractCompleted.Value)
+                    {
+                        <td><span class="badge badge-dark">Tamamlandı</span></td>
+                    }
+                    <td><span class="badge badge-success">@contract.TotalPrice.ToString("#.## ₺")</span></td>
                     @if (contract.HasPaid)
                     {
                         <td><span class="badge badge-success">Evet</span></td>
@@ -143,6 +159,9 @@
                     }
                     <td class="text-center">
                         <a href="@Url.Action("ContractDetail",new { id = contract.Id} )" class="btn btn-sm btn-dark btn-icon mr-2"><i class="icon-file-text3"></i></a>
+                        <a href="@Url.Action("ContractDetail",new { id = contract.Id} )" class="btn btn-sm btn-purple btn-icon mr-2"><i class="icon-cash4"></i></a>
+                        <a href="@Url.Action("ContractDetail",new { id = contract.Id} )" class="btn btn-sm btn-purple btn-icon mr-2"><i class="icon-airplane3"></i></a>
+                        <a href="@Url.Action("ContractDetail",new { id = contract.Id} )" class="btn btn-sm btn-purple btn-icon mr-2"><i class="icon-airplane4"></i></a>
                     </td>
                     <td></td>
                 </tr>

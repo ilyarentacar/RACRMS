@@ -184,7 +184,7 @@ namespace RACRMS.BusinessLayer.Concrete
         {
             try
             {
-                return await unitOfWork.Contract.Select().Where(x => !x.HasPaid).Where(x => !x.ContractCompleted).CountAsync();
+                return await unitOfWork.Contract.Select().Where(x => !x.HasPaid).Where(x => !x.ContractCompleted.HasValue).CountAsync();
             }
             catch
             {

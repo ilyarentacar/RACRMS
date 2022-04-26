@@ -24,6 +24,7 @@ namespace RACRMS.ManagementWebApp.Controllers
         private readonly ICarFuelTypeBL carFuelTypeBL;
         private readonly ICarGearTypeBL carGearTypeBL;
         private readonly IReservationBL reservationBL;
+        private readonly IContractBL contractBL;
 
         public CarController(ICarBL carBL,
             ICarBrandBL carBrandBL,
@@ -32,7 +33,9 @@ namespace RACRMS.ManagementWebApp.Controllers
             ICarTypeBL carTypeBL,
             ICarChassisTypeBL carChassisTypeBL,
             ICarFuelTypeBL carFuelTypeBL,
-            ICarGearTypeBL carGearTypeBL, IReservationBL reservationBL)
+            ICarGearTypeBL carGearTypeBL,
+            IReservationBL reservationBL,
+            IContractBL contractBL)
         {
             this.carBL = carBL;
             this.carBrandBL = carBrandBL;
@@ -43,6 +46,7 @@ namespace RACRMS.ManagementWebApp.Controllers
             this.carFuelTypeBL = carFuelTypeBL;
             this.carGearTypeBL = carGearTypeBL;
             this.reservationBL = reservationBL;
+            this.contractBL = contractBL;
         }
 
         [HttpGet]
@@ -53,6 +57,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var cars = await carBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 if (HttpContext.Session.Keys.Any(x => x == "ErrorMessage"))
                 {
@@ -87,6 +92,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var carBrands = await carBrandBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 return View("Index", new CarViewModel(OpenInsertPopup: true)
                 {
@@ -158,6 +164,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var cars = await carBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 var carBrands = await carBrandBL.GetAsync();
                 var carModels = await carModelBL.GetByCarBrandIdAsync(car.CarBrandId);
@@ -214,6 +221,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                 var cars = await carBL.GetAsync();
 
                 await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
 
                 return View("Index", new CarViewModel(OpenDeletePopup: true)
                 {
@@ -253,6 +261,7 @@ namespace RACRMS.ManagementWebApp.Controllers
         public async Task<IActionResult> Cancel()
         {
             await getWaitingReservationCountasync();
+            await getWaitingContractCountasync();
 
             return RedirectToAction("Index");
         }
@@ -262,6 +271,18 @@ namespace RACRMS.ManagementWebApp.Controllers
             try
             {
                 ViewBag.WaitingReservationCount = await reservationBL.GetWaitingReservationCountAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        private async Task getWaitingContractCountasync()
+        {
+            try
+            {
+                ViewBag.WaitingContractCount = await contractBL.GetWaitingContractCountAsync();
             }
             catch
             {
