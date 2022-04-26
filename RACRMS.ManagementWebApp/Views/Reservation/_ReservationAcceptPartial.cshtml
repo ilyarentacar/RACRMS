@@ -52,6 +52,12 @@
                     @Html.HiddenFor(x => x.Id)
                     <div class="form-group row p-2">
                         <div class="col-sm-12">
+                            @Html.LabelFor(x => x.ReservationCode)
+                            @Html.TextBoxFor(x => x.ReservationCode, new { placeholder = "Kayıt giriniz...", @class = "form-control", disabled = "disabled" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-12">
                             @Html.LabelFor(x => x.PlateNumber)
                             @Html.TextBoxFor(x => x.PlateNumber, new { placeholder = "Kayıt giriniz...", @class = "form-control", disabled = "disabled" })
                         </div>

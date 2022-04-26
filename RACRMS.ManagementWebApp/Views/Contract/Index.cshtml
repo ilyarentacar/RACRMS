@@ -159,9 +159,19 @@
                     }
                     <td class="text-center">
                         <a href="@Url.Action("ContractDetail",new { id = contract.Id} )" class="btn btn-sm btn-dark btn-icon mr-2"><i class="icon-file-text3"></i></a>
-                        <a href="@Url.Action("ContractDetail",new { id = contract.Id} )" class="btn btn-sm btn-purple btn-icon mr-2"><i class="icon-cash4"></i></a>
-                        <a href="@Url.Action("ContractDetail",new { id = contract.Id} )" class="btn btn-sm btn-purple btn-icon mr-2"><i class="icon-airplane3"></i></a>
-                        <a href="@Url.Action("ContractDetail",new { id = contract.Id} )" class="btn btn-sm btn-purple btn-icon mr-2"><i class="icon-airplane4"></i></a>
+                        @if (!contract.HasPaid)
+                        {
+                            <a href="@Url.Action("ContractPayment",new { id = contract.Id} )" class="btn btn-sm btn-teal btn-icon mr-2"><i class="icon-credit-card"></i></a>
+                        }
+                        @if (contract.StartDate <= DateTime.Now && contract.HasPaid)
+                        {
+                            <a href="@Url.Action("ContractStart",new { id = contract.Id} )" class="btn btn-sm btn-success btn-icon mr-2"><i class="icon-airplane3"></i></a>
+                        }
+                        @if (contract.ContractCompleted.HasValue && !contract.ContractCompleted.Value)
+                        {
+                            <a href="@Url.Action("ContractComplete",new { id = contract.Id} )" class="btn btn-sm btn-secondary btn-icon mr-2"><i class="icon-airplane4"></i></a>
+                        }
+                        <a href="@Url.Action("Delete",new { id = contract.Id} )" class="btn btn-sm btn-danger btn-icon"><i class="icon-bin"></i></a>
                     </td>
                     <td></td>
                 </tr>
@@ -170,19 +180,7 @@
     </table>
 </div>
 <!-- /basic datatable -->
-@*@if (Model != null && Model.OpenReservationAcceptPopup)
-    {
-        await Html.RenderPartialAsync("_ReservationAcceptPartial", Model.Reservation);
-    }
-    else if (Model != null && Model.OpenReservationRejectPopup)
-    {
-        await Html.RenderPartialAsync("_ReservationRejectPartial", Model.Reservation);
-    }
-    else if (Model != null && Model.OpenDeletePopup)
-    {
-        await Html.RenderPartialAsync("_DeletePartial", Model.Reservation);
-    }
-    else if (Model != null && Model.OpenDetailPopup)
-    {
-        await Html.RenderPartialAsync("_DetailPartial", Model.Reservation);
-    }*@
+@if (Model != null && Model.OpenDetailPopup)
+{
+    await Html.RenderPartialAsync("_DetailPartial", Model.Contract);
+}

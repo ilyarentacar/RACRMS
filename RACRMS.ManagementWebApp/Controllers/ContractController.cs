@@ -60,6 +60,41 @@ namespace RACRMS.ManagementWebApp.Controllers
             }
         }
 
+        [HttpGet("ContractDetail")]
+        public async Task<IActionResult> ContractDetail(int id)
+        {
+            try
+            {
+                var contract = await contractBL.GetByIdAsync(id);
+                var contracts = await contractBL.GetAsync();
+
+                await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
+
+                return View("Index", new ContractViewModel(OpenDetailPopup: true)
+                {
+                    Contract = contract,
+                    Contracts = contracts
+                });
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Session.SetString("ErrorMessage", ex.Message);
+
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpGet]
+
+        public async Task<IActionResult> Cancel()
+        {
+            await getWaitingReservationCountasync();
+            await getWaitingContractCountasync();
+
+            return RedirectToAction("Index");
+        }
+
         private async Task getWaitingReservationCountasync()
         {
             try

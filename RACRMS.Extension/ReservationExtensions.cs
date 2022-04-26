@@ -21,6 +21,7 @@ namespace RACRMS.Extension
                     PlateNumber = entity.Car != null ? entity.Car.PlateNumber : string.Empty,
                     CarBrandName = entity.Car != null && entity.Car.CarBrand != null ? entity.Car.CarBrand.Name : string.Empty,
                     CarModelName = entity.Car != null && entity.Car.CarModel != null ? entity.Car.CarModel.Name : string.Empty,
+                    ReservationCode = entity.ReservationCode,
                     CustomerId = entity.CustomerId,
                     CustomerName = entity.Customer != null ? entity.Customer.Name : string.Empty,
                     CustomerSurname = entity.Customer != null ? entity.Customer.Surname : string.Empty,
