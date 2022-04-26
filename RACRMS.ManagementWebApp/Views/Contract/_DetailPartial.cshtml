@@ -1,4 +1,4 @@
-﻿@model ReservationDTO
+﻿@model ContractDTO
 
 <script>
         $(() => {
@@ -14,10 +14,10 @@
 
 <!-- Horizontal form modal -->
 <div id="modal_form_horizontal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="icon-file-text3 mr-2"></i>Kayıt Detayları</h5>
+                <h5 class="modal-title"><i class="icon-file-text3 mr-2"></i>Sözleşme Detayları</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -25,40 +25,58 @@
                 @Html.HiddenFor(x => x.Id)
                 <div class="form-group row p-2">
                     <div class="col-sm-4 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
-                        @Html.LabelFor(x => x.PlateNumber)
-                        @Html.TextBoxFor(x => x.PlateNumber, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                        @Html.LabelFor(x => x.ReservationCode)
+                        @Html.TextBoxFor(x => x.ReservationCode, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
                     </div>
                     <div class="col-sm-4">
                         @Html.LabelFor(x => x.TotalPrice)
                         @Html.TextBoxFor(x => x.TotalPrice, "{0:#.## ₺}", new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
                     </div>
                     <div class="col-sm-4">
-                        @Html.LabelFor(x => x.Approved)
-                        @if (Model.Approved.HasValue)
+                        @Html.LabelFor(x => x.HasPaid)
+                        @if (Model.HasPaid)
                         {
-                            if (Model.Approved.Value)
-                            {
-                                <input class="form-control" readonly="readonly" id="Approved" name="Approved" placeholder="Kayıt giriniz..." type="text" value="Evet">
-                            }
-                            else
-                            {
-                                <input class="form-control" readonly="readonly" id="Approved" name="Approved" placeholder="Kayıt giriniz..." type="text" value="Hayır">
-                            }
+                            <input class="form-control" readonly="readonly" id="HasPaid" name="HasPaid" placeholder="Kayıt giriniz..." type="text" value="Evet">
                         }
                         else
                         {
-                            <input class="form-control" readonly="readonly" id="Approved" name="Approved" placeholder="Kayıt giriniz..." type="text" value="Onay bekleniyor">
+                            <input class="form-control" readonly="readonly" id="HasPaid" name="HasPaid" placeholder="Kayıt giriniz..." type="text" value="Hayır">
                         }
                     </div>
                 </div>
                 <div class="form-group row p-2">
-                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                    <div class="col-sm-4 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.PlateNumber)
+                        @Html.TextBoxFor(x => x.PlateNumber, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-4">
                         @Html.LabelFor(x => x.CarBrandName)
                         @Html.TextBoxFor(x => x.CarBrandName, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         @Html.LabelFor(x => x.CarModelName)
                         @Html.TextBoxFor(x => x.CarModelName, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-4 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.StartDate)
+                        @Html.TextBoxFor(x => x.StartDate, "{0:dd.MM.yyyy HH:mm:ss}", new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(x => x.PlanedEndDate)
+                        @Html.TextBoxFor(x => x.PlanedEndDate, "{0:dd.MM.yyyy HH:mm:ss}", new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(x => x.EndDate)
+                        @if (Model.EndDate.HasValue)
+                        {
+                            @Html.TextBoxFor(x => x.EndDate.Value, "{0:dd.MM.yyyy HH:mm:ss}", new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                        }
+                        else
+                        {
+                            <input class="form-control" readonly="readonly" id="EndDate" name="EndDate" placeholder="Kayıt giriniz..." type="text" value="Henüz teslim edilmedi">
+                        }
                     </div>
                 </div>
                 <div class="form-group row p-2">
@@ -81,64 +99,7 @@
                         @Html.TextBoxFor(x => x.CustomerCellNumber, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
                     </div>
                 </div>
-                <div class="form-group row p-2">
-                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
-                        @Html.LabelFor(x => x.StartDate)
-                        @Html.TextBoxFor(x => x.StartDate, "{0:dd.MM.yyyy HH:mm:ss}", new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
-                    </div>
-                    <div class="col-sm-6">
-                        @Html.LabelFor(x => x.EndDate)
-                        @Html.TextBoxFor(x => x.EndDate, "{0:dd.MM.yyyy HH:mm:ss}", new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
-                    </div>
-                </div>
-                <div class="form-group row p-2">
-                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
-                        @Html.LabelFor(x => x.ApprovingUserId)
-                        @if (!Model.ApprovingUserId.HasValue)
-                        {
-                            <input class="form-control" readonly="readonly" id="ApprovingUserId" name="ApprovingUserId" placeholder="Kayıt giriniz..." type="text" value="Onaylayan kullanıcı bulunmuyor">
-                        }
-                        else
-                        {
-                            <input class="form-control" readonly="readonly" id="ApprovingUserId" name="ApprovingUserId" placeholder="Kayıt giriniz..." type="text" value="@($"{Model.ApprovingUser.Name} {Model.ApprovingUser.Surname}")">
-                        }
-                    </div>
-                    <div class="col-sm-6">
-                        @Html.LabelFor(x => x.ApprovalDate)
-                        @if (!Model.ApprovalDate.HasValue)
-                        {
-                            <input class="form-control" readonly="readonly" id="ApprovalDate" name="ApprovalDate" placeholder="Kayıt giriniz..." type="text" value="Onay tarihi bulunmuyor">
-                        }
-                        else
-                        {
-                            <input class="form-control" readonly="readonly" id="ApprovalDate" name="ApprovalDate" placeholder="Kayıt giriniz..." type="text" value="@Model.ApprovalDate.Value.ToString("dd.MM.yyyy HH:mm:ss")">
-                        }
-                    </div>
-                </div>
-                <div class="form-group row p-2">
-                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
-                        @Html.LabelFor(x => x.RejectingUserId)
-                        @if (!Model.RejectingUserId.HasValue)
-                        {
-                            <input class="form-control" readonly="readonly" id="RejectingUserId" name="RejectingUserId" placeholder="Kayıt giriniz..." type="text" value="Reddeden kullanıcı bulunmuyor">
-                        }
-                        else
-                        {
-                            <input class="form-control" readonly="readonly" id="RejectingUserId" name="RejectingUserId" placeholder="Kayıt giriniz..." type="text" value="@($"{Model.RejectingUser.Name} {Model.RejectingUser.Surname}")">
-                        }
-                    </div>
-                    <div class="col-sm-6">
-                        @Html.LabelFor(x => x.RejectDate)
-                        @if (!Model.RejectDate.HasValue)
-                        {
-                            <input class="form-control" readonly="readonly" id="RejectDate" name="RejectDate" placeholder="Kayıt giriniz..." type="text" value="Ret tarihi bulunmuyor">
-                        }
-                        else
-                        {
-                            <input class="form-control" readonly="readonly" id="RejectDate" name="RejectDate" placeholder="Kayıt giriniz..." type="text" value="@Model.RejectDate.Value.ToString("dd.MM.yyyy HH:mm:ss")">
-                        }
-                    </div>
-                </div>
+
                 <div class="form-group row p-2">
                     <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
                         @Html.LabelFor(x => x.EmailSent)
@@ -174,6 +135,63 @@
                         {
                             @Html.TextAreaFor(x => x.EmailTemplate, new { rows = "10", placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
                         }
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.ContractCompleted)
+                        @if (Model.ContractCompleted.HasValue)
+                        {
+                            @if (Model.ContractCompleted.Value)
+                            {
+                                <input class="form-control" readonly="readonly" id="ContractCompleted" name="ContractCompleted" placeholder="Kayıt giriniz..." type="text" value="Tamamlandı">
+                            }
+                            else
+                            {
+                                <input class="form-control" readonly="readonly" id="ContractCompleted" name="ContractCompleted" placeholder="Kayıt giriniz..." type="text" value="Kirada">
+                            }
+                        }
+                        else
+                        {
+                            <input class="form-control" readonly="readonly" id="ContractCompleted" name="ContractCompleted" placeholder="Kayıt giriniz..." type="text" value="Henüz başlamadı">
+                        }
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(x => x.ContractCompletedDate)
+                        @if (!Model.ContractCompletedDate.HasValue)
+                        {
+                            <input class="form-control" readonly="readonly" id="ContractCompletedDate" name="ContractCompletedDate" placeholder="Kayıt giriniz..." type="text" value="Henüz tamamlanmadı">
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(x => x.ContractCompletedDate.Value, "{0:dd.MM.yyyy HH:mm:ss}", new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                        }
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-12 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.PaymentTypeName)
+                        @Html.TextBoxFor(x => x.PaymentTypeName, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-12 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.CardOwnerName)
+                        @Html.TextBoxFor(x => x.CardOwnerName, new { placeholder = "Kayıt giriniz...", @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group row p-2">
+                    <div class="col-sm-4 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                        @Html.LabelFor(x => x.CardNumber)
+                        <input class="form-control" readonly="readonly" id="CardNumber" name="CardNumber" placeholder="Kayıt giriniz..." type="text" value="**** **** **** ****">
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(x => x.CardValidDate)
+                        <input class="form-control" readonly="readonly" id="CardValidDate" name="CardValidDate" placeholder="Kayıt giriniz..." type="text" value="**/**">
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(x => x.CardCvv)
+                        <input class="form-control" readonly="readonly" id="CardCvv" name="CardCvv" placeholder="Kayıt giriniz..." type="text" value="***">
                     </div>
                 </div>
             </div>

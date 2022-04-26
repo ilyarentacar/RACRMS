@@ -14,6 +14,8 @@ namespace RACRMS.DataTransferObject
         public int Id { get; set; }
         public int CarId { get; set; }
         public int CustomerId { get; set; }
+        [DisplayName("Rezervasyon Kodu :")]
+        public string ReservationCode { get; set; }
         [DisplayName("Alış Tarihi :")]
         public DateTime StartDate { get; set; }
         [DisplayName("Teslim Tarihi :")]

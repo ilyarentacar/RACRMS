@@ -81,7 +81,7 @@
             var animationForReservations = ['bounce', 'flash', 'pulse', 'rubberBand', 'shake', 'swing', 'tada', 'wobble'];
 
             $(() => {
-                setAnimation = () => {
+                setAnimationForReservation = () => {
                     var animationType = animationForReservations[Math.floor(Math.random() * animationForReservations.length)];
 
                     $('.animationForReservations').data('animation', animationType);
@@ -93,9 +93,9 @@
                     });
                 };
 
-                setAnimation();
+                setAnimationForReservation();
 
-                setInterval(setAnimation, 10000);
+                setInterval(setAnimationForReservation, 10000);
             });
         </script>
     }
@@ -106,7 +106,7 @@
             var animationForContracts = ['bounce', 'flash', 'pulse', 'rubberBand', 'shake', 'swing', 'tada', 'wobble'];
 
             $(() => {
-                setAnimation = () => {
+                setAnimationForContract = () => {
                     var animationType = animationForContracts[Math.floor(Math.random() * animationForContracts.length)];
 
                     $('.animationForContracts').data('animation', animationType);
@@ -118,9 +118,9 @@
                     });
                 };
 
-                setAnimation();
+                setAnimationForContract();
 
-                setInterval(setAnimation, 10000);
+                setInterval(setAnimationForContract, 10000);
             });
         </script>
     }
@@ -297,17 +297,26 @@
                         <!-- Main -->
                         <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs mt-1">Kiralama Yönetimi</div> <i class="icon-menu" title="Main"></i></li>
                         <li class="nav-item">
-                            <a href="@Url.Action("Index","Contract")" class="nav-link @(controllerName == "Contract" ? "active" : string.Empty)">
+                            <a href="@Url.Action("Index","Contract")" class="nav-link disabled">
                                 <i class="icon-files-empty2"></i>
                                 <span>
-                                    Sözleşmeler (TEST YAYINI)
+                                    Sözleşmeler
                                 </span>
-                                @if (waitingContractCount != 0)
-                                {
-                                    <span class="badge badge-warning badge-pill align-self-center ml-auto mr-2 animationForContracts" data-animation="flash">@waitingContractCount</span>
-                                }
+                                <span class="badge bg-transparent align-self-center ml-auto">Yapım aşamasında</span>
                             </a>
                         </li>
+                        @*<li class="nav-item">
+                                <a href="@Url.Action("Index","Contract")" class="nav-link @(controllerName == "Contract" ? "active" : string.Empty)">
+                                    <i class="icon-files-empty2"></i>
+                                    <span>
+                                        Sözleşmeler (TEST YAYINI)
+                                    </span>
+                                    @if (waitingContractCount != 0)
+                                    {
+                                        <span class="badge badge-warning badge-pill align-self-center ml-auto mr-2 animationForContracts" data-animation="flash">@waitingContractCount</span>
+                                    }
+                                </a>
+                            </li>*@
                         <li class="nav-item">
                             <a href="@Url.Action("Index","Reservation")" class="nav-link @((controllerName == ("Reservation") || controllerName == string.Empty) ? "active" : string.Empty)">
                                 <i class="icon-calendar2"></i>

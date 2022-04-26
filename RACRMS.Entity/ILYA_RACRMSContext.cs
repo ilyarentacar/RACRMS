@@ -369,6 +369,10 @@ namespace RACRMS.Entity
 
                 entity.Property(e => e.RejectDate).HasColumnType("datetime");
 
+                entity.Property(e => e.ReservationCode)
+                    .IsRequired()
+                    .HasMaxLength(25);
+
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
                 entity.Property(e => e.TotalPrice).HasColumnType("money");

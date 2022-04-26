@@ -94,6 +94,7 @@ namespace RACRMS.BusinessLayer.Concrete
                 Reservation reservation = new Reservation()
                 {
                     CarId = dto.CarId,
+                    ReservationCode = $"RZV{DateTime.Now.Ticks}",
                     CustomerId = dto.CustomerId,
                     StartDate = dto.StartDate,
                     EndDate = dto.EndDate,

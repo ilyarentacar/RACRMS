@@ -104,7 +104,7 @@ namespace RACRMS.ManagementWebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Contract}/{action=Index}/{id?}");
+                    pattern: "{controller=Reservation}/{action=Index}/{id?}");
             });
         }
     }

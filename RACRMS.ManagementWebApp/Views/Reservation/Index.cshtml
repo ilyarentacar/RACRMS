@@ -47,7 +47,7 @@
                     },
                     {
                         orderable: false,
-                        targets: [7]
+                        targets: [8]
                     }
                 ]
             });
@@ -57,7 +57,7 @@
                 if (!checkBoxChecked)
                     return true;
                 else {
-                    var approved = data[6];
+                    var approved = data[7];
                     if (approved == 'Onay Bekleniyor')
                         return true;
 
@@ -113,6 +113,7 @@
         <thead>
             <tr>
                 <th>Sıra No</th>
+                <th>Rezervasyon Kodu</th>
                 <th>Plaka</th>
                 <th>Müşteri Adı</th>
                 <th>Müşteri Soyadı</th>
@@ -128,6 +129,7 @@
             {
                 <tr>
                     <td>@reservation.Id</td>
+                    <td>@reservation.ReservationCode</td>
                     <td>@reservation.Car.PlateNumber</td>
                     <td>@reservation.Customer.Name</td>
                     <td>@reservation.Customer.Surname</td>
