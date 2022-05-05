@@ -34,6 +34,8 @@
     <link href="~/lib/Template/assets/css/style.css" rel="stylesheet">
     <!-- Custom Responsive -->
     <link href="~/lib/Template/assets/css/responsive.css" rel="stylesheet">
+    <!-- Custom Site Styles -->
+    <link href="~/css/site.css" rel="stylesheet">
 
     <!-- CSS for IE -->
     <!--[if lte IE 9]>
@@ -46,6 +48,15 @@
         <![endif]-->
     <!-- place -->
     <!-- End Coming soon -->
+</head>
+<body>
+    <!-- Header -->
+    <!-- Start Topbar -->
+    @await Html.PartialAsync("_TopBarPartial")
+    <!-- End Topbar -->
+    <!-- Header -->
+    @RenderBody()
+    <div id="back-top" class="back-top"> <a href="#top"><i class="flaticon-arrows"></i></a> </div>
     <!-- Place all Scripts Here -->
     <!-- jQuery -->
     <script src="~/lib/Template/assets/js/jquery.min.js"></script>
@@ -71,8 +82,5 @@
     <!-- Custom Js -->
     <script src="~/lib/Template/assets/js/custom.js"></script>
     <!-- /Place all Scripts Here -->
-</head>
-<body>
-    @RenderBody()
 </body>
 </html>

@@ -402,7 +402,7 @@ Version: 1.0.0
 	});
 	// time counter
 	function makeTimer() {
-	    var endTime = new Date("23 April 2022 00:00:00 GMT+06:00");
+	    var endTime = new Date("5 May 2022 00:00:00 GMT+06:00");
 	    endTime = (Date.parse(endTime) / 1000);
 	    var now = new Date();
 	    now = (Date.parse(now) / 1000);
