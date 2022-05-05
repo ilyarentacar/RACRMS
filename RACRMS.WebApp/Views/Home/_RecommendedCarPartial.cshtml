@@ -1,4 +1,5 @@
-﻿<section class="section-padding about-us">
+﻿@model RecommendedCarViewModel
+<section class="section-padding about-us">
     <div class="container">
         <div class="row">
             <div class="col-xl-7 col-lg-6 pl-2 pr-2 align-self-center text-left">
@@ -6,29 +7,22 @@
                     <div class="section-header style-left">
                         <div class="section-heading">
                             <h5><span class="text-custom-blue">Sizin için önerildi</span></h5>
-                            <h3>Volkswagen <span class="text-custom-blue">Polo 1.4 TSI</span></h3>
+                            <h3>@Model.CarBrandName <span class="text-custom-blue">@Model.CarModelName</span></h3>
                             <div class="section-description">
-                                <div class="car-price"> <strong>400 ₺</strong> <span>/Günlük</span> </div>
+                                <div class="car-price"> <strong>@Model.CarRentalPrice.ToString("#.## ₺")</strong> <span>/Günlük</span> </div>
                             </div>
                         </div>
                     </div>
-                    <p class="pt-2">
-                        Ne kadar dikkatli bakarsanız bakın, bazıları göründüğünden fazlasıdır.
-                        Modern dokunuşlarla yeniden yorumlanan kompakt gövdesinin ardında sakladığı geniş iç mekanı ve yükleme kapasitesi,
-                        premium otomobillerde görmeye alışık olduğumuz teknolojileri,
-                        hiçbir zaman değişmeyen Volkswagen üretim kalitesi ve sağlamlığıyla Yeni Polo, şimdi sizi bekliyor.
-                    </p>
-                    <p class="pt-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
-                    <p class="pt-2">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. Lorem Ipsum has been the industry's standard dummy text.
-                        Lorem Ipsum is simply dummy.
-                    </p>
+                    @foreach (var carDescription in Model.CarDescriptions)
+                    {
+                        <p class="pt-2">@carDescription</p>
+                    }
                     <a href="about.html" class="btn-first btn-submit">Şimdi Rezerve Edin</a>
                 </div>
             </div>
             <div class="col-xl-5 col-lg-6">
                 <div class="about-right-side full-height">
-                    <div class="about-img full-height"> <img src="https://www.avis.com.tr/Avis/media/Avis/Cars/b-fiat-egea-cross.png" class="img-fluid image-fit" alt="img"> </div>
+                    <div class="about-img full-height"> <img src="@Model.CarImage" class="img-fluid image-fit recommended-car-image-fit" alt="img"> </div>
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
-﻿<div class="banner-tabs">
+﻿@model ReservationViewModel
+<div class="banner-tabs">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -6,7 +7,8 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="cars">
                             <div class="tab-inner">
-                                <form>
+                                @using (Html.BeginForm("Insert", "Home"))
+                                {
                                     <div class="row">
                                         <div class="offset-2 col-lg-3 col-md-6">
                                             <div class="form-group">
@@ -18,7 +20,7 @@
                                             <div class="form-group">
                                                 <label class="fs-14 text-custom-white fw-600">Alış Tarihi</label>
                                                 <div class="input-group group-form">
-                                                    <input type="text" name="#" class="form-control form-control-custom datepickr" placeholder="05.05.2022" readonly>
+                                                    @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control form-control-custom datepickr", placeholder = "05.05.2022", @readonly = "readonly" })
                                                     <span class="input-group-append"> <i class="far fa-calendar"></i> </span>
                                                 </div>
                                             </div>
@@ -27,13 +29,7 @@
                                             <div class="form-group">
                                                 <label class="fs-14 text-custom-white fw-600">Alış Saati</label>
                                                 <div class="group-form">
-                                                    <select class="custom-select form-control form-control-custom">
-                                                        @for (int index = 0; index < 24; index++)
-                                                        {
-                                                            <option>@(index.ToString().Length == 1 ? "0"+index : index):00</option>
-                                                            <option>@(index.ToString().Length == 1 ? "0"+index : index):30</option>
-                                                        }
-                                                    </select>
+                                                    @Html.DropDownListFor(x => x.StartHour, Model.StartHours.Select(x => new SelectListItem() { Text = x.Value, Value = x.Key }), string.Empty, new { @class = "custom-select form-control form-control-custom" })
                                                 </div>
                                             </div>
                                         </div>
@@ -49,7 +45,7 @@
                                             <div class="form-group">
                                                 <label class="fs-14 text-custom-white fw-600">İade Tarihi</label>
                                                 <div class="input-group group-form">
-                                                    <input type="text" name="#" class="form-control form-control-custom datepickr" placeholder="12.05.2022" readonly>
+                                                    @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control form-control-custom datepickr", placeholder = "05.05.2022", @readonly = "readonly" })
                                                     <span class="input-group-append"> <i class="far fa-calendar"></i> </span>
                                                 </div>
                                             </div>
@@ -58,13 +54,7 @@
                                             <div class="form-group">
                                                 <label class="fs-14 text-custom-white fw-600">İade Saati</label>
                                                 <div class="group-form">
-                                                    <select class="custom-select form-control form-control-custom">
-                                                        @for (int index = 0; index < 24; index++)
-                                                        {
-                                                            <option>@(index.ToString().Length == 1 ? "0"+index : index):00</option>
-                                                            <option>@(index.ToString().Length == 1 ? "0"+index : index):30</option>
-                                                        }
-                                                    </select>
+                                                    @Html.DropDownListFor(x => x.EndHour, Model.EndHours.Select(x => new SelectListItem() { Text = x.Value, Value = x.Key }), string.Empty, new { @class = "custom-select form-control form-control-custom" })
                                                 </div>
                                             </div>
                                         </div>
@@ -72,11 +62,11 @@
                                     <div class="row text-right">
                                         <div class="offset-2 col-lg-8 col-md-6">
                                             <div class="form-group">
-                                                <button class="btn-first btn-submit full-width btn-height">2 Gün Kirala</button>
+                                                <button type="submit" class="btn-first btn-submit full-width btn-height">2 Gün Kirala</button>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                }
                             </div>
                         </div>
                     </div>
