@@ -1,11 +1,11 @@
-﻿.bg-red {
+﻿/*.bg-red {
     background-color: #ff0000 !important;
 }
 
     .bg-red .menu-item > a {
         color: #ffffff !important;
-    }
+    }*/
 
-.image-fit {
+.recommended-car-image-fit {
     object-fit: scale-down !important;
 }

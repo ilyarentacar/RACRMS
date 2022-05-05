@@ -1,14 +1,15 @@
-﻿<!-- Start Slider -->
+﻿@model HomeViewModel
+<!-- Start Slider -->
 @await Html.PartialAsync("_SliderPartial")
 <!-- End Slider -->
 <!-- Start Reservation -->
-@await Html.PartialAsync("_ReservationPartial")
+@await Html.PartialAsync("_ReservationPartial", Model.reservationViewModel)
 <!-- End Reservation -->
 <!-- Start Recommended Car -->
-@await Html.PartialAsync("_RecommendedCarPartial")
+@await Html.PartialAsync("_RecommendedCarPartial", Model.recommendedCarViewModel)
 <!-- End Recommended Car -->
 <!-- Recommended Cars -->
-@await Html.PartialAsync("_FiloPartial")
+@await Html.PartialAsync("_FiloPartial", Model.filoViewModel)
 <!-- End Car -->
 <!-- Start Why choose Us -->
 @await Html.PartialAsync("_WhyChooseUsPartial")
