@@ -83,6 +83,31 @@ namespace RACRMS.ManagementWebApp.Controllers
             }
         }
 
+        [HttpGet("CarDetail")]
+        public async Task<IActionResult> CarDetail(int id)
+        {
+            try
+            {
+                var car = await carBL.GetByIdAsync(id);
+                var cars = await carBL.GetAsync();
+
+                await getWaitingReservationCountasync();
+                await getWaitingContractCountasync();
+
+                return View("Index", new CarViewModel(OpenDetailPopup: true)
+                {
+                    Car = car,
+                    Cars = cars
+                });
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Session.SetString("ErrorMessage", ex.Message);
+
+                return RedirectToAction("Index");
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> Insert()
         {
@@ -100,7 +125,9 @@ namespace RACRMS.ManagementWebApp.Controllers
                     Car = new CarDTO()
                     {
                         CarBrands = carBrands,
-                        Rentable = true
+                        Rentable = true,
+                        MostPrefered = false,
+                        ShowOnFilo = true
                     }
                 });
             }

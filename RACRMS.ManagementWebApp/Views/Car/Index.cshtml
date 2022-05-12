@@ -45,7 +45,7 @@
                     },
                     {
                         orderable: false,
-                        targets: [10]
+                        targets: [9]
                     }
                 ]
             });
@@ -65,13 +65,12 @@
                 <th>Sıra No</th>
                 <th>Plakası</th>
                 <th>Kiraya Gidebilir</th>
+                <th>En Çok Tercih Edilen</th>
+                <th>Filoda Göster</th>
                 <th>Markası</th>
                 <th>Modeli</th>
                 <th>Sınıfı</th>
                 <th>Tipi</th>
-                <th>Kasa Tipi</th>
-                <th>Yakıt Tipi</th>
-                <th>Vites Tipi</th>
                 <th class="text-center">İşlemler</th>
                 <th></th>
             </tr>
@@ -90,14 +89,28 @@
                     {
                         <td><span class="badge badge-dark">Hayır</span></td>
                     }
+                    @if (car.MostPrefered)
+                    {
+                        <td><span class="badge badge-success">Evet</span></td>
+                    }
+                    else
+                    {
+                        <td><span class="badge badge-dark">Hayır</span></td>
+                    }
+                    @if (car.ShowOnFilo)
+                    {
+                        <td><span class="badge badge-success">Evet</span></td>
+                    }
+                    else
+                    {
+                        <td><span class="badge badge-dark">Hayır</span></td>
+                    }
                     <td>@car.CarBrand.Name</td>
                     <td>@car.CarModel.Name</td>
                     <td>@car.CarClass.Name</td>
                     <td>@car.CarType.Name</td>
-                    <td>@car.CarChassisType.Name</td>
-                    <td>@car.CarFuelType.Name</td>
-                    <td>@car.CarGearType.Name</td>
                     <td class="text-center">
+                        <a href="@Url.Action("CarDetail",new { id = car.Id} )" class="btn btn-sm btn-dark btn-icon mr-2"><i class="icon-file-text3"></i></a>
                         <a href="@Url.Action("Update",new { id = car.Id} )" class="btn btn-sm btn-secondary btn-icon mr-2"><i class="icon-pencil7"></i></a>
                         <a href="@Url.Action("Delete",new { id = car.Id} )" class="btn btn-sm btn-danger btn-icon"><i class="icon-bin"></i></a>
                     </td>
@@ -120,4 +133,8 @@ else if (Model != null && Model.OpenUpdatePopup)
 else if (Model != null && Model.OpenDeletePopup)
 {
     await Html.RenderPartialAsync("_DeletePartial", Model.Car);
+}
+else if (Model != null && Model.OpenDetailPopup)
+{
+    await Html.RenderPartialAsync("_DetailPartial", Model.Car);
 }
