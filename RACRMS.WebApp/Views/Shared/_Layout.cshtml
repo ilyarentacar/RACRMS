@@ -55,11 +55,13 @@
     @await Html.PartialAsync("_TopBarPartial")
     <!-- End Topbar -->
     <!-- Header -->
-    @RenderBody()
     <div id="back-top" class="back-top"> <a href="#top"><i class="flaticon-arrows"></i></a> </div>
     <!-- Place all Scripts Here -->
     <!-- jQuery -->
     <script src="~/lib/Template/assets/js/jquery.min.js"></script>
+    @RenderBody()
+    <!-- Moment -->
+    <script src="~/lib/Template/assets/js/moment.min.js"></script>
     <!-- Popper -->
     <script src="~/lib/Template/assets/js/popper.min.js"></script>
     <!-- Bootstrap -->

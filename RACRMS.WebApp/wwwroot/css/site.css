@@ -1,11 +1,11 @@
-﻿/*.bg-red {
-    background-color: #ff0000 !important;
+﻿.label-input-control {
+    line-height: 38px;
 }
-
-    .bg-red .menu-item > a {
-        color: #ffffff !important;
-    }*/
 
 .recommended-car-image-fit {
     object-fit: scale-down !important;
+}
+
+.form-control-custom.disabled {
+    color: #6c757d !important;
 }
