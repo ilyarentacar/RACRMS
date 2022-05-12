@@ -32,6 +32,20 @@ namespace RACRMS.BusinessLayer.Concrete
 
                 if (car != null)
                 {
+                    if (car.MostPrefered)
+                    {
+                        Car entity = await unitOfWork.Car
+                            .Select()
+                            .FirstOrDefaultAsync();
+
+                        if (entity != null)
+                        {
+                            entity.MostPrefered = true;
+
+                            unitOfWork.Car.Update(entity);
+                        }
+                    }
+
                     unitOfWork.Car.Delete(car);
 
                     return await unitOfWork.SaveChangesAsync();
@@ -100,10 +114,26 @@ namespace RACRMS.BusinessLayer.Concrete
                     CarChassisTypeId = dto.CarChassisTypeId,
                     CarFuelTypeId = dto.CarFuelTypeId,
                     CarGearTypeId = dto.CarGearTypeId,
+                    MostPrefered = dto.MostPrefered,
+                    ShowOnFilo = dto.ShowOnFilo,
                     Rentable = dto.Rentable,
                     PlateNumber = dto.PlateNumber,
                     CreateDate = DateTime.Now
                 };
+
+                if (car.MostPrefered)
+                {
+                    Car entity = await unitOfWork.Car
+                        .Select()
+                        .FirstOrDefaultAsync(x => x.MostPrefered);
+
+                    if (entity != null)
+                    {
+                        entity.MostPrefered = false;
+
+                        unitOfWork.Car.Update(entity);
+                    }
+                }
 
                 await unitOfWork.Car.InsertAsync(car);
 
@@ -133,9 +163,27 @@ namespace RACRMS.BusinessLayer.Concrete
                 car.CarChassisTypeId = dto.CarChassisTypeId;
                 car.CarFuelTypeId = dto.CarFuelTypeId;
                 car.CarGearTypeId = dto.CarGearTypeId;
+                car.MostPrefered = dto.MostPrefered;
+                car.ShowOnFilo = dto.ShowOnFilo;
                 car.Rentable = dto.Rentable;
                 car.PlateNumber = dto.PlateNumber;
                 car.UpdateDate = DateTime.Now;
+
+                if (car.MostPrefered)
+                {
+                    Car entity = await unitOfWork.Car
+                        .Select()
+                        .Where(x => x.Id != dto.Id)
+                        .Where(x => x.MostPrefered)
+                        .FirstOrDefaultAsync();
+
+                    if (entity != null)
+                    {
+                        entity.MostPrefered = false;
+
+                        unitOfWork.Car.Update(entity);
+                    }
+                }
 
                 unitOfWork.Car.Update(car);
 

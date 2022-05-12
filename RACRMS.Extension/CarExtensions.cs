@@ -29,6 +29,8 @@ namespace RACRMS.Extension
                     CarFuelTypeName = entity.CarFuelType != null ? entity.CarFuelType.Name : string.Empty,
                     CarGearTypeId = entity.CarGearTypeId,
                     CarGearTypeName = entity.CarGearType != null ? entity.CarGearType.Name : string.Empty,
+                    MostPrefered = entity.MostPrefered,
+                    ShowOnFilo = entity.ShowOnFilo,
                     Rentable = entity.Rentable,
                     PlateNumber = entity.PlateNumber,
                     CreateDate = entity.CreateDate,

@@ -35,6 +35,11 @@ namespace RACRMS.DataTransferObject
         [CustomRequired(ErrorMessage = "Bu alan boş bırakılamaz.")]
         public int CarGearTypeId { get; set; }
 
+        [DisplayName("En Çok Tercih Edilen")]
+        public bool MostPrefered { get; set; }
+        [DisplayName("Filoda Göster")]
+        public bool ShowOnFilo { get; set; }
+
         [DisplayName("Kiraya Gidebilir")]
         public bool Rentable { get; set; }
 

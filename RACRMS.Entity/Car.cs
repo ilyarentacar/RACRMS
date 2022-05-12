@@ -22,6 +22,8 @@ namespace RACRMS.Entity
         public int CarChassisTypeId { get; set; }
         public int CarFuelTypeId { get; set; }
         public int CarGearTypeId { get; set; }
+        public bool MostPrefered { get; set; }
+        public bool ShowOnFilo { get; set; }
         public bool Rentable { get; set; }
         public string PlateNumber { get; set; }
         public DateTime CreateDate { get; set; }

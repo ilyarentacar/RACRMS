@@ -223,6 +223,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
+                            <div class="custom-control custom-switch custom-switch-square custom-control-success mt-3 pt-3">
+                                @Html.CheckBoxFor(x => x.MostPrefered, new { @class = "custom-control-input" })
+                                @Html.LabelFor(x => x.MostPrefered, new { @class = "custom-control-label" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="custom-control custom-switch custom-switch-square custom-control-success mt-3 pt-3">
+                                @Html.CheckBoxFor(x => x.ShowOnFilo, new { @class = "custom-control-input" })
+                                @Html.LabelFor(x => x.ShowOnFilo, new { @class = "custom-control-label" })
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
