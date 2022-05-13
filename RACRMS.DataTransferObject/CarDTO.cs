@@ -77,6 +77,8 @@ namespace RACRMS.DataTransferObject
         public string CarFuelTypeName { get; set; }
         [DisplayName("Araç Vites Tipi :")]
         public string CarGearTypeName { get; set; }
+        [DisplayName("Kiralama Fiyatı :")]
+        public decimal RentalPrice { get; set; }
 
 
         public List<CarBrandDTO> CarBrands { get; set; }

@@ -32,11 +32,12 @@ namespace RACRMS.DataTransferObject
         public int CarFuelTypeId { get; set; }
         [CustomRequired(ErrorMessage = "Bu alan boş bırakılamaz.")]
         public int CarGearTypeId { get; set; }
-        public Guid CarImageId { get; set; }
         [DisplayName("Adı :")]
         [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
         [MaxLength(15)]
         public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public string Description { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
 

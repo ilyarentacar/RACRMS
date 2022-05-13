@@ -154,6 +154,10 @@ namespace RACRMS.Entity
             {
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Description).HasMaxLength(500);
+
+                entity.Property(e => e.ImageUrl).HasMaxLength(150);
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(15);

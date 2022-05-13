@@ -238,5 +238,50 @@ namespace RACRMS.BusinessLayer.Concrete
                 throw;
             }
         }
+
+        public async Task<CarDTO> GetMostPrefered()
+        {
+            try
+            {
+                return await unitOfWork.Car.Select()
+                    .Include(x => x.CarClass)
+                    .Include(x => x.CarType)
+                    .Include(x => x.CarBrand)
+                    .Include(x => x.CarModel)
+                    .Include(x => x.CarChassisType)
+                    .Include(x => x.CarFuelType)
+                    .Include(x => x.CarGearType)
+                    .Include(x => x.CarRentalPrice)
+                    .Where(x => x.MostPrefered)
+                    .Select(x => x.ToDTO()).FirstOrDefaultAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<CarDTO>> GetFilo()
+        {
+            try
+            {
+                return await unitOfWork.Car.Select()
+                    .Include(x => x.CarClass)
+                    .Include(x => x.CarType)
+                    .Include(x => x.CarBrand)
+                    .Include(x => x.CarModel)
+                    .Include(x => x.CarChassisType)
+                    .Include(x => x.CarFuelType)
+                    .Include(x => x.CarGearType)
+                    .Include(x => x.CarRentalPrice)
+                    .Where(x => x.ShowOnFilo)
+                    .Select(x => x.ToDTO())
+                    .ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
