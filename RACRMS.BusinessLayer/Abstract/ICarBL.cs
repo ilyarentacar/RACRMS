@@ -13,5 +13,7 @@ namespace RACRMS.BusinessLayer.Abstract
         Task<int> InsertAsync(CarDTO dto);
         Task<int> UpdateAsync(CarDTO dto);
         Task<int> DeleteAsync(int id);
+        Task<CarDTO> GetMostPrefered();
+        Task<List<CarDTO>> GetFilo();
     }
 }

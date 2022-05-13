@@ -10,12 +10,12 @@ namespace RACRMS.WebApp.Models
         public HomeViewModel()
         {
             reservationViewModel = new ReservationViewModel();
-            recommendedCarViewModel = new RecommendedCarViewModel();
+            mostPreferedCarViewModel = new MostPreferedCarViewModel();
             filoViewModel = new FiloViewModel();
         }
 
         public ReservationViewModel reservationViewModel { get; set; }
-        public RecommendedCarViewModel recommendedCarViewModel { get; set; }
+        public MostPreferedCarViewModel mostPreferedCarViewModel { get; set; }
         public FiloViewModel filoViewModel { get; set; }
     }
 }

@@ -116,8 +116,9 @@ namespace RACRMS.BusinessLayer.Concrete
                     CarChassisTypeId = dto.CarChassisTypeId,
                     CarFuelTypeId = dto.CarFuelTypeId,
                     CarGearTypeId = dto.CarGearTypeId,
-                    CarImageId = Guid.NewGuid(),
                     Name = dto.Name,
+                    ImageUrl = dto.ImageUrl,
+                    Description = dto.Description,
                     CreateDate = DateTime.Now
                 };
 
@@ -148,8 +149,9 @@ namespace RACRMS.BusinessLayer.Concrete
                 carModel.CarChassisTypeId = dto.CarChassisTypeId;
                 carModel.CarFuelTypeId = dto.CarFuelTypeId;
                 carModel.CarGearTypeId = dto.CarGearTypeId;
-                carModel.CarImageId = dto.CarImageId;
                 carModel.Name = dto.Name;
+                carModel.ImageUrl = dto.ImageUrl;
+                carModel.Description = dto.Description;
                 carModel.UpdateDate = DateTime.Now;
 
                 unitOfWork.CarModel.Update(carModel);

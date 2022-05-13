@@ -27,7 +27,8 @@ namespace RACRMS.Extension
                     CarFuelTypeName = entity.CarFuelType != null ? entity.CarFuelType.Name : string.Empty,
                     CarGearTypeId = entity.CarGearTypeId,
                     CarGearTypeName = entity.CarGearType != null ? entity.CarGearType.Name : string.Empty,
-                    CarImageId = entity.CarImageId,
+                    ImageUrl = entity.ImageUrl,
+                    Description = entity.Description,
                     Name = entity.Name,
                     CreateDate = entity.CreateDate,
                     UpdateDate = entity.UpdateDate,
@@ -36,7 +37,7 @@ namespace RACRMS.Extension
                     CarClass = entity.CarClass != null ? entity.CarClass.ToDTO() : new CarClassDTO(),
                     CarFuelType = entity.CarFuelType != null ? entity.CarFuelType.ToDTO() : new CarFuelTypeDTO(),
                     CarGearType = entity.CarGearType != null ? entity.CarGearType.ToDTO() : new CarGearTypeDTO(),
-                    CarType = entity.CarType != null ? entity.CarType.ToDTO() : new CarTypeDTO()
+                    CarType = entity.CarType != null ? entity.CarType.ToDTO() : new CarTypeDTO(),
                 };
             }
             catch

@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RACRMS.BusinessLayer\RACRMS.BusinessLayer.csproj" />
     <ProjectReference Include="..\RACRMS.DataTransferObject\RACRMS.DataTransferObject.csproj" />
   </ItemGroup>
 

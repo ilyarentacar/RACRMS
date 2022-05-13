@@ -2,6 +2,7 @@
 using RACRMS.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RACRMS.Extension
@@ -41,7 +42,8 @@ namespace RACRMS.Extension
                     CarClass = entity.CarClass != null ? entity.CarClass.ToDTO() : new CarClassDTO(),
                     CarFuelType = entity.CarFuelType != null ? entity.CarFuelType.ToDTO() : new CarFuelTypeDTO(),
                     CarGearType = entity.CarGearType != null ? entity.CarGearType.ToDTO() : new CarGearTypeDTO(),
-                    CarType = entity.CarType != null ? entity.CarType.ToDTO() : new CarTypeDTO()
+                    CarType = entity.CarType != null ? entity.CarType.ToDTO() : new CarTypeDTO(),
+                    RentalPrice = entity.CarRentalPrice != null && entity.CarRentalPrice.Count != 0 ? entity.CarRentalPrice.FirstOrDefault().RentPrice : 0
                 };
             }
             catch

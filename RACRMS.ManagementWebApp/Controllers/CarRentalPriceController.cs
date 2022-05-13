@@ -91,7 +91,7 @@ namespace RACRMS.ManagementWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Insert(CarRentalPriceDTO RentalPrice)
+        public async Task<IActionResult> Insert(CarRentalPriceDTO model)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                     return RedirectToAction("Index");
                 }
 
-                await carRentalPriceBL.InsertAsync(RentalPrice);
+                await carRentalPriceBL.InsertAsync(model);
 
                 HttpContext.Session.SetString("SuccessMessage", "Kayıt işlemi başarıyla tamamlanmıştır.");
 
@@ -145,7 +145,7 @@ namespace RACRMS.ManagementWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(CarRentalPriceDTO RentalPrice)
+        public async Task<IActionResult> Update(CarRentalPriceDTO model)
         {
             try
             {
@@ -156,7 +156,7 @@ namespace RACRMS.ManagementWebApp.Controllers
                     return RedirectToAction("Index");
                 }
 
-                await carRentalPriceBL.UpdateAsync(RentalPrice);
+                await carRentalPriceBL.UpdateAsync(model);
 
                 HttpContext.Session.SetString("SuccessMessage", "Güncelleme işlemi başarıyla tamamlanmıştır.");
 
@@ -196,11 +196,11 @@ namespace RACRMS.ManagementWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(CarDTO RentalPrice)
+        public async Task<IActionResult> Delete(CarDTO model)
         {
             try
             {
-                await carRentalPriceBL.DeleteAsync(RentalPrice.Id);
+                await carRentalPriceBL.DeleteAsync(model.Id);
 
                 HttpContext.Session.SetString("SuccessMessage", "Silme işlemi başarıyla tamamlanmıştır.");
 

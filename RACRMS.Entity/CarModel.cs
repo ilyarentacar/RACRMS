@@ -17,8 +17,9 @@ namespace RACRMS.Entity
         public int CarChassisTypeId { get; set; }
         public int CarFuelTypeId { get; set; }
         public int CarGearTypeId { get; set; }
-        public Guid CarImageId { get; set; }
         public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public string Description { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
 
