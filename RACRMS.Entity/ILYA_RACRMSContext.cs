@@ -40,9 +40,9 @@ namespace RACRMS.Entity
             if (!optionsBuilder.IsConfigured)
             {
 #if DEBUG
-                optionsBuilder.UseSqlServer("Server=.;Database=ILYA_RACRMS;User Id=sa;Password=07081983Konya");
+                optionsBuilder.UseSqlServer("Server=.;Database=ILYA_RACRMS;User Id=sa;Password=07081983Konya;MultipleActiveResultSets=True");
 #else
-                optionsBuilder.UseSqlServer("Server=localhost;Database=ILYA_RACRMS;User Id=ilya_sa;Password=PCZ6hqP!GAg%4cBP");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=ILYA_RACRMS;User Id=ilya_sa;Password=PCZ6hqP!GAg%4cBP;MultipleActiveResultSets=True");
 #endif
             }
         }

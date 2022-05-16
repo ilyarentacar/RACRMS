@@ -1,16 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<RuntimeFrameworkVersion>5.0.9</RuntimeFrameworkVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\RACRMS.BusinessLayer\RACRMS.BusinessLayer.csproj" />
-    <ProjectReference Include="..\RACRMS.DataTransferObject\RACRMS.DataTransferObject.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\RACRMS.BusinessLayer\RACRMS.BusinessLayer.csproj" />
+		<ProjectReference Include="..\RACRMS.DataTransferObject\RACRMS.DataTransferObject.csproj" />
+	</ItemGroup>
 
 </Project>

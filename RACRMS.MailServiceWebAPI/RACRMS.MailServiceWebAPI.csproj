@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
+		<RuntimeFrameworkVersion>5.0.9</RuntimeFrameworkVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>

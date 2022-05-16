@@ -72,9 +72,9 @@ namespace RACRMS.Repository.Concrete
             try
             {
                 if (predicate == null)
-                    return dbContext.Set<T>().AsQueryable();
+                    return dbContext.Set<T>().AsQueryable().AsNoTracking();
 
-                return dbContext.Set<T>().Where(predicate);
+                return dbContext.Set<T>().Where(predicate).AsNoTracking();
             }
             catch
             {

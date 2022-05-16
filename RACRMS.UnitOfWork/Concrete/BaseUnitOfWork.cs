@@ -12,28 +12,7 @@ namespace RACRMS.UnitOfWork.Concrete
 {
     public class BaseUnitOfWork : IBaseUnitOfWork
     {
-        private static readonly object lockerObject = new object();
-
-        private DbContext _dbContext;
-
-        private DbContext dbContext
-        {
-            get
-            {
-                if (_dbContext == null)
-                {
-                    lock (lockerObject)
-                    {
-                        if (_dbContext == null)
-                        {
-                            _dbContext = new ILYA_RACRMSContext();
-                        }
-                    }
-                }
-
-                return _dbContext;
-            }
-        }
+        private readonly DbContext dbContext = new ILYA_RACRMSContext();
 
         public ICarBrandDAL CarBrand => new CarBrandDAL(dbContext);
 
@@ -82,10 +61,6 @@ namespace RACRMS.UnitOfWork.Concrete
             catch
             {
                 throw;
-            }
-            finally
-            {
-                dbContext.Dispose();
             }
         }
     }
