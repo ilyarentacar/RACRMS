@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using RACRMS.DataAccessLayer.Abstract;
 using RACRMS.DataAccessLayer.Concrete;
 using RACRMS.Entity;
@@ -12,7 +13,22 @@ namespace RACRMS.UnitOfWork.Concrete
 {
     public class BaseUnitOfWork : IBaseUnitOfWork
     {
-        private readonly DbContext dbContext = new ILYA_RACRMSContext();
+        private readonly object locker = new object();
+
+        private DbContext _dbContext;
+
+        private DbContext dbContext
+        {
+            get
+            {
+                if (_dbContext == null)
+                    lock (locker)
+                        if (_dbContext == null)
+                            _dbContext = new ILYA_RACRMSContext();
+
+                return _dbContext;
+            }
+        }
 
         public ICarBrandDAL CarBrand => new CarBrandDAL(dbContext);
 
@@ -54,13 +70,26 @@ namespace RACRMS.UnitOfWork.Concrete
 
         public async Task<int> SaveChangesAsync()
         {
+            IDbContextTransaction transaction = await dbContext.Database.BeginTransactionAsync();
+
             try
             {
-                return await dbContext.SaveChangesAsync();
+                int result = await dbContext.SaveChangesAsync();
+
+                transaction.Commit();
+
+                return result;
             }
             catch
             {
+                transaction.Rollback();
+
                 throw;
+            }
+            finally
+            {
+                if (dbContext != null)
+                    dbContext.Dispose();
             }
         }
     }

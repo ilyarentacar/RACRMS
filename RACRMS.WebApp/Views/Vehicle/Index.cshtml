@@ -1,19 +1,13 @@
-﻿@model HomeViewModel
-<!-- Start Slider -->
-@await Html.PartialAsync("_SliderPartial")
-<!-- End Slider -->
+﻿@model VehicleViewModel
 <!-- Start Reservation -->
 @await Html.PartialAsync("_ReservationPartial", Model.reservationViewModel)
 <!-- End Reservation -->
-<!-- Start Recommended Car -->
-@await Html.PartialAsync("_MostPreferedCarPartial", Model.mostPreferedCarViewModel)
-<!-- End Recommended Car -->
+<!-- Start Vehicle Class Topbar -->
+@await Html.PartialAsync("_VehicleClassTopbarPartial")
+<!-- End Vehicle Class Topbar -->
 <!-- Filo -->
 @await Html.PartialAsync("_FiloPartial", Model.filoViewModel)
 <!-- End Filo -->
-<!-- Start Why choose Us -->
-@await Html.PartialAsync("_WhyChooseUsPartial")
-<!-- End Why choose Us -->
 <!-- Start Footer -->
 @await Html.PartialAsync("_FooterPartial")
 <!-- End Footer -->

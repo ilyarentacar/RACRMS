@@ -11,6 +11,7 @@ namespace RACRMS.WebApp.Models
 
         public class CarViewModel
         {
+            public int Id { get; set; }
             public string ImageUrl { get; set; }
             public string CarClassName { get; set; }
             public string CarChassisTypeName { get; set; }
