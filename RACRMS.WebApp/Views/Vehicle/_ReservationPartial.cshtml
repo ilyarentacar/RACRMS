@@ -1,0 +1,239 @@
+﻿@model ReservationViewModel
+<div class="banner-tabs mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="tabs">
+                    <div class="tab-content pb-2">
+                        <div class="tab-pane active" id="cars">
+                            <div class="tab-inner">
+                                @using (Html.BeginForm("Insert", "Home"))
+                                {
+                                    <div class="row">
+                                        <div class="offset-2 col-lg-3 col-md-6">
+                                            <div class="form-group">
+                                                <label class="fs-14 text-custom-white fw-600">Teslim Alma Ofisi</label>
+                                                <label class="form-control form-control-custom label-input-control">Sakarya, Adapazarı - Merkez Ofis</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6">
+                                            <div class="form-group">
+                                                <label class="fs-14 text-custom-white fw-600">Alış Tarihi</label>
+                                                <div class="input-group group-form">
+                                                    @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control form-control-custom datepickr", placeholder = "Tarih seçiniz...", @readonly = "readonly" })
+                                                    <span class="input-group-append"> <i class="far fa-calendar"></i> </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-6">
+                                            <div class="form-group">
+                                                <label class="fs-14 text-custom-white fw-600">Alış Saati</label>
+                                                <div class="group-form">
+                                                    @Html.DropDownListFor(x => x.StartHour, Model.StartHours.Select(x => new SelectListItem() { Text = x.Value, Value = x.Key }), "Saat seçiniz...", new { @class = "custom-select form-control form-control-custom" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="offset-2 col-lg-3 col-md-6">
+                                            <div class="form-group">
+                                                <label class="fs-14 text-custom-white fw-600">İade Etme Ofisi</label>
+                                                <label class="form-control form-control-custom label-input-control">Sakarya, Adapazarı - Merkez Ofis</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6">
+                                            <div class="form-group">
+                                                <label class="fs-14 text-custom-white fw-600">İade Tarihi</label>
+                                                <div class="input-group group-form">
+                                                    @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control form-control-custom datepickr", placeholder = "Tarih seçiniz...", @readonly = "readonly" })
+                                                    <span class="input-group-append"> <i class="far fa-calendar"></i> </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-6">
+                                            <div class="form-group">
+                                                <label class="fs-14 text-custom-white fw-600">İade Saati</label>
+                                                <div class="group-form">
+                                                    @Html.DropDownListFor(x => x.EndHour, Model.EndHours.Select(x => new SelectListItem() { Text = x.Value, Value = x.Key }), "Saat seçiniz...", new { disabled = "disabled", @class = "custom-select form-control form-control-custom" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var startDate;
+    var endDate;
+
+    var startHour;
+    var endHour;
+
+    var todayDate;
+    var afterDayDate;
+
+    var currentHour;
+    var currentMinute;
+
+    var startDateDatePicker;
+    var endDateDatePicker;
+
+    var reservationButton;
+
+    $(function () {
+
+        $(document).ready(function () {
+            init();
+            setDatePickers();
+            setTimeOptions();
+            setInitialDateValues();
+        });
+
+        function setInitialDateValues() {
+            startDateDatePicker.selectDate(addDaysToDate(todayDate, 1));
+            endDateDatePicker.selectDate(addDaysToDate(todayDate, 2));
+            setInitialTimeValues();
+        }
+
+        function setInitialTimeValues() {
+            currentHour++;
+
+            if (currentMinute > 0 && currentMinute <= 30)
+                currentMinute = 30;
+            else
+                currentMinute = 0;
+
+            var timeOptionValue = setTimeFormat();
+
+            $(startHour).val(timeOptionValue);
+            $(endHour).val(timeOptionValue);
+
+            $(startHour).niceSelect('update')
+            $(endHour).niceSelect('update')
+        }
+
+        function setTimeFormat() {
+            var strHour;
+            var strMinute;
+
+            if (currentHour.toString().length < 2)
+                strHour = '0' + currentHour;
+            else
+                strHour = currentHour;
+
+            if (currentMinute == 0)
+                strMinute = '00';
+            else
+                strMinute = '30';
+
+            return (strHour + ':' + strMinute);
+        }
+
+        function setTimeOptions() {
+            $(startHour).niceSelect();
+            $(endHour).niceSelect();
+        }
+
+        function setDatePickers() {
+            startDateDatePicker = $(startDate).datepicker({
+                inline: false,
+                language: 'en',
+                startDate: addDaysToDate(todayDate, 1),
+                minDate: addDaysToDate(todayDate, 1),
+                maxDate: addMonthsToDate(todayDate, 1),
+                todayButton: addDaysToDate(todayDate, 1),
+                clearButton: true,
+                autoClose: true,
+                timepicker: false,
+                onSelect: function (x, y, z) {
+                    var startDateDatePickerValue = startDateDatePicker.selectedDates[0];
+                    var endDateDatePickerValue = endDateDatePicker.selectedDates[0];
+
+                    afterDayDate = addDaysToDate(startDateDatePickerValue, 1);
+
+                    endDateDatePicker.update({
+                        startDate: afterDayDate,
+                        minDate: afterDayDate
+                    });
+
+                    if (endDateDatePickerValue < startDateDatePickerValue)
+                        endDateDatePicker.selectDate(afterDayDate);
+                }
+            }).data('datepicker');
+
+            endDateDatePicker = $(endDate).datepicker({
+                inline: false,
+                language: 'en',
+                startDate: addDaysToDate(todayDate, 2),
+                minDate: addDaysToDate(todayDate, 2),
+                maxDate: addDaysToDate(todayDate, 29),
+                clearButton: true,
+                autoClose: true,
+                timepicker: false,
+                onSelect: function (x, y, z) {
+                    setReservationDays();
+                }
+            }).data('datepicker');
+        }
+
+        function init() {
+            startDate = $('#StartDate');
+            endDate = $('#EndDate');
+
+            startHour = $('#StartHour');
+            endHour = $('#EndHour');
+
+            $(startHour).on('change', startHour_onChange);
+
+            reservationButton = $('#btnReservation');
+
+            todayDate = new Date();
+
+            currentHour = todayDate.getHours();
+            currentMinute = todayDate.getMinutes();
+        }
+
+        function startHour_onChange() {
+            var startHourValue = $(startHour).val();
+
+            $(endHour).val(startHourValue);
+
+            $(endHour).niceSelect('update')
+        }
+
+        function setReservationDays() {
+            var startDateDatePickerValue = startDateDatePicker.selectedDates[0];
+            var endDateDatePickerValue = endDateDatePicker.selectedDates[0];
+            var dateRangeValue = (new Date(endDateDatePickerValue - startDateDatePickerValue).getDate()) - 1;
+            $(reservationButton).html(dateRangeValue + ' Gün Kirala');
+        }
+
+        function addMonthsToDate(_date, _noOfMonths) {
+            var yearFromDate = _date.getFullYear();
+            var monthFromYear = _date.getMonth();
+            var dayFromYear = _date.getDate();
+            var newDate = new Date(yearFromDate, monthFromYear + _noOfMonths, dayFromYear);
+            return newDate;
+        }
+
+        function addDaysToDate(_date, _noOfDays) {
+            var yearFromDate = _date.getFullYear();
+            var monthFromYear = _date.getMonth();
+            var dayFromYear = _date.getDate();
+            var hourFromDate = _date.getHours();
+            var minuteFromDate = _date.getMinutes();
+            var secondFromDate = _date.getSeconds();
+            var newDate = new Date(yearFromDate, monthFromYear, dayFromYear + _noOfDays, hourFromDate, minuteFromDate, secondFromDate);
+            return newDate;
+        }
+
+    });
+</script>

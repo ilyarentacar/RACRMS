@@ -23,7 +23,9 @@ namespace RACRMS.Repository.Concrete
         {
             try
             {
-                dbContext.Remove(entity).State = EntityState.Deleted;
+                dbContext.Entry(entity).State = EntityState.Detached;
+                dbContext.Attach(entity);
+                dbContext.Remove(entity);
             }
             catch
             {
@@ -47,7 +49,9 @@ namespace RACRMS.Repository.Concrete
         {
             try
             {
-                (await dbContext.AddAsync(entity)).State = EntityState.Added;
+                dbContext.Entry(entity).State = EntityState.Detached;
+                dbContext.Attach(entity);
+                await dbContext.AddAsync(entity);
             }
             catch
             {
@@ -86,7 +90,9 @@ namespace RACRMS.Repository.Concrete
         {
             try
             {
-                dbContext.Update(entity).State = EntityState.Modified;
+                dbContext.Entry(entity).State = EntityState.Detached;
+                dbContext.Attach(entity);
+                dbContext.Update(entity);
             }
             catch
             {
