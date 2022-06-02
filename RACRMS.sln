@@ -25,9 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.ManagementWebApp", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.WebApp", "RACRMS.WebApp\RACRMS.WebApp.csproj", "{A9A30613-618D-4F56-9E7E-73BFB48A1343}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACRMS.MailServiceWebAPI", "RACRMS.MailServiceWebAPI\RACRMS.MailServiceWebAPI.csproj", "{62653C47-20B1-4C77-96C1-C49FC777BCE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.MailServiceWebApi", "RACRMS.MailServiceWebAPI\RACRMS.MailServiceWebApi.csproj", "{62653C47-20B1-4C77-96C1-C49FC777BCE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACRMS.MailServiceShared", "RACRMS.MailServiceShared\RACRMS.MailServiceShared.csproj", "{B82959A2-B89D-418B-80F5-B8DAF131728D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.MailServiceShared", "RACRMS.MailServiceShared\RACRMS.MailServiceShared.csproj", "{B82959A2-B89D-418B-80F5-B8DAF131728D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

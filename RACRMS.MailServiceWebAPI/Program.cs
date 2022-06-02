@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RACRMS.MailServiceWebAPI
+namespace RACRMS.MailServiceWebApi
 {
     public class Program
     {

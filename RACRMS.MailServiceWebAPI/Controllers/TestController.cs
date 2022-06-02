@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RACRMS.MailServiceWebAPI.Controllers
+namespace RACRMS.MailServiceWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
