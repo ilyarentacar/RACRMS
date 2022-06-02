@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using RACRMS.BusinessLayer.Abstract;
 using RACRMS.BusinessLayer.Concrete;
 using RACRMS.MailServiceShared.Statics;
-using RACRMS.MailServiceWebAPI.Consumers;
+using RACRMS.MailServiceWebApi.Consumers;
 using RACRMS.ManagementWebApp.Consumers;
 using System;
 using System.Collections.Generic;

@@ -9,13 +9,13 @@ using Microsoft.Extensions.Logging;
 using RACRMS.MailServiceShared.Abstract;
 using RACRMS.MailServiceShared.Concrete;
 using RACRMS.MailServiceShared.Statics;
-using RACRMS.MailServiceWebAPI.Consumers;
+using RACRMS.MailServiceWebApi.Consumers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RACRMS.MailServiceWebAPI
+namespace RACRMS.MailServiceWebApi
 {
     public class Startup
     {

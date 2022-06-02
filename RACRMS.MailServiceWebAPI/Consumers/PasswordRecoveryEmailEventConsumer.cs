@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace RACRMS.MailServiceWebAPI.Consumers
+namespace RACRMS.MailServiceWebApi.Consumers
 {
     public class PasswordRecoveryEmailEventConsumer : IConsumer<PasswordRecoveryEmailEvent>
     {

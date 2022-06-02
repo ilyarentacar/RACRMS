@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RACRMS.MailServiceWebAPI.Consumers
+namespace RACRMS.MailServiceWebApi.Consumers
 {
     public class ReservationRejectedEventConsumer : IConsumer<ReservationRejectedEvent>
     {
