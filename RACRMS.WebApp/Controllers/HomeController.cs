@@ -50,6 +50,21 @@ namespace RACRMS.WebApp.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult Index(ReservationViewModel model)
+        {
+            if (ModelState.IsValid)
+                return RedirectToAction("Index", "Vehicle", new
+                {
+                    startDate = model.StartDate,
+                    startHour = model.StartHour,
+                    endDate = model.EndDate,
+                    endHour = model.EndHour
+                });
+
+            return View(model);
+        }
+
         private async Task<MostPreferedCarViewModel> getMostPreferedCarAsync()
         {
             try

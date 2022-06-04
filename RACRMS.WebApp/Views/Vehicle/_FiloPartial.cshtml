@@ -1,4 +1,5 @@
 ﻿@model FiloViewModel
+
 <section class="section-padding car-booking m-5 pt-4">
     <div class="container-fluid">
         <div class="section-header text-center">
@@ -7,7 +8,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
-                                <p class="fs-18 fw-600 text-custom-white">Tüm Kiralık Araçlar</p>
+                                <p class="fs-18 fw-600 text-custom-white">@Model.carClassName Kiralık Araçlar</p>
                             </div>
                         </div>
                     </div>
@@ -15,131 +16,138 @@
             </div>
         </div>
         <div class="row">
-            @foreach (var carViewModel in Model.carViewModels)
+            @if (Model.carViewModels.Count == 0)
             {
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-                    <div class="car-grid m-2 border">
-                        <div class="car-grid-wrapper car-grid bx-wrapper">
-                            <div class="image-sec animate-img"> <a href="car-detail.html"> <img src="@carViewModel.ImageUrl" class="full-width" alt="img"> </a> </div>
-                            <div class="car-grid-caption padding-20 bg-custom-white p-relative">
-                                <p class="title fs-16"><a href="car-detail.html" class="text-custom-black fs-16 fw-600">@carViewModel.CarBrandName<small class="text-light-dark fs-14">@carViewModel.CarModelName</small></a></p>
-                                <div class="hotel-type mb-xl-20">
-                                    <div class="tabs">
-                                        <ul class="custom-flex nav nav-tabs mb-xl-20 w-100">
-                                            <li class="nav-item p-0 m-0 w-50"> <a class="nav-link p-1 m-0 active" data-toggle="tab" href="#overview_@carViewModel.Id">Araç Özellikleri</a> </li>
-                                            <li class="nav-item p-0 m-0 w-50"> <a class="nav-link p-1 m-0" data-toggle="tab" href="#amenities_@carViewModel.Id">Kiralama Koşulları</a> </li>
-                                        </ul>
-                                        <div class="tab-content">
-                                            <div class="tab-pane fade active show" id="overview_@carViewModel.Id">
-                                                <div class="tab-inner">
-                                                    <ul class="custom">
-                                                        <li class="text-light-dark mb-2">
-                                                            <div class="row">
-                                                                <div class="col-4 pr-0">
-                                                                    <i class="icon-stars mr-2"></i><span class="text-custom-black fw-600">Araç Sınıfı</span>
+                <div class="col-12 text-center text-custom-black fs-16 fw-600 text-capitalize">Aradığınız kriterlerde araç bulunamamıştır.</div>
+            }
+            else
+            {
+                @foreach (var carViewModel in Model.carViewModels)
+                {
+                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                        <div class="car-grid m-2 border">
+                            <div class="car-grid-wrapper car-grid bx-wrapper">
+                                <div class="image-sec animate-img"> <a href="car-detail.html"> <img src="@carViewModel.ImageUrl" class="full-width" alt="img"> </a> </div>
+                                <div class="car-grid-caption padding-20 bg-custom-white p-relative">
+                                    <p class="title fs-16"><a href="car-detail.html" class="text-custom-black fs-16 fw-600">@carViewModel.CarBrandName<small class="text-light-dark fs-14">@carViewModel.CarModelName</small></a></p>
+                                    <div class="hotel-type mb-xl-20">
+                                        <div class="tabs">
+                                            <ul class="custom-flex nav nav-tabs mb-xl-20 w-100">
+                                                <li class="nav-item p-0 m-0 w-50"> <a class="nav-link p-1 m-0 active" data-toggle="tab" href="#overview_@carViewModel.Id">Araç Özellikleri</a> </li>
+                                                <li class="nav-item p-0 m-0 w-50"> <a class="nav-link p-1 m-0" data-toggle="tab" href="#amenities_@carViewModel.Id">Kiralama Koşulları</a> </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade active show" id="overview_@carViewModel.Id">
+                                                    <div class="tab-inner">
+                                                        <ul class="custom">
+                                                            <li class="text-light-dark mb-2">
+                                                                <div class="row">
+                                                                    <div class="col-4 pr-0">
+                                                                        <i class="icon-stars mr-2"></i><span class="text-custom-black fw-600">Araç Sınıfı</span>
+                                                                    </div>
+                                                                    <div class="col-8 pl-0">
+                                                                        <span class="mr-3">:</span>@carViewModel.CarClassName
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-8 pl-0">
-                                                                    <span class="mr-3">:</span>@carViewModel.CarClassName
+                                                            </li>
+                                                            <li class="text-light-dark mb-2">
+                                                                <div class="row">
+                                                                    <div class="col-4 pr-0">
+                                                                        <i class="icon-alignment-unalign mr-2"></i><span class="text-custom-black fw-600">Kasa Tipi</span>
+                                                                    </div>
+                                                                    <div class="col-8 pl-0">
+                                                                        <span class="mr-3">:</span>@carViewModel.CarChassisTypeName
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="text-light-dark mb-2">
-                                                            <div class="row">
-                                                                <div class="col-4 pr-0">
-                                                                    <i class="icon-alignment-unalign mr-2"></i><span class="text-custom-black fw-600">Kasa Tipi</span>
+                                                            </li>
+                                                            <li class="text-light-dark mb-2">
+                                                                <div class="row">
+                                                                    <div class="col-4 pr-0">
+                                                                        <i class="icon-gas mr-2"></i><span class="text-custom-black fw-600">Yakıt Türü</span>
+                                                                    </div>
+                                                                    <div class="col-8 pl-0">
+                                                                        <span class="mr-3">:</span>@carViewModel.CarFuelTypeName
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-8 pl-0">
-                                                                    <span class="mr-3">:</span>@carViewModel.CarChassisTypeName
+                                                            </li>
+                                                            <li class="text-light-dark mb-2">
+                                                                <div class="row">
+                                                                    <div class="col-4 pr-0">
+                                                                        <i class="icon-cogs mr-2"></i><span class="text-custom-black fw-600">Vites Türü</span>
+                                                                    </div>
+                                                                    <div class="col-8 pl-0">
+                                                                        <span class="mr-3">:</span>@carViewModel.CarGearTypeName
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="text-light-dark mb-2">
-                                                            <div class="row">
-                                                                <div class="col-4 pr-0">
-                                                                    <i class="icon-gas mr-2"></i><span class="text-custom-black fw-600">Yakıt Türü</span>
+                                                            </li>
+                                                            <li class="text-light-dark mb-2">
+                                                                <div class="row">
+                                                                    <div class="col-4 pr-0">
+                                                                        <i class="icon-heart5 mr-2"></i><span class="text-custom-black fw-600">Güvenlik</span>
+                                                                    </div>
+                                                                    <div class="col-8 pl-0">
+                                                                        <span class="mr-3">:</span>Yolcu Airbag - ABS
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-8 pl-0">
-                                                                    <span class="mr-3">:</span>@carViewModel.CarFuelTypeName
+                                                            </li>
+                                                            <li class="text-light-dark mb-2">
+                                                                <div class="row">
+                                                                    <div class="col-4 pr-0">
+                                                                        <i class="icon-meter-fast mr-2"></i><span class="text-custom-black fw-600">Toplam KM</span>
+                                                                    </div>
+                                                                    <div class="col-8 pl-0">
+                                                                        <span class="mr-3">:</span>@carViewModel.TotalKm
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="text-light-dark mb-2">
-                                                            <div class="row">
-                                                                <div class="col-4 pr-0">
-                                                                    <i class="icon-cogs mr-2"></i><span class="text-custom-black fw-600">Vites Türü</span>
-                                                                </div>
-                                                                <div class="col-8 pl-0">
-                                                                    <span class="mr-3">:</span>@carViewModel.CarGearTypeName
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="text-light-dark mb-2">
-                                                            <div class="row">
-                                                                <div class="col-4 pr-0">
-                                                                    <i class="icon-heart5 mr-2"></i><span class="text-custom-black fw-600">Güvenlik</span>
-                                                                </div>
-                                                                <div class="col-8 pl-0">
-                                                                    <span class="mr-3">:</span>Yolcu Airbag - ABS
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="text-light-dark mb-2">
-                                                            <div class="row">
-                                                                <div class="col-4 pr-0">
-                                                                    <i class="icon-meter-fast mr-2"></i><span class="text-custom-black fw-600">Toplam KM</span>
-                                                                </div>
-                                                                <div class="col-8 pl-0">
-                                                                    <span class="mr-3">:</span>@carViewModel.TotalKm
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="amenities_@carViewModel.Id">
-                                                <div class="tab-inner">
-                                                    <ul class="custom">
-                                                        <li class="text-light-dark mb-2">
-                                                            <div class="row">
-                                                                <div class="col-4 pr-0">
-                                                                    <i class="icon-height mr-2"></i><span class="text-custom-black fw-600">Yaş Sınırı</span>
+                                                <div class="tab-pane fade" id="amenities_@carViewModel.Id">
+                                                    <div class="tab-inner">
+                                                        <ul class="custom">
+                                                            <li class="text-light-dark mb-2">
+                                                                <div class="row">
+                                                                    <div class="col-4 pr-0">
+                                                                        <i class="icon-height mr-2"></i><span class="text-custom-black fw-600">Yaş Sınırı</span>
+                                                                    </div>
+                                                                    <div class="col-8 pl-0">
+                                                                        <span class="mr-3">:</span>@carViewModel.AgeLimit
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-8 pl-0">
-                                                                    <span class="mr-3">:</span>@carViewModel.AgeLimit
+                                                            </li>
+                                                            <li class="text-light-dark mb-2">
+                                                                <div class="row">
+                                                                    <div class="col-4 pr-0">
+                                                                        <i class="icon-newspaper mr-2"></i><span class="text-custom-black fw-600">Ehliyet</span>
+                                                                    </div>
+                                                                    <div class="col-8 pl-0">
+                                                                        <span class="mr-3">:</span>1 Yıl ve Üzeri
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="text-light-dark mb-2">
-                                                            <div class="row">
-                                                                <div class="col-4 pr-0">
-                                                                    <i class="icon-newspaper mr-2"></i><span class="text-custom-black fw-600">Ehliyet</span>
+                                                            </li>
+                                                            <li class="text-light-dark mb-2">
+                                                                <div class="row">
+                                                                    <div class="col-4 pr-0">
+                                                                        <i class="icon-credit-card2 mr-2"></i><span class="text-custom-black fw-600">Kredi Kartı</span>
+                                                                    </div>
+                                                                    <div class="col-8 pl-0">
+                                                                        <span class="mr-3">:</span>1 Kredi Kartı
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-8 pl-0">
-                                                                    <span class="mr-3">:</span>1 Yıl ve Üzeri
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li class="text-light-dark mb-2">
-                                                            <div class="row">
-                                                                <div class="col-4 pr-0">
-                                                                    <i class="icon-credit-card2 mr-2"></i><span class="text-custom-black fw-600">Kredi Kartı</span>
-                                                                </div>
-                                                                <div class="col-8 pl-0">
-                                                                    <span class="mr-3">:</span>1 Kredi Kartı
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <span><button class="btn-first btn-submit full-width btn-height">Hemen Kirala</button></span>
                                 </div>
-                                <span><button class="btn-first btn-submit full-width btn-height">Hemen Kirala</button></span>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             }
         </div>
     </div>

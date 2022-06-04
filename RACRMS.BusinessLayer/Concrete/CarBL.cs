@@ -3,6 +3,7 @@ using RACRMS.BusinessLayer.Abstract;
 using RACRMS.DataTransferObject;
 using RACRMS.Entity;
 using RACRMS.Extension;
+using RACRMS.Shared.Enum;
 using RACRMS.UnitOfWork.Abstract;
 using RACRMS.UnitOfWork.Concrete;
 using RACRMS.ValidationLayer.Abstract;
@@ -275,6 +276,185 @@ namespace RACRMS.BusinessLayer.Concrete
                     .Include(x => x.CarGearType)
                     .Include(x => x.CarRentalPrice)
                     .Where(x => x.ShowOnFilo)
+                    .Select(x => x.ToDTO())
+                    .ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<CarDTO>> GetEconomicFilo()
+        {
+            try
+            {
+                return await unitOfWork.Car.Select()
+                    .Include(x => x.CarClass)
+                    .Include(x => x.CarType)
+                    .Include(x => x.CarBrand)
+                    .Include(x => x.CarModel)
+                    .Include(x => x.CarChassisType)
+                    .Include(x => x.CarFuelType)
+                    .Include(x => x.CarGearType)
+                    .Include(x => x.CarRentalPrice)
+                    .Where(x => x.ShowOnFilo)
+                    .Where(x => x.CarClass.Name == Enum.GetName(typeof(CarClassEnum), CarClassEnum.Ekonomik))
+                    .Select(x => x.ToDTO())
+                    .ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<CarDTO>> GetConfortFilo()
+        {
+            try
+            {
+                return await unitOfWork.Car.Select()
+                    .Include(x => x.CarClass)
+                    .Include(x => x.CarType)
+                    .Include(x => x.CarBrand)
+                    .Include(x => x.CarModel)
+                    .Include(x => x.CarChassisType)
+                    .Include(x => x.CarFuelType)
+                    .Include(x => x.CarGearType)
+                    .Include(x => x.CarRentalPrice)
+                    .Where(x => x.ShowOnFilo)
+                    .Where(x => x.CarClass.Name == Enum.GetName(typeof(CarClassEnum), CarClassEnum.Konfor))
+                    .Select(x => x.ToDTO())
+                    .ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<CarDTO>> GetLuxFilo()
+        {
+            try
+            {
+                return await unitOfWork.Car.Select()
+                    .Include(x => x.CarClass)
+                    .Include(x => x.CarType)
+                    .Include(x => x.CarBrand)
+                    .Include(x => x.CarModel)
+                    .Include(x => x.CarChassisType)
+                    .Include(x => x.CarFuelType)
+                    .Include(x => x.CarGearType)
+                    .Include(x => x.CarRentalPrice)
+                    .Where(x => x.ShowOnFilo)
+                    .Where(x => x.CarClass.Name == Enum.GetName(typeof(CarClassEnum), CarClassEnum.Lüx))
+                    .Select(x => x.ToDTO())
+                    .ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<CarDTO>> GetFiloByReservation(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                return await unitOfWork.Car.Select()
+                    .Include(x => x.Reservation)
+                    .Include(x => x.CarClass)
+                    .Include(x => x.CarType)
+                    .Include(x => x.CarBrand)
+                    .Include(x => x.CarModel)
+                    .Include(x => x.CarChassisType)
+                    .Include(x => x.CarFuelType)
+                    .Include(x => x.CarGearType)
+                    .Include(x => x.CarRentalPrice)
+                    .Where(x => x.ShowOnFilo)
+                    .Where(x => !x.Reservation.Any(y => y.StartDate >= startDate))
+                    .Where(x => !x.Reservation.Any(y => y.StartDate <= endDate))
+                    .Select(x => x.ToDTO())
+                    .ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<CarDTO>> GetEconomicFiloByReservation(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                return await unitOfWork.Car.Select()
+                    .Include(x => x.Reservation)
+                    .Include(x => x.CarClass)
+                    .Include(x => x.CarType)
+                    .Include(x => x.CarBrand)
+                    .Include(x => x.CarModel)
+                    .Include(x => x.CarChassisType)
+                    .Include(x => x.CarFuelType)
+                    .Include(x => x.CarGearType)
+                    .Include(x => x.CarRentalPrice)
+                    .Where(x => x.ShowOnFilo)
+                    .Where(x => x.CarClass.Name == Enum.GetName(typeof(CarClassEnum), CarClassEnum.Ekonomik))
+                    .Where(x => !x.Reservation.Any(y => y.StartDate >= startDate))
+                    .Where(x => !x.Reservation.Any(y => y.StartDate <= endDate))
+                    .Select(x => x.ToDTO())
+                    .ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<CarDTO>> GetConfortFiloByReservation(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                return await unitOfWork.Car.Select()
+                    .Include(x => x.Reservation)
+                    .Include(x => x.CarClass)
+                    .Include(x => x.CarType)
+                    .Include(x => x.CarBrand)
+                    .Include(x => x.CarModel)
+                    .Include(x => x.CarChassisType)
+                    .Include(x => x.CarFuelType)
+                    .Include(x => x.CarGearType)
+                    .Include(x => x.CarRentalPrice)
+                    .Where(x => x.ShowOnFilo)
+                    .Where(x => x.CarClass.Name == Enum.GetName(typeof(CarClassEnum), CarClassEnum.Konfor))
+                    .Where(x => !x.Reservation.Any(y => y.StartDate >= startDate))
+                    .Where(x => !x.Reservation.Any(y => y.StartDate <= endDate))
+                    .Select(x => x.ToDTO())
+                    .ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<CarDTO>> GetLuxFiloByReservation(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                return await unitOfWork.Car.Select()
+                    .Include(x => x.Reservation)
+                    .Include(x => x.CarClass)
+                    .Include(x => x.CarType)
+                    .Include(x => x.CarBrand)
+                    .Include(x => x.CarModel)
+                    .Include(x => x.CarChassisType)
+                    .Include(x => x.CarFuelType)
+                    .Include(x => x.CarGearType)
+                    .Include(x => x.CarRentalPrice)
+                    .Where(x => x.ShowOnFilo)
+                    .Where(x => x.CarClass.Name == Enum.GetName(typeof(CarClassEnum), CarClassEnum.Lüx))
+                    .Where(x => !x.Reservation.Any(y => y.StartDate >= startDate))
+                    .Where(x => !x.Reservation.Any(y => y.StartDate <= endDate))
                     .Select(x => x.ToDTO())
                     .ToListAsync();
             }

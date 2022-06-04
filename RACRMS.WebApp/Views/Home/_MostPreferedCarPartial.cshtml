@@ -9,12 +9,19 @@
                             <h5><span class="text-custom-blue">En Çok Tercih Edilen</span></h5>
                             <h3>@Model.CarBrandName <span class="text-custom-blue">@Model.CarModelName</span></h3>
                             <div class="section-description">
-                                <div class="car-price"> <strong>@Model.CarRentalPrice.ToString("#.## ₺")</strong> <span>/Günlük</span> </div>
+                                @if (Model.CarRentalPrice == 0)
+                                {
+                                    <div class="car-price"> <strong>Fiyat Sorunuz</strong> <span>/Günlük</span> </div>
+                                }
+                                else
+                                {
+                                    <div class="car-price"> <strong>@Model.CarRentalPrice.ToString("#.## ₺")</strong> <span>/Günlük</span> </div>
+                                }
                             </div>
                         </div>
                     </div>
                     <p class="pt-2">@Model.Description</p>
-                    <a href="about.html" class="btn-first btn-submit">Tüm Araçlara Gözatın</a>
+                    <a href="@Url.Action("Index","Vehicle")" class="btn-first btn-submit">Tüm Araçlara Gözatın</a>
                 </div>
             </div>
             <div class="col-xl-5 col-lg-6">

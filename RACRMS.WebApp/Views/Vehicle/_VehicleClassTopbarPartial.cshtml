@@ -1,4 +1,28 @@
-﻿<header class="header">
+﻿@model string
+
+@{
+    string[] urlParameters = this.ViewContext.ModelState.Keys.ToArray();
+    string[] urlParameterValues = this.ViewContext.ModelState.Values.Select(x => x.RawValue.ToString()).ToArray();
+
+    string startDateParameter = null;
+    string startHourParameter = null;
+    string endDateParameter = null;
+    string endHourParameter = null;
+
+    for (int index = 0; index < urlParameters.Count(); index++)
+    {
+        if (urlParameters[index] == "startDate")
+            startDateParameter = urlParameterValues[index];
+        if (urlParameters[index] == "startHour")
+            startHourParameter = urlParameterValues[index];
+        if (urlParameters[index] == "endDate")
+            endDateParameter = urlParameterValues[index];
+        if (urlParameters[index] == "endHour")
+            endHourParameter = urlParameterValues[index];
+    }
+}
+
+<header class="header">
     <div class="navigation-wrapper bg-red">
         <div class="container">
             <div class="row">
@@ -7,10 +31,10 @@
                         <div class="main-navigation">
                             <div class="main-menu">
                                 <ul class="custom-flex">
-                                    <li class="menu-item text-center w-25 ml-0 mr-0 active"><a href="index.html">Tüm Kiralık Araçlar</a></li>
-                                    <li class="menu-item text-center w-25 ml-0 mr-0"><a href="contact.html">Ekonomik Araçlar</a></li>
-                                    <li class="menu-item text-center w-25 ml-0 mr-0"><a href="contact.html">Konfor Araçlar</a></li>
-                                    <li class="menu-item text-center w-25 ml-0 mr-0"><a href="contact.html">Lüx Araçlar</a></li>
+                                    <li class="menu-item text-center w-25 ml-0 mr-0 @(Model=="Tüm" ? "active" : string.Empty)"><a href="@Url.Action("Index","Vehicle",new { startDate = startDateParameter, startHour = startHourParameter, endDate = endDateParameter, endHour = endHourParameter })">Tüm Kiralık Araçlar</a></li>
+                                    <li class="menu-item text-center w-25 ml-0 mr-0 @(Model=="Ekonomik" ? "active" : string.Empty)"><a href="@Url.Action("Index","Vehicle",new { carClassName = Enum.GetName(typeof(CarClassEnum),CarClassEnum.Ekonomik),startDate = startDateParameter, startHour = startHourParameter, endDate = endDateParameter, endHour = endHourParameter })">Ekonomik Araçlar</a></li>
+                                    <li class="menu-item text-center w-25 ml-0 mr-0 @(Model=="Konfor" ? "active" : string.Empty)"><a href="@Url.Action("Index","Vehicle",new { carClassName = Enum.GetName(typeof(CarClassEnum),CarClassEnum.Konfor),startDate = startDateParameter, startHour = startHourParameter, endDate = endDateParameter, endHour = endHourParameter })">Konfor Araçlar</a></li>
+                                    <li class="menu-item text-center w-25 ml-0 mr-0 @(Model=="Lüx" ? "active" : string.Empty)"><a href="@Url.Action("Index","Vehicle",new { carClassName = Enum.GetName(typeof(CarClassEnum),CarClassEnum.Lüx),startDate = startDateParameter, startHour = startHourParameter, endDate = endDateParameter, endHour = endHourParameter })">Lüx Araçlar</a></li>
                                 </ul>
                             </div>
                             <div class="hamburger-menu">

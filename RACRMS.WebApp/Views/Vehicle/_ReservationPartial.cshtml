@@ -1,4 +1,30 @@
 ﻿@model ReservationViewModel
+
+@{
+    string[] urlParameters = this.ViewContext.ModelState.Keys.ToArray();
+    string[] urlParameterValues = this.ViewContext.ModelState.Values.Select(x => x.RawValue.ToString()).ToArray();
+
+    string startDateParameter = Model.StartDate;
+    string startHourParameter = Model.StartHour;
+    string endDateParameter = Model.EndDate;
+    string endHourParameter = Model.EndHour;
+
+    for (int index = 0; index < urlParameters.Count(); index++)
+    {
+        if (urlParameters[index] == "startDate")
+            startDateParameter = urlParameterValues[index];
+        if (urlParameters[index] == "startHour")
+            startHourParameter = urlParameterValues[index];
+        if (urlParameters[index] == "endDate")
+            endDateParameter = urlParameterValues[index];
+        if (urlParameters[index] == "endHour")
+            endHourParameter = urlParameterValues[index];
+    }
+
+    DateTime startDateParsed = DateTime.ParseExact($"{Model.StartDate}", "dd.MM.yyyy", CultureInfo.InvariantCulture);
+    DateTime endDateParsed = DateTime.ParseExact($"{Model.EndDate}", "dd.MM.yyyy", CultureInfo.InvariantCulture);
+}
+
 <div class="banner-tabs mt-4">
     <div class="container">
         <div class="row">
@@ -59,6 +85,13 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row text-right">
+                                        <div class="offset-2 col-lg-8 col-md-6">
+                                            <div class="form-group">
+                                                <a href="@Url.Action("Index","Vehicle",new { carClassName = Enum.GetName(typeof(CarClassEnum),CarClassEnum.Ekonomik),startDate = startDateParameter, startHour = startHourParameter, endDate = endDateParameter, endHour = endHourParameter })" class="btn-first btn-submit full-width btn-height" id="btnReservation" name="btnReservation">Müsait Araçları Getir</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
                             </div>
                         </div>
@@ -70,7 +103,6 @@
 </div>
 
 <script>
-
     var startDate;
     var endDate;
 
@@ -86,7 +118,8 @@
     var startDateDatePicker;
     var endDateDatePicker;
 
-    var reservationButton;
+    var selectedStartDate;
+    var selectedEndDate;
 
     $(function () {
 
@@ -98,43 +131,18 @@
         });
 
         function setInitialDateValues() {
-            startDateDatePicker.selectDate(addDaysToDate(todayDate, 1));
-            endDateDatePicker.selectDate(addDaysToDate(todayDate, 2));
+            startDateDatePicker.selectDate(addDaysToDate(selectedStartDate, 0));
+            endDateDatePicker.selectDate(addDaysToDate(selectedEndDate, 0));
             setInitialTimeValues();
         }
 
         function setInitialTimeValues() {
-            currentHour++;
 
-            if (currentMinute > 0 && currentMinute <= 30)
-                currentMinute = 30;
-            else
-                currentMinute = 0;
-
-            var timeOptionValue = setTimeFormat();
-
-            $(startHour).val(timeOptionValue);
-            $(endHour).val(timeOptionValue);
+            $(startHour).val('@Model.StartHour');
+            $(endHour).val('@Model.EndHour');
 
             $(startHour).niceSelect('update')
             $(endHour).niceSelect('update')
-        }
-
-        function setTimeFormat() {
-            var strHour;
-            var strMinute;
-
-            if (currentHour.toString().length < 2)
-                strHour = '0' + currentHour;
-            else
-                strHour = currentHour;
-
-            if (currentMinute == 0)
-                strMinute = '00';
-            else
-                strMinute = '30';
-
-            return (strHour + ':' + strMinute);
         }
 
         function setTimeOptions() {
@@ -146,7 +154,7 @@
             startDateDatePicker = $(startDate).datepicker({
                 inline: false,
                 language: 'en',
-                startDate: addDaysToDate(todayDate, 1),
+                startDate: addDaysToDate(selectedStartDate, 0),
                 minDate: addDaysToDate(todayDate, 1),
                 maxDate: addMonthsToDate(todayDate, 1),
                 todayButton: addDaysToDate(todayDate, 1),
@@ -172,7 +180,7 @@
             endDateDatePicker = $(endDate).datepicker({
                 inline: false,
                 language: 'en',
-                startDate: addDaysToDate(todayDate, 2),
+                startDate: addDaysToDate(selectedEndDate, 0),
                 minDate: addDaysToDate(todayDate, 2),
                 maxDate: addDaysToDate(todayDate, 29),
                 clearButton: true,
@@ -193,12 +201,13 @@
 
             $(startHour).on('change', startHour_onChange);
 
-            reservationButton = $('#btnReservation');
-
             todayDate = new Date();
 
             currentHour = todayDate.getHours();
             currentMinute = todayDate.getMinutes();
+
+            selectedStartDate = new Date(@startDateParsed.Year,@startDateParsed.Month-1,@startDateParsed.Day);
+            selectedEndDate = new Date(@endDateParsed.Year,@endDateParsed.Month-1,@endDateParsed.Day);
         }
 
         function startHour_onChange() {
@@ -213,10 +222,11 @@
             var startDateDatePickerValue = startDateDatePicker.selectedDates[0];
             var endDateDatePickerValue = endDateDatePicker.selectedDates[0];
             var dateRangeValue = (new Date(endDateDatePickerValue - startDateDatePickerValue).getDate()) - 1;
-            $(reservationButton).html(dateRangeValue + ' Gün Kirala');
         }
 
         function addMonthsToDate(_date, _noOfMonths) {
+            if (!_date)
+                return;
             var yearFromDate = _date.getFullYear();
             var monthFromYear = _date.getMonth();
             var dayFromYear = _date.getDate();
@@ -225,6 +235,8 @@
         }
 
         function addDaysToDate(_date, _noOfDays) {
+            if (!_date)
+                return;
             var yearFromDate = _date.getFullYear();
             var monthFromYear = _date.getMonth();
             var dayFromYear = _date.getDate();

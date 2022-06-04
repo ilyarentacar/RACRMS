@@ -12,44 +12,86 @@
         <div class="row">
             <div class="col-12">
                 <div class="car-slider arrow-layout-2 row">
-                    @foreach (var carViewModel in Model.carViewModels)
+                    @if (Model.carViewModels.Count == 0)
                     {
-                        <div class="slide-item col-12">
-                            <div class="car-grid">
-                                <div class="car-grid-wrapper car-grid bx-wrapper">
-                                    <div class="image-sec animate-img"> <a href="car-detail.html"> <img src="@carViewModel.ImageUrl" class="full-width" alt="img"> </a> </div>
-                                    <div class="car-grid-caption padding-20 bg-custom-white p-relative">
-                                        <h4 class="title fs-16"><a href="car-detail.html" class="text-custom-black">@carViewModel.CarClassName<small class="text-light-dark">@carViewModel.CarChassisTypeName</small></a></h4>
-                                        <span class="price"><small>Günlük</small>@carViewModel.CarRentalPrice.ToString("#.## ₺")</span>
-                                        <div class="hotel-type mb-xl-20">
-                                            <ul class="custom">
-                                                <li class="text-light-dark">
-                                                    @carViewModel.CarBrandName
-                                                </li>
-                                                <li class="text-light-dark">
-                                                    @carViewModel.CarModelName
-                                                </li>
-                                                <li class="text-light-dark">
-                                                    @carViewModel.CarFuelTypeName
-                                                </li>
-                                                <li class="text-light-dark">
-                                                    @carViewModel.CarGearTypeName
-                                                </li>
-                                                <li class="text-light-dark">
-                                                    @carViewModel.TotalKm
-                                                </li>
-                                                <li class="text-light-dark">
-                                                    @carViewModel.AgeLimit
-                                                </li>
-                                            </ul>
+                        <div class="col-12 text-center text-custom-black fs-16 fw-600 text-capitalize">Görüntülenecek araç bulunamamıştır.</div>
+                    }
+                    else
+                    {
+                        @foreach (var carViewModel in Model.carViewModels)
+                        {
+                            <div class="slide-item col-12">
+                                <div class="car-grid">
+                                    <div class="car-grid-wrapper car-grid bx-wrapper">
+                                        <div class="image-sec animate-img"> <a href="car-detail.html"> <img src="@carViewModel.ImageUrl" class="full-width" alt="img"> </a> </div>
+                                        <div class="car-grid-caption padding-20 bg-custom-white p-relative">
+                                            <h4 class="title fs-16"><a href="car-detail.html" class="text-custom-black">@carViewModel.CarClassName<small class="text-light-dark">@carViewModel.CarChassisTypeName</small></a></h4>
+                                            <span class="price">
+                                                <small>Günlük</small>
+                                                @if (carViewModel.CarRentalPrice == 0)
+                                                {
+                                                    <span class="text-capitalize fs-16">Fiyat sorunuz</span>
+                                                }
+                                                else
+                                                {
+                                                    @carViewModel.CarRentalPrice.ToString("#.## ₺")
+                                                }
+                                            </span>
+                                            <div class="hotel-type mb-xl-20">
+                                                <ul class="custom">
+                                                    <li class="text-light-dark">
+                                                        @carViewModel.CarBrandName
+                                                    </li>
+                                                    <li class="text-light-dark">
+                                                        @carViewModel.CarModelName
+                                                    </li>
+                                                    <li class="text-light-dark">
+                                                        @carViewModel.CarFuelTypeName
+                                                    </li>
+                                                    <li class="text-light-dark">
+                                                        @carViewModel.CarGearTypeName
+                                                    </li>
+                                                    <li class="text-light-dark">
+                                                        @carViewModel.TotalKm
+                                                    </li>
+                                                    <li class="text-light-dark">
+                                                        @carViewModel.AgeLimit
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <span><button class="btn-first btn-submit full-width btn-height text-capitalize btnReservation">Rezerve Edin</button></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    var reservationButton;
+
+    $(function () {
+
+        $(document).ready(function () {
+            init();
+        });
+
+        function init() {
+            reservationButton = $('.btnReservation');
+
+            $(reservationButton).on('click', reservationButton_onClick);
+        }
+
+        function reservationButton_onClick(e) {
+            event.preventDefault();
+            $('html, body').animate({ scrollTop: 350 }, "slow");
+            return false;
+        }
+
+    });
+</script>
