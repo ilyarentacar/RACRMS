@@ -3,7 +3,7 @@
 @await Html.PartialAsync("_ReservationPartial", Model.reservationViewModel)
 <!-- End Reservation -->
 <!-- Start Vehicle Class Topbar -->
-@await Html.PartialAsync("_VehicleClassTopbarPartial")
+@await Html.PartialAsync("_VehicleClassTopbarPartial", Model.filoViewModel.carClassName)
 <!-- End Vehicle Class Topbar -->
 <!-- Filo -->
 @await Html.PartialAsync("_FiloPartial", Model.filoViewModel)

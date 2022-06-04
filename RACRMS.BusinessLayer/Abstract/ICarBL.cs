@@ -15,5 +15,12 @@ namespace RACRMS.BusinessLayer.Abstract
         Task<int> DeleteAsync(int id);
         Task<CarDTO> GetMostPrefered();
         Task<List<CarDTO>> GetFilo();
+        Task<List<CarDTO>> GetFiloByReservation(DateTime startDate, DateTime endDate);
+        Task<List<CarDTO>> GetEconomicFilo();
+        Task<List<CarDTO>> GetEconomicFiloByReservation(DateTime startDate, DateTime endDate);
+        Task<List<CarDTO>> GetConfortFilo();
+        Task<List<CarDTO>> GetConfortFiloByReservation(DateTime startDate, DateTime endDate);
+        Task<List<CarDTO>> GetLuxFilo();
+        Task<List<CarDTO>> GetLuxFiloByReservation(DateTime startDate, DateTime endDate);
     }
 }

@@ -7,6 +7,7 @@ namespace RACRMS.WebApp.Models
 {
     public class FiloViewModel
     {
+        public string carClassName { get; set; }
         public List<CarViewModel> carViewModels { get; set; }
 
         public class CarViewModel

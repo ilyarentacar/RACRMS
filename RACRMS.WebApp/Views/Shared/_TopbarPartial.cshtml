@@ -1,4 +1,7 @@
-﻿<header class="header">
+﻿@{
+    string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+}
+<header class="header">
     <div class="navigation-wrapper bg-red">
         <div class="container">
             <div class="row">
@@ -8,14 +11,14 @@
                             <div class="logo"> <a href="index.html"> <img src="~/lib/Template/assets/images/ilya-logo.png" class="img-fluid" alt="logo"> </a> </div>
                             <div class="main-menu">
                                 <ul class="custom-flex">
-                                    <li class="menu-item active"> <a href="index.html">Rezervasyon</a> </li>
-                                    <li class="menu-item menu-item-has-children">
+                                    <li class="menu-item @(string.IsNullOrEmpty(controllerName) || controllerName == "Home" ? "active" : string.Empty)"> <a href="@Url.Action("Index","Home")">Rezervasyon</a> </li>
+                                    <li class="menu-item menu-item-has-children @(controllerName == "Vehicle" ? "active" : string.Empty)">
                                         <a href="#">Araçlar</a>
                                         <ul class="submenu custom">
                                             <li class="menu-item"> <a href="@Url.Action("Index","Vehicle")">Tüm Kiralık Araçlar</a> </li>
-                                            <li class="menu-item"> <a href="@Url.Action("Index","EconomicVehicle")">Ekonomik Araçlar</a> </li>
-                                            <li class="menu-item"> <a href="@Url.Action("Index","ConfortVehicle")">Konfor Araçlar</a> </li>
-                                            <li class="menu-item"> <a href="@Url.Action("Index","LuxVehicle")">Lüx Araçlar</a> </li>
+                                            <li class="menu-item"> <a href="@Url.Action("Index","Vehicle",new { carClassName = Enum.GetName(typeof(CarClassEnum),CarClassEnum.Ekonomik) })">Ekonomik Araçlar</a> </li>
+                                            <li class="menu-item"> <a href="@Url.Action("Index","Vehicle",new { carClassName = Enum.GetName(typeof(CarClassEnum),CarClassEnum.Konfor) })">Konfor Araçlar</a> </li>
+                                            <li class="menu-item"> <a href="@Url.Action("Index","Vehicle",new { carClassName = Enum.GetName(typeof(CarClassEnum),CarClassEnum.Lüx) })">Lüx Araçlar</a> </li>
                                         </ul>
                                     </li>
                                     <li class="menu-item menu-item-has-children">

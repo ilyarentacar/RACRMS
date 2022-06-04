@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.MailServiceWebApi", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RACRMS.MailServiceShared", "RACRMS.MailServiceShared\RACRMS.MailServiceShared.csproj", "{B82959A2-B89D-418B-80F5-B8DAF131728D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RACRMS.Shared", "RACRMS.Shared\RACRMS.Shared.csproj", "{A06680FA-5B53-426B-BF7A-1E792A76DB86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{B82959A2-B89D-418B-80F5-B8DAF131728D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B82959A2-B89D-418B-80F5-B8DAF131728D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B82959A2-B89D-418B-80F5-B8DAF131728D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A06680FA-5B53-426B-BF7A-1E792A76DB86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A06680FA-5B53-426B-BF7A-1E792A76DB86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A06680FA-5B53-426B-BF7A-1E792A76DB86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A06680FA-5B53-426B-BF7A-1E792A76DB86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

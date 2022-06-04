@@ -16,10 +16,10 @@
                         <li>Çalışma saatlerimiz, 7 gün / 24 saat</li>
                     </ul>
                     <ul class="custom-flex socials">
-                        <li><a href="#" class="text-custom-white fs-14"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="#" class="text-custom-white fs-14"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#" class="text-custom-white fs-14"><i class="fab fa-linkedin"></i></a></li>
-                        <li><a href="#" class="text-custom-white fs-14"><i class="fab fa-youtube"></i></a></li>
+                        <li><a href="@Url.Action("Index","Home")" class="text-custom-white fs-14"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="@Url.Action("Index","Home")" class="text-custom-white fs-14"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="@Url.Action("Index","Home")" class="text-custom-white fs-14"><i class="fab fa-linkedin"></i></a></li>
+                        <li><a href="@Url.Action("Index","Home")" class="text-custom-white fs-14"><i class="fab fa-youtube"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -28,11 +28,11 @@
                     <h4 class="text-custom-white fw-600">Haberdar olun</h4>
                     <div class="newsletter">
                         <p class="text-custom-white">Yayınladığımız bültenlere abone olun, en yeni kampanyalardan önce siz haberdar olun.</p>
-                        <form>
+                        <form id="frmSubscribe">
                             <div class="form-group">
-                                <input type="email" name="#" class="form-control form-control-custom disabled" disabled="disabled" placeholder="E-posta Adresiniz">
+                                <input type="email" name="EmailAddress" id="EmailAddress" class="form-control form-control-custom" placeholder="E-posta Adresiniz" required>
                             </div>
-                            <button type="submit" class="btn-first btn-submits disabled" disabled="disabled">Abone ol</button>
+                            <button type="button" class="btn-first btn-submits btnSubscribe">Abone ol</button>
                         </form>
                     </div>
                 </div>
@@ -40,3 +40,66 @@
         </div>
     </div>
 </footer>
+
+<script>
+    var subscribeButton;
+
+    var subscribeForm;
+
+    var emailAddressText;
+
+    $(function () {
+
+        $(document).ready(function () {
+            init();
+        })
+
+        function init() {
+            subscribeForm = $('#frmSubscribe');
+
+            subscribeButton = $('.btnSubscribe');
+
+            emailAddressText = $('#EmailAddress');
+
+            $(subscribeButton).on('click', subscribeButton_onClick);
+
+            setValidation();
+        }
+
+        function subscribeButton_onClick() {
+            if ($(subscribeForm).valid()) {
+
+                alert('Talebiniz alınmıştır. Abone olduğunuz için teşekkür ederiz.');
+
+                $(emailAddressText).val('');
+
+            }
+        }
+
+        function setValidation() {
+            $(subscribeForm).validate({
+                ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+                errorClass: 'd-none',
+                successClass: 'd-none',
+                validClass: 'd-none',
+                highlight: function (element, errorClass) {
+                    $(element).removeClass(errorClass);
+                },
+                unhighlight: function (element, errorClass) {
+                    $(element).removeClass(errorClass);
+                },
+                rules: {
+                    EmailAddress: {
+                        required: true
+                    }
+                },
+                messages: {
+                    EmailAddress: {
+                        required: "Bu alan boş bırakılamaz."
+                    }
+                }
+            })
+        }
+
+    });
+</script>

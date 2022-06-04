@@ -7,7 +7,7 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="cars">
                             <div class="tab-inner">
-                                @using (Html.BeginForm("Insert", "Home"))
+                                @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { name = "frmReservation", id = "frmReservation" }))
                                 {
                                     <div class="row">
                                         <div class="offset-2 col-lg-3 col-md-6">
@@ -54,7 +54,7 @@
                                             <div class="form-group">
                                                 <label class="fs-14 text-custom-white fw-600">İade Saati</label>
                                                 <div class="group-form">
-                                                    @Html.DropDownListFor(x => x.EndHour, Model.EndHours.Select(x => new SelectListItem() { Text = x.Value, Value = x.Key }), "Saat seçiniz...", new { disabled = "disabled", @class = "custom-select form-control form-control-custom" })
+                                                    @Html.DropDownListFor(x => x.EndHour, Model.EndHours.Select(x => new SelectListItem() { Text = x.Value, Value = x.Key }), "Saat seçiniz...", new { @class = "custom-select form-control form-control-custom" })
                                                 </div>
                                             </div>
                                         </div>
@@ -62,7 +62,7 @@
                                     <div class="row text-right">
                                         <div class="offset-2 col-lg-8 col-md-6">
                                             <div class="form-group">
-                                                <button type="submit" class="btn-first btn-submit full-width btn-height disabled" disabled="disabled" id="btnReservation" name="btnReservation">0 Gün Kirala</button>
+                                                <button type="submit" class="btn-first btn-submit full-width btn-height" id="btnReservation" name="btnReservation">0 Gün Kirala</button>
                                             </div>
                                         </div>
                                     </div>
@@ -94,6 +94,8 @@
     var endDateDatePicker;
 
     var reservationButton;
+
+    var reservationForm;
 
     $(function () {
 
@@ -192,6 +194,8 @@
         }
 
         function init() {
+            reservationForm = $('#frmReservation');
+
             startDate = $('#StartDate');
             endDate = $('#EndDate');
 
@@ -202,10 +206,57 @@
 
             reservationButton = $('#btnReservation');
 
+            $(reservationButton).on('click', reservationButton_onClick);
+
             todayDate = new Date();
 
             currentHour = todayDate.getHours();
             currentMinute = todayDate.getMinutes();
+
+            setValidation();
+        }
+
+        function setValidation() {
+            $(reservationForm).validate({
+                ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+                errorClass: 'd-none',
+                successClass: 'd-none',
+                validClass: 'd-none',
+                highlight: function (element, errorClass) {
+                    $(element).removeClass(errorClass);
+                },
+                unhighlight: function (element, errorClass) {
+                    $(element).removeClass(errorClass);
+                },
+                rules: {
+                    StartDate: {
+                        required: true
+                    },
+                    EndDate: {
+                        required: true
+                    },
+                    StartHour: {
+                        required: true
+                    },
+                    EndHour: {
+                        required: true
+                    }
+                },
+                messages: {
+                    StartDate: {
+                        required: "Bu alan boş bırakılamaz."
+                    },
+                    EndDate: {
+                        required: "Bu alan boş bırakılamaz."
+                    },
+                    StartHour: {
+                        required: "Bu alan boş bırakılamaz."
+                    },
+                    EndHour: {
+                        required: "Bu alan boş bırakılamaz."
+                    }
+                }
+            });
         }
 
         function startHour_onChange() {
@@ -216,6 +267,11 @@
             $(endHour).niceSelect('update')
         }
 
+        function reservationButton_onClick() {
+            if (!$(reservationForm).valid())
+                return;
+        }
+
         function setReservationDays() {
             var startDateDatePickerValue = startDateDatePicker.selectedDates[0];
             var endDateDatePickerValue = endDateDatePicker.selectedDates[0];
@@ -224,6 +280,8 @@
         }
 
         function addMonthsToDate(_date, _noOfMonths) {
+            if (!_date)
+                return;
             var yearFromDate = _date.getFullYear();
             var monthFromYear = _date.getMonth();
             var dayFromYear = _date.getDate();
@@ -232,6 +290,8 @@
         }
 
         function addDaysToDate(_date, _noOfDays) {
+            if (!_date)
+                return;
             var yearFromDate = _date.getFullYear();
             var monthFromYear = _date.getMonth();
             var dayFromYear = _date.getDate();

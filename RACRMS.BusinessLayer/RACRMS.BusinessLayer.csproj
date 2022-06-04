@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RACRMS.DataTransferObject\RACRMS.DataTransferObject.csproj" />
     <ProjectReference Include="..\RACRMS.Extension\RACRMS.Extension.csproj" />
+    <ProjectReference Include="..\RACRMS.Shared\RACRMS.Shared.csproj" />
     <ProjectReference Include="..\RACRMS.UnitOfWork\RACRMS.UnitOfWork.csproj" />
     <ProjectReference Include="..\RACRMS.ValidationLayer\RACRMS.ValidationLayer.csproj" />
   </ItemGroup>
