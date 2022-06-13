@@ -30,25 +30,25 @@ namespace RACRMS.ManagementWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ICarBrandBL, CarBrandBL>();
-            services.AddScoped<ICarChassisTypeBL, CarChassisTypeBL>();
-            services.AddScoped<ICarClassBL, CarClassBL>();
-            services.AddScoped<ICarFuelTypeBL, CarFuelTypeBL>();
-            services.AddScoped<ICarGearTypeBL, CarGearTypeBL>();
-            services.AddScoped<ICarTypeBL, CarTypeBL>();
-            services.AddScoped<IPreferenceBL, PreferenceBL>();
-            services.AddScoped<IRequirementBL, RequirementBL>();
-            services.AddScoped<IUserRoleBL, UserRoleBL>();
-            services.AddScoped<IUserBL, UserBL>();
-            services.AddScoped<ICarBL, CarBL>();
-            services.AddScoped<ICarModelBL, CarModelBL>();
-            services.AddScoped<ICarRentalPriceBL, CarRentalPriceBL>();
-            services.AddScoped<ICustomerBL, CustomerBL>();
-            services.AddScoped<ICarPreferenceBL, CarPreferenceBL>();
-            services.AddScoped<ICarRentalRequirementBL, CarRentalRequirementBL>();
-            services.AddScoped<IReservationBL, ReservationBL>();
-            services.AddScoped<IPaymentTypeBL, PaymentTypeBL>();
-            services.AddScoped<IContractBL, ContractBL>();
+            services.AddTransient<ICarBrandBL, CarBrandBL>();
+            services.AddTransient<ICarChassisTypeBL, CarChassisTypeBL>();
+            services.AddTransient<ICarClassBL, CarClassBL>();
+            services.AddTransient<ICarFuelTypeBL, CarFuelTypeBL>();
+            services.AddTransient<ICarGearTypeBL, CarGearTypeBL>();
+            services.AddTransient<ICarTypeBL, CarTypeBL>();
+            services.AddTransient<IPreferenceBL, PreferenceBL>();
+            services.AddTransient<IRequirementBL, RequirementBL>();
+            services.AddTransient<IUserRoleBL, UserRoleBL>();
+            services.AddTransient<IUserBL, UserBL>();
+            services.AddTransient<ICarBL, CarBL>();
+            services.AddTransient<ICarModelBL, CarModelBL>();
+            services.AddTransient<ICarRentalPriceBL, CarRentalPriceBL>();
+            services.AddTransient<ICustomerBL, CustomerBL>();
+            services.AddTransient<ICarPreferenceBL, CarPreferenceBL>();
+            services.AddTransient<ICarRentalRequirementBL, CarRentalRequirementBL>();
+            services.AddTransient<IReservationBL, ReservationBL>();
+            services.AddTransient<IPaymentTypeBL, PaymentTypeBL>();
+            services.AddTransient<IContractBL, ContractBL>();
 
             services.AddAuthentication("Default").AddCookie("Default");
 
