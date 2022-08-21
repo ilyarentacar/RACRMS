@@ -10,6 +10,7 @@ using RACRMS.ManagementWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -117,6 +118,8 @@ namespace RACRMS.ManagementWebApp.Controllers
 
                 await contractBL.InsertAsync(contractModel);
 
+                await wakeUpMailService();
+
                 ISendEndpoint sendEndpoint = await sendEndpointProvider.GetSendEndpoint(new Uri($"queue:{RabbitMQSettings.ReservationAcceptedEventQueue}"));
 
                 await sendEndpoint.Send(new ReservationAcceptedEvent()
@@ -205,6 +208,8 @@ namespace RACRMS.ManagementWebApp.Controllers
                 model.RejectDate = DateTime.Now;
 
                 await reservationBL.UpdateAsync(model);
+
+                await wakeUpMailService();
 
                 ISendEndpoint sendEndpoint = await sendEndpointProvider.GetSendEndpoint(new Uri($"queue:{RabbitMQSettings.ReservationRejectedEventQueue}"));
 
@@ -301,6 +306,22 @@ namespace RACRMS.ManagementWebApp.Controllers
             try
             {
                 ViewBag.WaitingContractCount = await contractBL.GetWaitingContractCountAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        private async Task wakeUpMailService()
+        {
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, new Uri(MailServiceSettings.MailServiceRequestUrl));
+
+                HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
             }
             catch
             {

@@ -10,6 +10,7 @@ using RACRMS.ManagementWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -117,6 +118,7 @@ namespace RACRMS.ManagementWebApp.Controllers
             {
                 model = await userBL.CheckCridentialForPasswordRover(model);
 
+                await wakeUpMailService();
                 await sendEmailAsync(model);
 
                 HttpContext.Session.SetString("SuccessMessage", "Giriş bilgileriniz E-Posta adresinize gönderilmiştir.");
@@ -187,6 +189,31 @@ namespace RACRMS.ManagementWebApp.Controllers
                     Username = model.Username,
                     Password = model.Password
                 });
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        private async Task wakeUpMailService()
+        {
+            try
+            {
+                HttpClientHandler httpClientHandler = new HttpClientHandler();
+
+                httpClientHandler.ClientCertificateOptions = ClientCertificateOption.Manual;
+
+                httpClientHandler.ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                };
+
+                HttpClient httpClient = new HttpClient();
+
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, new Uri(MailServiceSettings.MailServiceRequestUrl));
+
+                HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
             }
             catch
             {
