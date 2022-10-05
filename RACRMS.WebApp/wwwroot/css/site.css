@@ -9,3 +9,12 @@
 .form-control-custom.disabled {
     color: #6c757d !important;
 }
+
+.custom-font-family {
+    font-family: "Open Sans", sans-serif !important;
+    font-size: small;
+}
+
+.contact-info-box {
+    height: 258px !important;
+}
