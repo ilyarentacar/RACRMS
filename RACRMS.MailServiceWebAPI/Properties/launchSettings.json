@@ -15,7 +15,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:3017"
+      "applicationUrl": "http://localhost:26001"
     },
     "RACRMS.MailServiceWebApi": {
       "commandName": "Project",

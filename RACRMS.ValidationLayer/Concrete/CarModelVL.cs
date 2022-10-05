@@ -32,6 +32,7 @@ namespace RACRMS.ValidationLayer.Concrete
                     .Where(x => x.CarFuelTypeId == dto.CarFuelTypeId)
                     .Where(x => x.CarGearTypeId == dto.CarGearTypeId)
                     .Where(x => x.Name == dto.Name)
+                    .Where(x => x.ImageUrl == dto.ImageUrl)
                     .AnyAsync())
                     throw new Exception("Bu araç modeli zaten kayıtlıdır.");
             }

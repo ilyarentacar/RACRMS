@@ -99,6 +99,12 @@
                         </div>
                     </div>
                     <div class="form-group row p-2">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(x => x.ImageUrl)
+                            @Html.DropDownListFor(x => x.ImageUrl, Model.CarImages.Select(x => new SelectListItem() { Text = x.Key, Value = x.Value }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control carImage-select select", data_fouc = "data-fouc" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
                         <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
                             @Html.LabelFor(x => x.CarBrandName)
                             @Html.DropDownListFor(x => x.CarBrandId, Model.CarBrands.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control carBrand-select select", data_fouc = "data-fouc" })
