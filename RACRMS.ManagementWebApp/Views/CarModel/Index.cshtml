@@ -45,7 +45,7 @@
                     },
                     {
                         orderable: false,
-                        targets: [8]
+                        targets: [9]
                     }
                 ]
             });
@@ -70,6 +70,7 @@
                 <th>Kasa Tipi</th>
                 <th>Yakıt Tipi</th>
                 <th>Vites Tipi</th>
+                <th>Araç Resmi</th>
                 <th class="text-center">İşlemler</th>
                 <th></th>
             </tr>
@@ -77,6 +78,10 @@
         <tbody>
             @foreach (var carModel in Model.CarModels)
             {
+                string carImage = carModel.CarImages.Any(x => x.Value == carModel.ImageUrl)
+                    ? carModel.CarImages.FirstOrDefault(x => x.Value == carModel.ImageUrl).Key
+                    : "Araç Resmi Bulunamadı";
+
                 <tr>
                     <td>@carModel.Id</td>
                     <td>@carModel.Name</td>
@@ -86,6 +91,7 @@
                     <td>@carModel.CarChassisType.Name</td>
                     <td>@carModel.CarFuelType.Name</td>
                     <td>@carModel.CarGearType.Name</td>
+                    <td>@carImage</td>
                     <td class="text-center">
                         <a href="@Url.Action("Update",new { id = carModel.Id} )" class="btn btn-sm btn-secondary btn-icon mr-2"><i class="icon-pencil7"></i></a>
                         <a href="@Url.Action("Delete",new { id = carModel.Id} )" class="btn btn-sm btn-danger btn-icon"><i class="icon-bin"></i></a>
