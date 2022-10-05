@@ -22,11 +22,13 @@ namespace RACRMS.UnitOfWork.Concrete
             get
             {
                 if (_dbContext == null)
-                    lock (locker)
-                        if (_dbContext == null)
-                            _dbContext = new ILYA_RACRMSContext();
+                    _dbContext = new ILYA_RACRMSContext();
 
                 return _dbContext;
+            }
+            set
+            {
+                _dbContext = value;
             }
         }
 

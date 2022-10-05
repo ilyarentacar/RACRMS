@@ -19,6 +19,12 @@
                         </div>
                     </div>
                     <div class="form-group row p-2">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(x => x.ImageUrl)
+                            @Html.TextBoxFor(x => Model.CarImages.FirstOrDefault(y => y.Value == x.ImageUrl).Key, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
                         <div class="col-sm-6 mb-2 mb-sm-0 mb-md-0 mb-lg-0 mb-xl-0">
                             @Html.LabelFor(x => x.CarBrandName)
                             @Html.TextBoxFor(x => x.CarBrandName, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required", @readonly = "readonly" })

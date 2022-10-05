@@ -13,7 +13,7 @@ namespace RACRMS.MailServiceShared.Concrete
     {
         private string From { get => "info@ilyarentacar.com.tr"; }
         private string Host { get => "ilyarentacar.com.tr"; }
-        private int Port { get => 465; }
+        private int Port { get => 587; }
         private string Username { get => "info@ilyarentacar.com.tr"; }
         private string Password { get => "vy82@3eG"; }
 

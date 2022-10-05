@@ -8,6 +8,16 @@ namespace RACRMS.MailServiceShared.Statics
 {
     public class MailServiceSettings
     {
-        public static string MailServiceRequestUrl { get => "http://mailservice.ilyarentacar.com.tr/api/test"; }
+        public static string MailServiceRequestUrl
+        {
+            get
+            {
+#if DEBUG
+                return "http://localhost:26001/api/test";
+#else
+                return "http://mailservice.ilyarentacar.com.tr/api/test";
+#endif
+            }
+        }
     }
 }

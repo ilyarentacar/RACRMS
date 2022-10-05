@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace RACRMS.DataTransferObject
 {
@@ -17,6 +18,21 @@ namespace RACRMS.DataTransferObject
             CarChassisTypes = new List<CarChassisTypeDTO>();
             CarFuelTypes = new List<CarFuelTypeDTO>();
             CarGearTypes = new List<CarGearTypeDTO>();
+
+            CarImages = new Dictionary<string, string>();
+
+            CarImages.Add("Citroen C Elysee", "citroen-c-elysee.png");
+            CarImages.Add("Fiat Egea", "fiat-egea.png");
+            CarImages.Add("Ford Focus", "ford-focus.png");
+            CarImages.Add("Hyundai i20", "hyundai-i20.png");
+            CarImages.Add("Peugeot 208", "peugeot-208.png");
+            CarImages.Add("Peugeot 301", "peugeot-301.png");
+            CarImages.Add("Renault Clio", "renault-clio.png");
+            CarImages.Add("Renault Taliant", "renault-taliant.png");
+
+            CarImages = CarImages
+                .OrderBy(x => x.Key)
+                .ToDictionary(x => x.Key, x => x.Value);
         }
 
         public int Id { get; set; }
@@ -36,6 +52,7 @@ namespace RACRMS.DataTransferObject
         [Required(ErrorMessage = "Bu alan boş bırakılamaz.")]
         [MaxLength(15)]
         public string Name { get; set; }
+        [DisplayName("Araç Resmi :")]
         public string ImageUrl { get; set; }
         public string Description { get; set; }
         public DateTime CreateDate { get; set; }
@@ -68,5 +85,7 @@ namespace RACRMS.DataTransferObject
         public List<CarChassisTypeDTO> CarChassisTypes { get; set; }
         public List<CarFuelTypeDTO> CarFuelTypes { get; set; }
         public List<CarGearTypeDTO> CarGearTypes { get; set; }
+
+        public Dictionary<string, string> CarImages { get; set; }
     }
 }

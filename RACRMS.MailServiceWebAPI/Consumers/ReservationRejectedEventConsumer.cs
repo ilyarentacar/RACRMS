@@ -22,22 +22,29 @@ namespace RACRMS.MailServiceWebApi.Consumers
 
         public async Task Consume(ConsumeContext<ReservationRejectedEvent> context)
         {
-            ISendEndpoint sendEndpoint = await sendEndpointProvider.GetSendEndpoint(new Uri($"queue:{RabbitMQSettings.ReservationRejectedMailSentEventQueue}"));
-            
-            string name = context.Message.Name;
-            string surname = context.Message.Surname;
-            string emailAddress = context.Message.EmailAddress;
-            string reservationStartDate = context.Message.ReservationStartDate;
-            string reservationEndDate = context.Message.ReservationEndDate;
-
-            string emailTemplate = await emailHelper.SendReservationRejectedEmail(emailAddress, name, surname, reservationStartDate, reservationEndDate);
-
-            await sendEndpoint.Send(new ReservationRejectedMailSentEvent()
+            try
             {
-                ReservationId = context.Message.ReservationId,
-                EmailSentDate = DateTime.Now,
-                EmailTemplate = emailTemplate
-            });
+                ISendEndpoint sendEndpoint = await sendEndpointProvider.GetSendEndpoint(new Uri($"queue:{RabbitMQSettings.ReservationRejectedMailSentEventQueue}"));
+
+                string name = context.Message.Name;
+                string surname = context.Message.Surname;
+                string emailAddress = context.Message.EmailAddress;
+                string reservationStartDate = context.Message.ReservationStartDate;
+                string reservationEndDate = context.Message.ReservationEndDate;
+
+                string emailTemplate = await emailHelper.SendReservationRejectedEmail(emailAddress, name, surname, reservationStartDate, reservationEndDate);
+
+                await sendEndpoint.Send(new ReservationRejectedMailSentEvent()
+                {
+                    ReservationId = context.Message.ReservationId,
+                    EmailSentDate = DateTime.Now,
+                    EmailTemplate = emailTemplate
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred. Error message: {ex.Message}");
+            }
         }
     }
 }

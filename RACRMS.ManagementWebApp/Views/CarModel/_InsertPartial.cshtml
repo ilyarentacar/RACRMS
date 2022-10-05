@@ -5,7 +5,6 @@
     var carModels;
 
     $(() => {
-
         $(document).ready(() => {
             $('#modal_form_horizontal').modal('show');
 
@@ -100,6 +99,12 @@
                         <div class="col-sm-12">
                             @Html.LabelFor(x => x.Name)
                             @Html.TextBoxFor(x => x.Name, new { placeholder = "Kayıt giriniz...", @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+                    <div class="form-group row p-2">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(x => x.ImageUrl)
+                            @Html.DropDownListFor(x => x.ImageUrl, Model.CarImages.Select(x => new SelectListItem() { Text = x.Key, Value = x.Value }), string.Empty, new { data_placeholder = "Kayıt seçiniz...", @class = "form-control carImage-select select", data_fouc = "data-fouc" })
                         </div>
                     </div>
                     <div class="form-group row p-2">
