@@ -43,7 +43,13 @@ namespace RACRMS.Extension
                     CarFuelType = entity.CarFuelType != null ? entity.CarFuelType.ToDTO() : new CarFuelTypeDTO(),
                     CarGearType = entity.CarGearType != null ? entity.CarGearType.ToDTO() : new CarGearTypeDTO(),
                     CarType = entity.CarType != null ? entity.CarType.ToDTO() : new CarTypeDTO(),
-                    RentalPrice = entity.CarRentalPrice != null && entity.CarRentalPrice.Count != 0 ? entity.CarRentalPrice.FirstOrDefault().RentPrice : 0
+                    RentalPrice = entity.CarRentalPrice != null && entity.CarRentalPrice.Count != 0 ? entity.CarRentalPrice.FirstOrDefault().RentPrice : 0,
+                    CarRentalRequirement = entity.CarRentalRequirement != null ? entity.CarRentalRequirement.Select(x => new CarRentalRequirementDTO()
+                    {
+                        Id = x.Id,
+                        RequirementId = x.RequirementId,
+                        Requirement = x.Requirement != null ? x.Requirement.ToDTO() : new RequirementDTO()
+                    }).ToList() : new List<CarRentalRequirementDTO>()
                 };
             }
             catch
