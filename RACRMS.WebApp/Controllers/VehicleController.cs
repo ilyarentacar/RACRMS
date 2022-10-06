@@ -177,14 +177,18 @@ namespace RACRMS.WebApp.Controllers
                             CarModelName = x.CarModelName,
                             CarFuelTypeName = x.CarFuelTypeName,
                             CarGearTypeName = x.CarGearTypeName,
-                            TotalKm = x.CarRentalRequirement
-                                .Select(y => y.Requirement)
-                                .AsEnumerable()
-                                .FirstOrDefault(y => y.Id == 1).Name,
-                            AgeLimit = x.CarRentalRequirement
-                                .Select(y => y.Requirement)
-                                .AsEnumerable()
-                                .FirstOrDefault(y => y.Id == 2).Name
+                            TotalKm = x.CarRentalRequirement.Count != 0
+                                ? x.CarRentalRequirement
+                                    .Select(y => y.Requirement)
+                                    .AsEnumerable()
+                                    .FirstOrDefault(y => y.Id == 1).Name
+                                : string.Empty,
+                            AgeLimit = x.CarRentalRequirement.Count != 0
+                                ? x.CarRentalRequirement
+                                    .Select(y => y.Requirement)
+                                    .AsEnumerable()
+                                    .FirstOrDefault(y => y.Id == 2).Name
+                                : string.Empty
                         })
                         .GroupBy(x => new
                         {
@@ -303,14 +307,18 @@ namespace RACRMS.WebApp.Controllers
                             CarModelName = x.CarModelName,
                             CarFuelTypeName = x.CarFuelTypeName,
                             CarGearTypeName = x.CarGearTypeName,
-                            TotalKm = x.CarRentalRequirement
-                                .Select(y => y.Requirement)
-                                .AsEnumerable()
-                                .FirstOrDefault(y => y.Id == 1).Name,
-                            AgeLimit = x.CarRentalRequirement
-                                .Select(y => y.Requirement)
-                                .AsEnumerable()
-                                .FirstOrDefault(y => y.Id == 2).Name
+                            TotalKm = x.CarRentalRequirement.Count != 0
+                                ? x.CarRentalRequirement
+                                    .Select(y => y.Requirement)
+                                    .AsEnumerable()
+                                    .FirstOrDefault(y => y.Id == 1).Name
+                                : string.Empty,
+                            AgeLimit = x.CarRentalRequirement.Count != 0
+                                ? x.CarRentalRequirement
+                                    .Select(y => y.Requirement)
+                                    .AsEnumerable()
+                                    .FirstOrDefault(y => y.Id == 2).Name
+                                : string.Empty
                         })
                         .GroupBy(x => new
                         {
@@ -429,14 +437,18 @@ namespace RACRMS.WebApp.Controllers
                             CarModelName = x.CarModelName,
                             CarFuelTypeName = x.CarFuelTypeName,
                             CarGearTypeName = x.CarGearTypeName,
-                            TotalKm = x.CarRentalRequirement
-                                .Select(y => y.Requirement)
-                                .AsEnumerable()
-                                .FirstOrDefault(y => y.Id == 1).Name,
-                            AgeLimit = x.CarRentalRequirement
-                                .Select(y => y.Requirement)
-                                .AsEnumerable()
-                                .FirstOrDefault(y => y.Id == 2).Name
+                            TotalKm = x.CarRentalRequirement.Count != 0
+                                ? x.CarRentalRequirement
+                                    .Select(y => y.Requirement)
+                                    .AsEnumerable()
+                                    .FirstOrDefault(y => y.Id == 1).Name
+                                : string.Empty,
+                            AgeLimit = x.CarRentalRequirement.Count != 0
+                                ? x.CarRentalRequirement
+                                    .Select(y => y.Requirement)
+                                    .AsEnumerable()
+                                    .FirstOrDefault(y => y.Id == 2).Name
+                                : string.Empty
                         })
                         .GroupBy(x => new
                         {
@@ -555,14 +567,18 @@ namespace RACRMS.WebApp.Controllers
                             CarModelName = x.CarModelName,
                             CarFuelTypeName = x.CarFuelTypeName,
                             CarGearTypeName = x.CarGearTypeName,
-                            TotalKm = x.CarRentalRequirement
-                                .Select(y => y.Requirement)
-                                .AsEnumerable()
-                                .FirstOrDefault(y => y.Id == 1).Name,
-                            AgeLimit = x.CarRentalRequirement
-                                .Select(y => y.Requirement)
-                                .AsEnumerable()
-                                .FirstOrDefault(y => y.Id == 2).Name
+                            TotalKm = x.CarRentalRequirement.Count != 0
+                                ? x.CarRentalRequirement
+                                    .Select(y => y.Requirement)
+                                    .AsEnumerable()
+                                    .FirstOrDefault(y => y.Id == 1).Name
+                                : string.Empty,
+                            AgeLimit = x.CarRentalRequirement.Count != 0
+                                ? x.CarRentalRequirement
+                                    .Select(y => y.Requirement)
+                                    .AsEnumerable()
+                                    .FirstOrDefault(y => y.Id == 2).Name
+                                : string.Empty
                         })
                         .GroupBy(x => new
                         {
