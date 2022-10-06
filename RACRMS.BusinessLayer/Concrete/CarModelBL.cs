@@ -106,7 +106,7 @@ namespace RACRMS.BusinessLayer.Concrete
         {
             try
             {
-                await nameValidation(dto.CarBrandId, dto.Name);
+                await isThereAnyCarModelValidation(dto);
 
                 CarModel carModel = new CarModel()
                 {
