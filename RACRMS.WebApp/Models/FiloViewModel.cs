@@ -21,7 +21,7 @@ namespace RACRMS.WebApp.Models
             public string CarModelName { get; set; }
             public string CarFuelTypeName { get; set; }
             public string CarGearTypeName { get; set; }
-            public int TotalKm { get; set; }
+            public string TotalKm { get; set; }
             public string AgeLimit { get; set; }
         }
     }

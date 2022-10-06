@@ -105,8 +105,14 @@ namespace RACRMS.WebApp.Controllers
                             CarModelName = x.CarModelName,
                             CarFuelTypeName = x.CarFuelTypeName,
                             CarGearTypeName = x.CarGearTypeName,
-                            TotalKm = 500,
-                            AgeLimit = $"{21} Yaş ve üzeri"
+                            TotalKm = x.CarRentalRequirement
+                                .Select(y => y.Requirement)
+                                .AsEnumerable()
+                                .FirstOrDefault(y => y.Id == 1).Name,
+                            AgeLimit = x.CarRentalRequirement
+                                .Select(y => y.Requirement)
+                                .AsEnumerable()
+                                .FirstOrDefault(y => y.Id == 2).Name
                         })
                         .GroupBy(x => new
                         {
@@ -131,8 +137,8 @@ namespace RACRMS.WebApp.Controllers
                             CarModelName = x.Key.CarModelName,
                             CarFuelTypeName = x.Key.CarFuelTypeName,
                             CarGearTypeName = x.Key.CarGearTypeName,
-                            TotalKm = 500,
-                            AgeLimit = $"{21} Yaş ve üzeri"
+                            TotalKm = x.Key.TotalKm,
+                            AgeLimit = x.Key.AgeLimit
                         })
                         .ToList()
                 };
