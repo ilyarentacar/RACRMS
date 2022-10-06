@@ -26,7 +26,7 @@ namespace RACRMS.DataTransferObject
             CarImages.Add("Fiat Egea", "fiat-egea.png");
             CarImages.Add("Ford Ecosport", "ford-ecosport.png");
             CarImages.Add("Ford Focus", "ford-focus.png");
-            CarImages.Add("Hyundai Elentra", "hyundai-elentra.png");
+            CarImages.Add("Hyundai Elantra", "hyundai-elantra.png");
             CarImages.Add("Hyundai i20", "hyundai-i20.png");
             CarImages.Add("Jeep Compass", "jeep-compass.png");
             CarImages.Add("Kia Cerato", "kia-cerato.png");
@@ -39,6 +39,7 @@ namespace RACRMS.DataTransferObject
             CarImages.Add("Renault Taliant", "renault-taliant.png");
             CarImages.Add("Volkswagen Polo", "volkswagen-polo.png");
             CarImages.Add("Volkswagen T-Roc", "volkswagen-troc.png");
+            CarImages.Add("Renault Capture", "renault-capture.png");
 
             CarImages = CarImages
                 .OrderBy(x => x.Key)
