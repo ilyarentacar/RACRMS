@@ -97,66 +97,6 @@ namespace RACRMS.WebApp.Controllers
             }
         }
 
-        //private async Task<FiloViewModel> getFilo()
-        //{
-        //    try
-        //    {
-        //        List<CarDTO> cars = await carBL.GetFilo();
-
-        //        return new FiloViewModel()
-        //        {
-        //            carViewModels = cars
-        //                .Select(x => new FiloViewModel.CarViewModel()
-        //                {
-        //                    Id = x.Id,
-        //                    ImageUrl = x.CarModel.ImageUrl,
-        //                    CarClassName = x.CarClassName,
-        //                    CarChassisTypeName = x.CarChassisTypeName,
-        //                    CarRentalPrice = x.RentalPrice,
-        //                    CarBrandName = x.CarBrandName,
-        //                    CarModelName = x.CarModelName,
-        //                    CarFuelTypeName = x.CarFuelTypeName,
-        //                    CarGearTypeName = x.CarGearTypeName,
-        //                    TotalKm = 500,
-        //                    AgeLimit = $"{21} Yaş ve üzeri"
-        //                })
-        //                .GroupBy(x => new
-        //                {
-        //                    Id = x.Id,
-        //                    x.ImageUrl,
-        //                    x.CarClassName,
-        //                    x.CarChassisTypeName,
-        //                    x.CarRentalPrice,
-        //                    x.CarBrandName,
-        //                    x.CarModelName,
-        //                    x.CarFuelTypeName,
-        //                    x.CarGearTypeName,
-        //                    x.TotalKm,
-        //                    x.AgeLimit
-        //                })
-        //                .Select(x => new FiloViewModel.CarViewModel()
-        //                {
-        //                    Id = x.Key.Id,
-        //                    ImageUrl = x.Key.ImageUrl,
-        //                    CarClassName = x.Key.CarClassName,
-        //                    CarChassisTypeName = x.Key.CarChassisTypeName,
-        //                    CarRentalPrice = x.Key.CarRentalPrice,
-        //                    CarBrandName = x.Key.CarBrandName,
-        //                    CarModelName = x.Key.CarModelName,
-        //                    CarFuelTypeName = x.Key.CarFuelTypeName,
-        //                    CarGearTypeName = x.Key.CarGearTypeName,
-        //                    TotalKm = 500,
-        //                    AgeLimit = $"{21} Yaş ve üzeri"
-        //                })
-        //                .ToList()
-        //        };
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-
         private async Task<FiloViewModel> getFiloByReservation(DateTime startDate, DateTime endDate)
         {
             try
@@ -177,17 +117,23 @@ namespace RACRMS.WebApp.Controllers
                             CarModelName = x.CarModelName,
                             CarFuelTypeName = x.CarFuelTypeName,
                             CarGearTypeName = x.CarGearTypeName,
-                            TotalKm = x.CarRentalRequirement.Count != 0
+                            TotalKm = x.CarRentalRequirement.Count != 0 && x.CarRentalRequirement.Any(y => y.RequirementId == 1)
                                 ? x.CarRentalRequirement
                                     .Select(y => y.Requirement)
                                     .AsEnumerable()
                                     .FirstOrDefault(y => y.Id == 1).Name
                                 : string.Empty,
-                            AgeLimit = x.CarRentalRequirement.Count != 0
+                            AgeLimit = x.CarRentalRequirement.Count != 0 && x.CarRentalRequirement.Any(y => y.RequirementId == 2)
                                 ? x.CarRentalRequirement
                                     .Select(y => y.Requirement)
                                     .AsEnumerable()
                                     .FirstOrDefault(y => y.Id == 2).Name
+                                : string.Empty,
+                            DriverLicense = x.CarRentalRequirement.Count != 0 && x.CarRentalRequirement.Any(y => y.RequirementId == 3)
+                                ? x.CarRentalRequirement
+                                    .Select(y => y.Requirement)
+                                    .AsEnumerable()
+                                    .FirstOrDefault(y => y.Id == 3).Name
                                 : string.Empty
                         })
                         .GroupBy(x => new
@@ -202,7 +148,8 @@ namespace RACRMS.WebApp.Controllers
                             x.CarFuelTypeName,
                             x.CarGearTypeName,
                             x.TotalKm,
-                            x.AgeLimit
+                            x.AgeLimit,
+                            x.DriverLicense
                         })
                         .Select(x => new FiloViewModel.CarViewModel()
                         {
@@ -216,7 +163,8 @@ namespace RACRMS.WebApp.Controllers
                             CarFuelTypeName = x.Key.CarFuelTypeName,
                             CarGearTypeName = x.Key.CarGearTypeName,
                             TotalKm = x.Key.TotalKm,
-                            AgeLimit = x.Key.AgeLimit
+                            AgeLimit = x.Key.AgeLimit,
+                            DriverLicense = x.Key.DriverLicense
                         })
                         .ToList()
                 };
@@ -307,17 +255,23 @@ namespace RACRMS.WebApp.Controllers
                             CarModelName = x.CarModelName,
                             CarFuelTypeName = x.CarFuelTypeName,
                             CarGearTypeName = x.CarGearTypeName,
-                            TotalKm = x.CarRentalRequirement.Count != 0
+                            TotalKm = x.CarRentalRequirement.Count != 0 && x.CarRentalRequirement.Any(y => y.RequirementId == 1)
                                 ? x.CarRentalRequirement
                                     .Select(y => y.Requirement)
                                     .AsEnumerable()
                                     .FirstOrDefault(y => y.Id == 1).Name
                                 : string.Empty,
-                            AgeLimit = x.CarRentalRequirement.Count != 0
+                            AgeLimit = x.CarRentalRequirement.Count != 0 && x.CarRentalRequirement.Any(y => y.RequirementId == 2)
                                 ? x.CarRentalRequirement
                                     .Select(y => y.Requirement)
                                     .AsEnumerable()
                                     .FirstOrDefault(y => y.Id == 2).Name
+                                : string.Empty,
+                            DriverLicense = x.CarRentalRequirement.Count != 0 && x.CarRentalRequirement.Any(y => y.RequirementId == 3)
+                                ? x.CarRentalRequirement
+                                    .Select(y => y.Requirement)
+                                    .AsEnumerable()
+                                    .FirstOrDefault(y => y.Id == 3).Name
                                 : string.Empty
                         })
                         .GroupBy(x => new
@@ -437,17 +391,23 @@ namespace RACRMS.WebApp.Controllers
                             CarModelName = x.CarModelName,
                             CarFuelTypeName = x.CarFuelTypeName,
                             CarGearTypeName = x.CarGearTypeName,
-                            TotalKm = x.CarRentalRequirement.Count != 0
+                            TotalKm = x.CarRentalRequirement.Count != 0 && x.CarRentalRequirement.Any(y => y.RequirementId == 1)
                                 ? x.CarRentalRequirement
                                     .Select(y => y.Requirement)
                                     .AsEnumerable()
                                     .FirstOrDefault(y => y.Id == 1).Name
                                 : string.Empty,
-                            AgeLimit = x.CarRentalRequirement.Count != 0
+                            AgeLimit = x.CarRentalRequirement.Count != 0 && x.CarRentalRequirement.Any(y => y.RequirementId == 2)
                                 ? x.CarRentalRequirement
                                     .Select(y => y.Requirement)
                                     .AsEnumerable()
                                     .FirstOrDefault(y => y.Id == 2).Name
+                                : string.Empty,
+                            DriverLicense = x.CarRentalRequirement.Count != 0 && x.CarRentalRequirement.Any(y => y.RequirementId == 3)
+                                ? x.CarRentalRequirement
+                                    .Select(y => y.Requirement)
+                                    .AsEnumerable()
+                                    .FirstOrDefault(y => y.Id == 3).Name
                                 : string.Empty
                         })
                         .GroupBy(x => new
@@ -567,17 +527,23 @@ namespace RACRMS.WebApp.Controllers
                             CarModelName = x.CarModelName,
                             CarFuelTypeName = x.CarFuelTypeName,
                             CarGearTypeName = x.CarGearTypeName,
-                            TotalKm = x.CarRentalRequirement.Count != 0
+                            TotalKm = x.CarRentalRequirement.Count != 0 && x.CarRentalRequirement.Any(y => y.RequirementId == 1)
                                 ? x.CarRentalRequirement
                                     .Select(y => y.Requirement)
                                     .AsEnumerable()
                                     .FirstOrDefault(y => y.Id == 1).Name
                                 : string.Empty,
-                            AgeLimit = x.CarRentalRequirement.Count != 0
+                            AgeLimit = x.CarRentalRequirement.Count != 0 && x.CarRentalRequirement.Any(y => y.RequirementId == 2)
                                 ? x.CarRentalRequirement
                                     .Select(y => y.Requirement)
                                     .AsEnumerable()
                                     .FirstOrDefault(y => y.Id == 2).Name
+                                : string.Empty,
+                            DriverLicense = x.CarRentalRequirement.Count != 0 && x.CarRentalRequirement.Any(y => y.RequirementId == 3)
+                                ? x.CarRentalRequirement
+                                    .Select(y => y.Requirement)
+                                    .AsEnumerable()
+                                    .FirstOrDefault(y => y.Id == 3).Name
                                 : string.Empty
                         })
                         .GroupBy(x => new
@@ -592,7 +558,8 @@ namespace RACRMS.WebApp.Controllers
                             x.CarFuelTypeName,
                             x.CarGearTypeName,
                             x.TotalKm,
-                            x.AgeLimit
+                            x.AgeLimit,
+                            x.DriverLicense
                         })
                         .Select(x => new FiloViewModel.CarViewModel()
                         {
@@ -606,7 +573,8 @@ namespace RACRMS.WebApp.Controllers
                             CarFuelTypeName = x.Key.CarFuelTypeName,
                             CarGearTypeName = x.Key.CarGearTypeName,
                             TotalKm = x.Key.TotalKm,
-                            AgeLimit = x.Key.AgeLimit
+                            AgeLimit = x.Key.AgeLimit,
+                            DriverLicense = x.Key.DriverLicense
                         })
                         .ToList()
                 };

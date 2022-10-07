@@ -23,6 +23,7 @@ namespace RACRMS.WebApp.Models
             public string CarGearTypeName { get; set; }
             public string TotalKm { get; set; }
             public string AgeLimit { get; set; }
+            public string DriverLicense { get; set; }
         }
     }
 }
