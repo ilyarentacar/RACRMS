@@ -36,7 +36,7 @@
                                 @using (Html.BeginForm("Insert", "Home"))
                                 {
                                     <div class="row">
-                                        <div class="offset-2 col-lg-3 col-md-6">
+                                        <div class="offset-md-2 col-lg-3 col-md-6">
                                             <div class="form-group">
                                                 <label class="fs-14 text-custom-white fw-600">Teslim Alma Ofisi</label>
                                                 <label class="form-control form-control-custom label-input-control">Sakarya, Adapazarı - Merkez Ofis</label>
@@ -61,7 +61,7 @@
                                         </div>
                                     </div>
                                     <div class="row mb-4">
-                                        <div class="offset-2 col-lg-3 col-md-6">
+                                        <div class="offset-md-2 col-lg-3 col-md-6">
                                             <div class="form-group">
                                                 <label class="fs-14 text-custom-white fw-600">İade Etme Ofisi</label>
                                                 <label class="form-control form-control-custom label-input-control">Sakarya, Adapazarı - Merkez Ofis</label>
@@ -86,7 +86,7 @@
                                         </div>
                                     </div>
                                     <div class="row text-right">
-                                        <div class="offset-2 col-lg-8 col-md-6">
+                                        <div class="offset-md-2 col-lg-8 col-md-6">
                                             <div class="form-group">
                                                 <a href="@Url.Action("Index","Vehicle",new { carClassName = Enum.GetName(typeof(CarClassEnum),CarClassEnum.Ekonomik),startDate = startDateParameter, startHour = startHourParameter, endDate = endDateParameter, endHour = endHourParameter })" class="btn-first btn-submit full-width btn-height" id="btnReservation" name="btnReservation">Müsait Araçları Getir</a>
                                             </div>
