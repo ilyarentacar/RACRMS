@@ -37,7 +37,7 @@ Version: 1.0.0
  width: 320px;
  height: 100vh;
  top: 0;
- background: #ff0000;
+ background: #F8F200;
  transition: 0.5s all;
  overflow: auto;
  z-index: 100;
@@ -58,7 +58,7 @@ Version: 1.0.0
  .header .navigation-wrapper nav>.main-navigation .main-menu>ul>.menu-item>a {
  padding: 10px 15px;
  display: block;
- background: #fff;
+ background: #F8F200;
  border: none;
  border-radius: 0;
 }
